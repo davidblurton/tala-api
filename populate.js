@@ -24,17 +24,7 @@ var input = fs.createReadStream(__dirname + '/SHsnid.csv', {
 });
 
 input.on('close', function() {
-  database.addWords(output, function(err, documents) {
-    if(err) {
-      console.dir(err);
-    } else {
-      console.log('success');
-    }
-
-    console.log(documents.length + ' words inserted');
-
-    process.exit(0);
-  });
+  console.log('done');
 });
 
 input.pipe(parser);

@@ -5,9 +5,6 @@ var Database = function() {
   mongoose.connect('mongodb://localhost/bil');
 
   return {
-    addWords: function(words, callback) {
-      Word.collection.insert(words, callback);
-    },
     startsWith: function(prefix, callback) {
       var re = new RegExp('^' + prefix + '.*');
       Word.find()
