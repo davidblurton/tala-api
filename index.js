@@ -1,5 +1,6 @@
 var database = require('./database');
 var translate = require('./translate');
+var printer = require('./printer');
 var argv = require('minimist')(process.argv.slice(2));
 
 var words = argv._;
@@ -9,7 +10,7 @@ database.phrase(words, function(err, documents) {
 
   if(documents.length) {
     documents.forEach(function(word) {
-      console.log(translate('en', word));
+      printer.print(translate('en', word).toObject());
     });
   } else {
     console.log('not found');

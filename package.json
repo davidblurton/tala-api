@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^0.5.1",
     "csv-parse": "0.0.6",
     "minimist": "^1.1.0",
     "mongodb": "^1.4.28",
