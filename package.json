@@ -10,9 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^0.5.1",
+    "concat-stream": "^1.4.7",
     "csv-parse": "0.0.6",
-    "minimist": "^1.1.0",
-    "mongoose": "^3.8.21",
-    "udawg": "0.0.1"
+    "express": "^4.11.0",
+    "level": "^0.18.0",
+    "minimist": "^1.1.0"
   }
 }

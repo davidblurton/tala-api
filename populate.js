@@ -1,8 +1,8 @@
 var fs = require('fs');
 var parse = require('csv-parse');
 
-var database = require('./database');
-var convert = require('./convert');
+var level = require('level');
+var db = level(__dirname + '/db');
 
 var output = [];
 var parser = parse({
@@ -11,12 +11,13 @@ var parser = parse({
 });
 
 parser.on('data', function(data) {
-  var word = convert(data);
-  word.save();
+  var key = data[4] + ';' + data[1];
+  var value = data.join(';');
+  db.put(key, value);
 });
 
 parser.on('error', function(err) {
-  console.dir('parse error', err);
+  console.dir(err);
 });
 
 var input = fs.createReadStream(__dirname + '/SHsnid.csv', {

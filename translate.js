@@ -1,6 +1,6 @@
 var lookup = require('./translate.json');
 
-module.exports = function(language, word) {
+module.exports = function(word, language) {
   function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
   }
@@ -32,7 +32,7 @@ module.exports = function(language, word) {
 
   var grammarTags = tags.map(function(tag) {
     return lookup[language].grammar_tag[tag] || tag;
-  }).join(', ');
+  });
 
   if(wordClass) {
     word.word_class = wordClass;
