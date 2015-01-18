@@ -1,4 +1,5 @@
 var lookup = require('./translate.json');
+var mapTags = require('./mapTags');
 
 module.exports = function(word, language) {
   function endsWith(str, suffix) {
@@ -21,13 +22,8 @@ module.exports = function(word, language) {
   }
 
   // Other pronouns use _ as a separator
-  if(word.word_class === 'fn') {
+  if(word.word_class === 'fn' || word.word_class === 'ao') {
     tags = word.grammar_tag.split('_');
-  }
-
-  // Nouns aren't tagged with gender
-  if(lookup[language].grammar_tag[word.word_class.toUpperCase()]) {
-    tags.push(word.word_class.toUpperCase());
   }
 
   var grammarTags = tags.map(function(tag) {
@@ -35,12 +31,14 @@ module.exports = function(word, language) {
   });
 
   if(wordClass) {
-    word.word_class = wordClass;
+    word.type = wordClass;
   }
 
   if(grammarTags) {
-    word.grammar_tag = grammarTags;
+    word.tags = grammarTags;
   }
+
+  word.info = mapTags(word.grammar_tag, word.word_class);
 
   return word;
 }

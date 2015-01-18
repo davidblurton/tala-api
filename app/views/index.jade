@@ -1,0 +1,17 @@
+extend ./layout
+
+block content
+  h1 Search for a word
+  input(placeholder='Enter an icelandic word...', type='search', data-bind="value: query, valueUpdate: 'keyup'", autocomplete='off' autofocus=true)
+
+  //p(data-bind="text: count")
+  .columns(data-bind="foreach: words")
+    div
+      h3
+        span(data-bind='text: word_form')
+      em(data-bind='text: type')
+      p(data-bind='text: head_word')
+      p(data-bind='text: grammar_tag')
+      p(data-bind='text: tags')
+      pre(data-bind='text: JSON.stringify(info, null, 2)')
+

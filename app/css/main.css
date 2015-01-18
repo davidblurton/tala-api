@@ -1,0 +1,13 @@
+.container {
+  width: calc(100% - 40px);
+  margin: 0 auto;
+}
+
+.columns {
+  display: flex;
+}
+
+h3 {
+  display: inline-block;
+  margin-right: 8px;
+}

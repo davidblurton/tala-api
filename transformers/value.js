@@ -1,5 +1,3 @@
-var stream = require('stream')
-
 function convert(row) {
   return {
     head_word: row[0],
@@ -11,16 +9,7 @@ function convert(row) {
   };
 }
 
-module.exports = function() {
-  var liner = new stream.Transform({
-    objectMode: true
-  })
-
-  liner._transform = function(chunk, encoding, done) {
-    var data = chunk.split(';');
-    this.push(convert(data));
-    done()
-  }
-
-  return liner;
+module.exports = function(data) {
+  var row = data.split(';');
+  return convert(row);
 }

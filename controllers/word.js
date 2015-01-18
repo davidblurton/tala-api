@@ -1,8 +1,10 @@
 var level = require('level');
 var db = level('./db');
 var concat = require('concat-stream');
-var keyTransformer = require('../transformers/key');
-var valueTransformer = require('../transformers/value');
+
+var streamTransformer = require('../transformers/transformer');
+var keyMapper = require('../transformers/key');
+var valueMapper = require('../transformers/value');
 
 module.exports = {
   // Finds words that start with prefix.
@@ -15,7 +17,7 @@ module.exports = {
       gte: prefix,
       lt: prefix + '\xff'
     })
-      .pipe(valueTransformer())
+      .pipe(streamTransformer(valueMapper))
       .pipe(concatStream);
   },
 
@@ -29,7 +31,7 @@ module.exports = {
       gte: prefix,
       lt: prefix + '\xff'
     })
-      .pipe(keyTransformer())
+      .pipe(streamTransformer(keyMapper))
       .pipe(concatStream);
   },
 
@@ -40,11 +42,10 @@ module.exports = {
     }, cb);
 
     db.createValueStream({
-      gte: word,
-      lt: word + '\xff',
-      limit: 1
+      gte: word + ';',
+      lt: word + ';\xff'
     })
-      .pipe(valueTransformer())
+      .pipe(streamTransformer(valueMapper))
       .pipe(concatStream);
   },
 
