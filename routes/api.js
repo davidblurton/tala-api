@@ -24,7 +24,7 @@ router.get('/:word', function(req, res, next) {
 router.get('/:word/related', function(req, res, next) {
   var lang = req.query.lang;
 
-  controller.related(req.params.word).then(function(results) {
+  controller.related(req.params.word, function(results) {
     res.send(format(results, lang));
   }, next);
 });

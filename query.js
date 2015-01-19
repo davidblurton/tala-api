@@ -9,7 +9,7 @@ db.createKeyStream({
   lt: query + '\xff'
 })
   .on('data', function(entry) {
-    console.log(entry.split(';')[0])
+    console.log(entry)
     i++;
   })
   .on('end', function() {

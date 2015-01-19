@@ -38,7 +38,11 @@ module.exports = function(word, language) {
     word.tags = grammarTags;
   }
 
-  word.info = mapTags(word.grammar_tag, word.word_class);
+  var tags = mapTags(word.grammar_tag, word.word_class);
+
+  word.info = Object.keys(tags).filter(function(key) {
+    return tags[key];
+  });
 
   return word;
 }

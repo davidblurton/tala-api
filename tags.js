@@ -11,11 +11,15 @@ module.exports = {
   isPlural: function(tags) {
     return tags.includes('FT');
   },
-  isIndefinite: function(tags) {
-    return !tags.includes('gr');
+  isIndefinite: function(tags, wordClass) {
+    return ((
+      wordClass === 'kk' ||
+      wordClass === 'kvk' ||
+      wordClass === 'hk'
+    ) && !tags.includes('gr')) || tags.includes('SB');
   },
   isDefinite: function(tags) {
-    return tags.includes('gr');
+    return tags.includes('gr') || tags.includes('VB');
   },
   isMasculine: function(tags, wordClass) {
     return tags.includes('KK') || wordClass === 'kk';
@@ -38,4 +42,13 @@ module.exports = {
   isDative: function(tags) {
     return tags.includes('ÞG');
   },
+  isFirstPerson: function(tags) {
+    return tags.includes('1p') || tags.includes('1P')
+  },
+  isSecondPerson: function(tags) {
+    return tags.includes('2p') || tags.includes('2P')
+  },
+  isThirdPerson: function(tags) {
+    return tags.includes('3p') || tags.includes('3P')
+  }
 }

@@ -1,5 +1,6 @@
 var fs = require('fs');
 var parse = require('csv-parse');
+var id = require('./generateId');
 
 var level = require('level');
 var db = level(__dirname + '/db');
@@ -12,9 +13,12 @@ var parser = parse({
 });
 
 parser.on('data', function(data) {
-  var key = [data[4], data[1], data[5]].join(';');
-  var value = data.join(';');
-  db.put(key, value);
+  var bin_id = data[1];
+  var word_form = data[4];
+  var data = data.join(';');
+
+  db.put(bin_id + '~' + data, 0);
+  db.put(word_form + '~' + data, 0);
 
   count++;
 });
@@ -23,7 +27,7 @@ parser.on('error', function(err) {
   console.dir(err);
 });
 
-var input = fs.createReadStream(__dirname + '/plastur.csv', {
+var input = fs.createReadStream(__dirname + '/SHsnid.csv', {
   encoding: 'utf8'
 });
 

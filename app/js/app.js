@@ -7,15 +7,15 @@ var viewModel = {
   search: function(value) {
     var self = this;
     self.words([]);
-    self.count('');
 
-    if(!value) {
-      return;
-    }
+    var promises = value.split(' ').filter(function(x) {
+      return x;
+    }).map(function(word) {
+      return Q($.getJSON("/api/" + word.toLowerCase() + "?lang=en"));
+    });
 
-    $.getJSON("/api/" + value + "?lang=en", function(data) {
-      self.count(data.count);
-      self.words(data.results);
+    Q.all(promises).then(function(results) {
+      self.words(results);
     });
   }
 };

@@ -4,7 +4,6 @@ var concat = require('concat-stream');
 
 var streamTransformer = require('../transformers/transformer');
 var keyMapper = require('../transformers/key');
-var valueMapper = require('../transformers/value');
 
 module.exports = {
   // Finds words that start with prefix.
@@ -13,11 +12,11 @@ module.exports = {
       encoding: 'object'
     }, cb);
 
-    db.createValueStream({
+    db.createKeyStream({
       gte: prefix,
       lt: prefix + '\xff'
     })
-      .pipe(streamTransformer(valueMapper))
+      .pipe(streamTransformer(keyMapper))
       .pipe(concatStream);
   },
 
@@ -41,16 +40,18 @@ module.exports = {
       encoding: 'object'
     }, cb);
 
-    db.createValueStream({
-      gte: word + ';',
-      lt: word + ';\xff'
+    db.createKeyStream({
+      gte: word + '~',
+      lt: word + '~\xff'
     })
-      .pipe(streamTransformer(valueMapper))
+      .pipe(streamTransformer(keyMapper))
       .pipe(concatStream);
   },
 
   // Find all words from the same headword.
-  related: function(word) {
-
+  related: function(word, cb) {
+    this.lookup(word, function(results) {
+      return this.lookup(results[0].bil_id, cb);
+    }.bind(this));
   }
 }
