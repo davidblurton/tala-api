@@ -11,10 +11,15 @@ var viewModel = {
     var promises = value.split(' ').filter(function(x) {
       return x;
     }).map(function(word) {
-      return Q($.getJSON("/api/" + word.toLowerCase() + "?lang=en"));
+      return promise.get("/api/" + word.toLowerCase() + "?lang=en");
     });
 
-    Q.all(promises).then(function(results) {
+    promise.join(promises).then(function(data) {
+
+      var results = data.map(function(d) {
+        return JSON.parse(d[1]);
+      });
+
       self.words(results);
     });
   }

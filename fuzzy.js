@@ -1,5 +1,13 @@
 module.exports = function(word) {
-  // Generate alternative words with common mispellings.
-  // í => i
-  // æ => ae
+
+  a => á,
+  e => é
+  i => í
+  o => ó,
+  u => ú,
+  y => ý,
+  æ => ae,
+  ö => o,
+  ð => d,
+  þ => th
 }

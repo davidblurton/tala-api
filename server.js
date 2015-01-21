@@ -13,9 +13,9 @@ app.get('/', function (req, res) {
 
 app.use(express.static(__dirname + '/app'));
 
-var server = app.listen(process.env.PORT || 8000, function () {
+var server = app.listen(8000, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('app listening at http://%s:%s', host, port);
+  console.log('app running at http://%s:%s', host, port);
 });
