@@ -46,6 +46,10 @@ var fuzzy = function(word) {
     }
   });
 
+  if(!replacementIndexes.length) {
+    return [word];
+  }
+
   var banana = replacementIndexes.map(function(i) {
     return [
       [i, true],

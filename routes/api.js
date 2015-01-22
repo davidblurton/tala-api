@@ -44,8 +44,10 @@ router.get('/:prefix/suggestions', function(req, res, next) {
 });
 
 router.get('/:prefix/fuzzy', function(req, res, next) {
+  var lang = req.query.lang;
+
   controller.fuzzy(req.params.prefix, function(results) {
-    res.send(format(results));
+    res.send(format(results, lang));
   });
 });
 
