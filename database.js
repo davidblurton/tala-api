@@ -13,5 +13,12 @@ module.exports = {
       gte: word + '~',
       lt: word + '~' + '\xff'
     });
+  },
+  findOne: function(word) {
+    return db.createKeyStream({
+      gte: word + '~',
+      lt: word + '~' + '\xff',
+      limit: 1
+    });
   }
 }

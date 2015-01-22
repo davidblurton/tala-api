@@ -43,4 +43,10 @@ router.get('/:prefix/suggestions', function(req, res, next) {
   });
 });
 
+router.get('/:prefix/fuzzy', function(req, res, next) {
+  controller.fuzzy(req.params.prefix, function(results) {
+    res.send(format(results));
+  });
+});
+
 module.exports = router;

@@ -1,9 +1,11 @@
 var concat = require('concat-stream');
+var es = require('event-stream');
 
 var database = require('../database');
 var streamTransformer = require('../transformers/transformer');
 var keyMapper = require('../transformers/key');
 var wordMapper = require('../transformers/headword');
+var fuzzy = require('../fuzzy');
 
 var allResults = function(cb) {
   return concatStream = concat({
@@ -38,5 +40,16 @@ module.exports = {
     this.lookup(word, function(results) {
       this.lookup(results[0].bil_id, cb);
     }.bind(this));
+  },
+
+  // Find fuzzy matches for word.
+  fuzzy: function(word, cb) {
+    var streams = fuzzy(word).map(function(suggestion) {
+      return database.findOne(suggestion)
+        .pipe(streamTransformer(keyMapper))
+    });
+
+    es.merge.apply(null, streams)
+      .pipe(allResults(cb));
   }
 }
