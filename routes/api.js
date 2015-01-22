@@ -38,7 +38,7 @@ router.get('/:prefix/prefix', function(req, res, next) {
 });
 
 router.get('/:prefix/suggestions', function(req, res, next) {
-  controller.suggestions(req.params.prefix, function(results) {
+  controller.suggestions(req.params.prefix, req.query.limit, function(results) {
     res.send(format(results));
   });
 });

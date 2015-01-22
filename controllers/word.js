@@ -1,57 +1,42 @@
-var level = require('level');
-var db = level('./db');
 var concat = require('concat-stream');
 
+var database = require('../database');
 var streamTransformer = require('../transformers/transformer');
 var keyMapper = require('../transformers/key');
+var wordMapper = require('../transformers/headword');
+
+var allResults = function(cb) {
+  return concatStream = concat({
+    encoding: 'object'
+  }, cb);
+}
 
 module.exports = {
   // Finds words that start with prefix.
   prefix: function(prefix, cb) {
-    var concatStream = concat({
-      encoding: 'object'
-    }, cb);
-
-    db.createKeyStream({
-      gte: prefix,
-      lt: prefix + '\xff'
-    })
+    database.search(prefix)
       .pipe(streamTransformer(keyMapper))
-      .pipe(concatStream);
+      .pipe(allResults(cb));
   },
 
   // Generates a list of autocompletion suggestions.
-  suggestions: function(prefix, cb) {
-    var concatStream = concat({
-      encoding: 'object'
-    }, cb);
-
-    db.createKeyStream({
-      gte: prefix,
-      lt: prefix + '\xff'
-    })
-      .pipe(streamTransformer(keyMapper))
-      .pipe(concatStream);
+  suggestions: function(prefix, limit, cb) {
+    database.search(prefix, limit)
+      .pipe(streamTransformer(wordMapper))
+      .pipe(allResults(cb));
   },
 
   // Find an exact match for word.
   lookup: function(word, cb) {
-    var concatStream = concat({
-      encoding: 'object'
-    }, cb);
-
-    db.createKeyStream({
-      gte: word + '~',
-      lt: word + '~\xff'
-    })
+    database.find(word)
       .pipe(streamTransformer(keyMapper))
-      .pipe(concatStream);
+      .pipe(allResults(cb));
   },
 
   // Find all words from the same headword.
   related: function(word, cb) {
     this.lookup(word, function(results) {
-      return this.lookup(results[0].bil_id, cb);
+      this.lookup(results[0].bil_id, cb);
     }.bind(this));
   }
 }
