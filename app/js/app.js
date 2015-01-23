@@ -11,7 +11,7 @@ var viewModel = {
     var promises = value.split(' ').filter(function(x) {
       return x;
     }).map(function(word) {
-      return promise.get("/api/" + word.toLowerCase() + "/fuzzy?lang=en");
+      return promise.get("/api/" + word.toLowerCase() + "?lang=en");
     });
 
     promise.join(promises).then(function(data) {
