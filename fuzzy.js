@@ -8,11 +8,11 @@ var map = {
   //th: 'þ',
   //ae: 'æ',
   d: 'ð'
-}
+};
 
 String.prototype.replaceAt = function(index, character) {
   return this.substr(0, index) + character + this.substr(index + character.length);
-}
+};
 
 function cartProd(paramArray) {
   function addTo(curr, args) {
@@ -55,7 +55,7 @@ var fuzzy = function(word) {
       [i, true],
       [i, false]
     ];
-  })
+ });
 
   var replacementMap = cartProd.apply(null, banana);
 
@@ -64,9 +64,9 @@ var fuzzy = function(word) {
       var replacementIndex = inst[0];
       var shouldReplace = inst[1];
 
-      return shouldReplace ? word.replaceAt(replacementIndex, map[word[replacementIndex]]) : word
+      return shouldReplace ? word.replaceAt(replacementIndex, map[word[replacementIndex]]) : word;
     }, word);
   });
-}
+};
 
 module.exports = fuzzy;
