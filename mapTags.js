@@ -1,6 +1,6 @@
 var matchers = require('./tags');
 
-module.exports = function(tags, wordClass) {
+export default (tags, wordClass) => {
   return {
     masculine: matchers.isMasculine(tags, wordClass),
     feminine: matchers.isFeminine(tags, wordClass),

@@ -7,9 +7,10 @@
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "David Blurton",
   "license": "ISC",
   "dependencies": {
+    "babel": "^4.1.1",
     "concat-stream": "^1.4.7",
     "event-stream": "^3.2.1",
     "express": "^4.11.0",

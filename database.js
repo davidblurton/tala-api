@@ -1,24 +1,20 @@
-var level = require('level');
-var db = level(process.cwd() + '/db');
+var level = require('level')
+var db = level(process.cwd() + '/db')
 
-module.exports = {
-  search: function(prefix) {
-    return db.createKeyStream({
-      gte: prefix,
-      lt: prefix + '\xff'
-    });
-  },
-  find: function(word) {
-    return db.createKeyStream({
-      gte: word + '~',
-      lt: word + '~' + '\xff'
-    });
-  },
-  findOne: function(word) {
-    return db.createKeyStream({
-      gte: word + '~',
-      lt: word + '~' + '\xff',
-      limit: 1
-    });
-  }
+export default {
+  search: prefix => db.createKeyStream({
+    gte: prefix,
+    lt: prefix + '\xff'
+  }),
+
+  find: word => db.createKeyStream({
+    gte: word + '~',
+    lt: word + '~' + '\xff'
+  }),
+
+  findOne: word => db.createKeyStream({
+    gte: word + '~',
+    lt: word + '~' + '\xff',
+    limit: 1
+  })
 }

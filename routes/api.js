@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
-
+var router = require('express').Router();
 var controller = require('../controllers/word');
 var translate = require('../translate');
 
-function format(results, lang) {
+let format = (results, lang) => {
   return {
     count: results.length,
     results: results.map(function(result) {
@@ -28,6 +26,14 @@ router.get('/:word/related', function(req, res, next) {
     res.send(format(results, lang));
   }, next);
 });
+
+router.get('/:word/tags/:tags', function(req, res, next) {
+  var lang = req.query.lang;
+
+  controller.tags(req.params.word, req.params.tags, function(results) {
+    res.send(format(results, lang));
+  }, next);
+})
 
 router.get('/:prefix/prefix', function(req, res, next) {
   var lang = req.query.lang;

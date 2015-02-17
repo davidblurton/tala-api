@@ -1,48 +1,25 @@
 var lookup = require('./translate.json');
 var mapTags = require('./mapTags');
+var parseGrammarTags = require('./grammar-tag-parser');
 
-module.exports = function(word, language) {
-  function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
-  }
-
+export default (word, language) => {
   if(!lookup[language]) {
     return word;
   }
 
   var wordClass = lookup[language].word_class[word.word_class];
 
-  var tags = word.grammar_tag.split('-');
-
-  // Definite article doesn't have a separator
-  if(endsWith(word.grammar_tag, 'gr')) {
-    tags = [];
-    tags.push(word.grammar_tag.replace('gr', ''));
-    tags.push('gr');
-  }
-
-  // Other pronouns use _ as a separator
-  if(word.word_class === 'fn' || word.word_class === 'ao') {
-    tags = word.grammar_tag.split('_');
-  }
-
-  var grammarTags = tags.map(function(tag) {
-    return lookup[language].grammar_tag[tag] || tag;
-  });
-
   if(wordClass) {
     word.type = wordClass;
   }
 
   if(grammarTags) {
-    word.tags = grammarTags;
+    word.tags = parseGrammarTags(word, language);
   }
 
   var tags = mapTags(word.grammar_tag, word.word_class);
 
-  word.info = Object.keys(tags).filter(function(key) {
-    return tags[key];
-  });
+  word.info = Object.keys(tags).filter(key => tags[key]);
 
   return word;
 }

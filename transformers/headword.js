@@ -1,4 +1,1 @@
-module.exports = function(data) {
-  var headword = data.split('~')[0];
-  return headword;
-}
+module.exports = data => data.split('~')[0];

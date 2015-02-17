@@ -69,4 +69,6 @@ var fuzzy = function(word) {
   });
 };
 
-module.exports = fuzzy;
+export default {
+  getSuggestions: fuzzy
+};

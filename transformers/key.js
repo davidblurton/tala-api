@@ -1,4 +1,4 @@
-function convert(row) {
+let convert = row => {
   return {
     head_word: row[0],
     bil_id: row[1],
@@ -6,7 +6,7 @@ function convert(row) {
     section: row[3],
     word_form: row[4],
     grammar_tag: row[5]
-  };
+  }
 }
 
 module.exports = function(data) {

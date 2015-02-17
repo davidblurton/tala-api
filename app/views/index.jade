@@ -3,7 +3,6 @@ extend ./layout
 block content
   input(placeholder='Enter an icelandic word...', type='search', data-bind="value: query, valueUpdate: 'keyup'", autocomplete='off' autofocus=true)
 
-  //p(data-bind="text: count")
   .columns(data-bind="foreach: words")
     .box
       div(data-bind="foreach: results")
@@ -11,7 +10,7 @@ block content
         h3
           span(data-bind='text: head_word')
         em(data-bind='text: type')
-        //p(data-bind='text: grammar_tag')
-        ul(data-bind="foreach: tags")
-          li(data-bind="text: $data")
+        pre(data-bind='text: grammar_tag')
+        //ul(data-bind="foreach: tags")
+          //li(data-bind="text: $data")
         pre(data-bind='text: JSON.stringify(info, null, 2)')
