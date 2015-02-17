@@ -8,37 +8,41 @@ var fuzzy = require('../fuzzy');
 
 export default {
   // Finds words that start with prefix.
-  prefix: (prefix) => concat(
-    database.search(prefix)
-      .pipe(mapper(keyMapper))),
+  prefix(prefix) {
+    return concat(database.search(prefix)
+      .pipe(mapper(keyMapper)))
+  },
 
   // Generates a list of autocompletion suggestions.
-  suggestions: (prefix, limit) => concat(
-    database.search(prefix, limit)
-      .pipe(mapper(wordMapper))),
+  suggestions(prefix, limit) {
+    return concat(database.search(prefix, limit)
+      .pipe(mapper(wordMapper)))
+  },
 
   // Find an exact match for word.
-  lookup: (word) => concat(database.find(word)
-    .pipe(mapper(keyMapper))),
+  lookup(word) {
+    return concat(database.find(word)
+      .pipe(mapper(keyMapper)))
+  },
 
   // Find all words from the same headword.
-  related: function(word) {
+  related(word) {
     return this.lookup(word)
-      .then(results => this.lookup(results[0].bil_id));
+      .then(results => this.lookup(results[0].bil_id))
   },
 
   // Find a related word with the specified grammar tag
-  tags: function(word, tag) {
+  tags(word, tag) {
     return this.related(word)
       .then(results => results.filter(result => result.grammar_tag === tag))
   },
 
   // Find fuzzy matches for word.
-  fuzzy: (word) => {
+  fuzzy(word) {
     var streams = fuzzy.getSuggestions(word)
       .map(suggestion => database.findOne(suggestion)
-      .pipe(mapper(keyMapper)));
+      .pipe(mapper(keyMapper)))
 
-    return concat(es.merge.apply(null, streams));
+    return concat(es.merge.apply(null, streams))
   }
 }
