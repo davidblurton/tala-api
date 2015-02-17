@@ -13,9 +13,8 @@ export default (word, language) => {
     word.type = wordClass;
   }
 
-  if(grammarTags) {
-    word.tags = parseGrammarTags(word, language);
-  }
+
+  word.tags = parseGrammarTags(word, language);
 
   var tags = mapTags(word.grammar_tag, word.word_class);
 
