@@ -1,59 +1,40 @@
 var router = require('express').Router();
 var controller = require('../controllers/word');
-var translate = require('../translate');
-
-let format = (results, lang) => {
-  return {
-    count: results.length,
-    results: results.map(function(result) {
-      return translate(result, lang)
-    })
-  }
-}
+var resultFormatter = require('./result-formatter');
 
 router.get('/:word', function(req, res, next) {
-  var lang = req.query.lang;
-
   controller.lookup(req.params.word, function(results) {
-    res.send(format(results, lang));
+    res.send(resultFormatter(results, req.query.lang));
   }, next);
 });
 
 router.get('/:word/related', function(req, res, next) {
-  var lang = req.query.lang;
-
   controller.related(req.params.word, function(results) {
-    res.send(format(results, lang));
+    res.send(resultFormatter(results, req.query.lang));
   }, next);
 });
 
 router.get('/:word/tags/:tags', function(req, res, next) {
-  var lang = req.query.lang;
-
   controller.tags(req.params.word, req.params.tags, function(results) {
-    res.send(format(results, lang));
+    res.send(resultFormatter(results, req.query.lang));
   }, next);
-})
+});
 
 router.get('/:prefix/prefix', function(req, res, next) {
-  var lang = req.query.lang;
-
   controller.prefix(req.params.prefix, function(results) {
-    res.send(format(results, lang));
+    res.send(resultFormatter(results, req.query.lang));
   });
 });
 
 router.get('/:prefix/suggestions', function(req, res, next) {
   controller.suggestions(req.params.prefix, req.query.limit, function(results) {
-    res.send(format(results));
+    res.send(resultFormatter(results));
   });
 });
 
 router.get('/:prefix/fuzzy', function(req, res, next) {
-  var lang = req.query.lang;
-
   controller.fuzzy(req.params.prefix, function(results) {
-    res.send(format(results, lang));
+    res.send(resultFormatter(results, req.query.lang));
   });
 });
 
