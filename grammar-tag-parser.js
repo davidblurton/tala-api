@@ -1,6 +1,9 @@
 var lookup = require('./translate.json');
 var mapTags = require('./mapTags');
 
+let endsWith = (str, suffix) =>
+  str.indexOf(suffix, str.length - suffix.length) !== -1;
+
 export default (word, language) => {
   if(!lookup[language]) {
     return word.grammar_tag;
