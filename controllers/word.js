@@ -31,8 +31,14 @@ export default {
       .then(results => this.lookup(results[0].bil_id))
   },
 
+  // Get the grammar tags for all related words.
+  tags(word) {
+    return this.related(word)
+      .then(results => results.map(result => result.grammar_tag))
+  },
+
   // Find a related word with the specified grammar tag
-  tags(word, tag) {
+  tag(word, tag) {
     return this.related(word)
       .then(results => results.filter(result => result.grammar_tag === tag))
   },

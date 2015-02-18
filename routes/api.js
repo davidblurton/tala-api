@@ -12,10 +12,14 @@ router.get('/:word/related', (req, res, next) => {
     .this(results => res.send(format(results, req.query.lang)), next);
 });
 
-router.get('/:word/tags/:tags', (req, res, next) => {
-  var promise = word.tags(req.params.word, req.params.tags)
-  console.dir(promise)
-    promise.then(results => res.send(format(results, req.query.lang)), next);
+router.get('/:word/tags/', (req, res, next) => {
+  word.tags(req.params.word)
+    .then(results => res.send(format(results, req.query.lang)), next);
+});
+
+router.get('/:word/tag/:tags', (req, res, next) => {
+  word.tag(req.params.word, req.params.tags)
+    .then(results => res.send(format(results, req.query.lang)), next);
 });
 
 router.get('/:prefix/prefix', (req, res, next) => {
