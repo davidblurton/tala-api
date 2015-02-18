@@ -26,12 +26,17 @@ router.get('/:word/tags', (req, res, next) => {
     .catch(next)
 });
 
-router.get('/:word/tag/:tags', (req, res, next) => {
-  word.tag(req.params.word, req.params.tags)
+router.get('/:word/tags/:tags', (req, res, next) => {
+  word.includesTag(req.params.word, req.params.tags)
     .then(results => res.send(format(results, req.query.lang)))
     .catch(next)
 });
 
+router.get('/:word/tag/:tags', (req, res, next) => {
+  word.exactTag(req.params.word, req.params.tags)
+    .then(results => res.send(format(results, req.query.lang)))
+    .catch(next)
+});
 
 router.get('/:word/classes', (req, res, next) => {
   word.classes(req.params.word)
