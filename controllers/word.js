@@ -46,7 +46,7 @@ export default {
   // Find a related word with the specified grammar tag
   tag(word, tag) {
     return this.related(word)
-      .then(results => results.filter(result => result.grammar_tag === tag))
+      .then(results => results.filter(result => result.grammar_tag.includes(tag)))
   },
 
   // Get the word class for all matching words.
