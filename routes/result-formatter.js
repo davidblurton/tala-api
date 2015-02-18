@@ -1,4 +1,4 @@
-var translate = require('../translate');
+var translate = require('../translate/translate');
 
 export default (results, lang) => {
   return {

@@ -12,6 +12,9 @@ export default (tags, wordClass) => {
     nominitive: matchers.isNominative(tags),
     accusative: matchers.isAccusative(tags),
     genitive: matchers.isGenitive(tags),
-    dative: matchers.isDative(tags)
+    dative: matchers.isDative(tags),
+    "first person": matchers.isFirstPerson(tags),
+    "second person": matchers.isSecondPerson(tags),
+    "third person": matchers.isThirdPerson(tags)
   }
 }
