@@ -22,5 +22,5 @@ export default {
       lt: word + '~' + '\xff',
       limit: 1
     })
-  }
+  },
 }

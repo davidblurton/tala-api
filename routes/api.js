@@ -8,6 +8,12 @@ router.get('/:word', (req, res, next) => {
     .catch(next)
 });
 
+router.get('/:word/id', (req, res, next) => {
+  word.findById(req.params.word)
+    .then(results => res.send(format(results, req.query.lang)))
+    .catch(next)
+});
+
 router.get('/:word/related', (req, res, next) => {
   word.related(req.params.word)
     .then(results => res.send(format(results, req.query.lang)))

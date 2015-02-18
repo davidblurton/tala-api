@@ -1,5 +1,7 @@
-let convert = row => {
+let convert = (row, raw) => {
   return {
+    _id: raw,
+    _url: `/api/${raw}/id`,
     head_word: row[0],
     bil_id: row[1],
     word_class: row[2],
@@ -12,5 +14,5 @@ let convert = row => {
 module.exports = function(data) {
   var word = data.split('~')[1];
   var row = word.split(';');
-  return convert(row);
+  return convert(row, data);
 }

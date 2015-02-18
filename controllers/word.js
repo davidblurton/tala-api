@@ -14,9 +14,14 @@ export default {
   },
 
   // Generates a list of autocompletion suggestions.
-  suggestions(prefix, limit) {
-    return concat(database.search(prefix, limit)
+  suggestions(prefix) {
+    return concat(database.search(prefix)
       .pipe(mapper(wordMapper)))
+  },
+
+  findById(id) {
+    return concat(database.search(id)
+      .pipe(mapper(keyMapper)))
   },
 
   // Find an exact match for word.
