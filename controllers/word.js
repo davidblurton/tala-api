@@ -28,7 +28,8 @@ export default {
   // Find all words from the same headword.
   related(word) {
     return this.lookup(word)
-      .then(results => this.lookup(results[0].bil_id))
+      .then(results =>
+        this.lookup(results.map(result => result.bil_id)[0]))
   },
 
   // Get the grammar tags for all related words.
