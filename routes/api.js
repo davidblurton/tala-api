@@ -10,7 +10,7 @@ router.get('/:word', (req, res, next) => {
 
 router.get('/:word/related', (req, res, next) => {
   word.related(req.params.word)
-    .this(results => res.send(format(results, req.query.lang)))
+    .then(results => res.send(format(results, req.query.lang)))
     .catch(next)
 });
 
