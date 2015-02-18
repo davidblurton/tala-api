@@ -44,6 +44,18 @@ export default {
       .then(results => results.filter(result => result.grammar_tag === tag))
   },
 
+  // Get the word class for all matching words.
+  classes(word) {
+    return this.lookup(word)
+      .then(results => results.map(result => result.word_class))
+  },
+
+  // Find a matching word with the specified word class
+  class(word, word_class) {
+    return this.lookup(word)
+      .then(results => results.filter(result => result.word_class === word_class))
+  },
+
   // Find fuzzy matches for word.
   fuzzy(word) {
     var streams = fuzzy.getSuggestions(word)
