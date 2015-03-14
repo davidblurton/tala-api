@@ -20,35 +20,11 @@ router.get('/:word/related', (req, res, next) => {
     .catch(next)
 });
 
-router.get('/:word/tags', (req, res, next) => {
-  word.tags(req.params.word)
+router.get('/:word/filter', (req, res, next) => {
+  word.filter(req.params.word, req.query)
     .then(results => res.send(format(results, req.query.lang)))
     .catch(next)
 });
-
-router.get('/:word/tags/:tags', (req, res, next) => {
-  word.includesTag(req.params.word, req.params.tags)
-    .then(results => res.send(format(results, req.query.lang)))
-    .catch(next)
-});
-
-router.get('/:word/tag/:tags', (req, res, next) => {
-  word.exactTag(req.params.word, req.params.tags)
-    .then(results => res.send(format(results, req.query.lang)))
-    .catch(next)
-});
-
-router.get('/:word/classes', (req, res, next) => {
-  word.classes(req.params.word)
-    .then(results => res.send(format(results, req.query.lang)))
-    .catch(next)
-})
-
-router.get('/:word/class/:class', (req, res, next) => {
-  word.class(req.params.word, req.params.class)
-    .then(results => res.send(format(results, req.query.lang)))
-    .catch(next)
-})
 
 router.get('/:prefix/prefix', (req, res, next) => {
   word.prefix(req.params.prefix)

@@ -1,10 +1,12 @@
-var es = require('event-stream');
-var concat = require('./concat-stream-promise');
-var database = require('../database');
-var mapper = require('../transformers/transformer');
-var keyMapper = require('../transformers/key');
-var wordMapper = require('../transformers/headword');
-var fuzzy = require('../fuzzy');
+var es = require('event-stream')
+var _ = require('lodash')
+var concat = require('./concat-stream-promise')
+var database = require('../database')
+var mapper = require('../transformers/transformer')
+var keyMapper = require('../transformers/key')
+var wordMapper = require('../transformers/headword')
+var fuzzy = require('../fuzzy')
+var filters = require('./filters')
 
 export default {
   // Finds words that start with prefix.
@@ -32,9 +34,23 @@ export default {
 
   // Find all words from the same headword.
   related(word) {
-    return this.lookup(word)
-      .then(results =>
-        this.lookup(results.map(result => result.bil_id)[0]))
+    var lookup = this.lookup.bind(this)
+
+    return lookup(word)
+      .then(results => _.chain(results).pluck('bil_id').unique().value())
+      .then(ids => Promise.all(ids.map(id => lookup(id))))
+      .then(results => _.flatten(results))
+  },
+
+  // Find a related word with the provided filters.
+  // Supports filtering on grammar_tag, word_class.
+  filter(word, queries) {
+    var tags = (queries.grammar_tag || '').split(',') || []
+    var word_class = queries.word_class || ''
+
+    return this.related(word)
+      .then(results => filters.exact(results, 'word_class', word_class))
+      .then(results => filters.includes(results, 'grammar_tag', tags))
   },
 
   // Get the grammar tags for all related words.
@@ -44,9 +60,11 @@ export default {
   },
 
   // Find a related word with the specified grammar tag
-  includesTag(word, tag) {
+  includesTag(word, tags) {
     return this.related(word)
-      .then(results => results.filter(result => result.grammar_tag.includes(tag)))
+      .then(results => results.filter(
+        result => tags.every(
+          tag => result.grammar_tag.includes(tag))))
   },
 
   exactTag(word, tag) {
