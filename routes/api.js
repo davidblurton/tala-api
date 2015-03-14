@@ -34,7 +34,7 @@ router.get('/:prefix/prefix', (req, res, next) => {
 
 router.get('/:prefix/suggestions', (req, res, next) => {
   word.suggestions(req.params.prefix, req.query.limit)
-    .then(results => res.send(format(results)))
+    .then(results => res.send(results))
     .catch(next)
 });
 
