@@ -1,5 +1,4 @@
 var lookup = require('./translate.json');
-var mapTags = require('./mapTags');
 
 let endsWith = (str, suffix) =>
   str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -23,7 +22,5 @@ export default (word, language) => {
     tags = word.grammar_tag.split('_');
   }
 
-  var grammarTags = tags.map(tag => lookup[language].grammar_tag[tag] || tag);
-
-  return mapTags(word.grammar_tag, word.word_class);
+  return tags.map(tag => lookup[language].grammar_tag[tag] || tag);
 }
