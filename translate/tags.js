@@ -12,11 +12,11 @@ module.exports = {
 
   isDefinite: (tags) => tags.includes('gr') || tags.includes('VB'),
 
-  isMasculine: (tags, wordClass) => tags.includes('KK') || wordClass === 'kk',
+  isMasculine: (tags) => tags.includes('KK'),
 
-  isFeminine: (tags, wordClass) => tags.includes('KVK') || wordClass === 'kvk',
+  isFeminine: (tags) => tags.includes('KVK'),
 
-  isNeuter: (tags, wordClass) => tags.includes('HK') || wordClass === 'hk',
+  isNeuter: (tags) => tags.includes('HK'),
 
   isNominative: (tags) => tags.includes('NF'),
 

@@ -13,12 +13,7 @@ export default (word, language) => {
     word.type = wordClass;
   }
 
-
   word.tags = parseGrammarTags(word, language);
-
-  var tags = mapTags(word.grammar_tag, word.word_class);
-
-  word.info = Object.keys(tags).filter(key => tags[key]);
 
   return word;
 }
