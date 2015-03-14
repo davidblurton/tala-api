@@ -1,11 +1,13 @@
 var express = require('express');
 var api = require('./routes/api');
 var index = require('./routes/index');
+var cors = require('cors');
 
 var app = express();
 app.set('views', __dirname + '/app/views');
 app.set('view engine', 'jade')
 
+app.use(cors());
 app.use('/api', api);
 app.use('/', index);
 app.use(express.static(__dirname + '/app'));
