@@ -2,10 +2,11 @@ var level = require('level')
 var db = level(process.cwd() + '/db')
 
 export default {
-  search(prefix) {
+  search(prefix, limit) {
     return db.createKeyStream({
       gte: prefix,
-      lt: prefix + '\xff'
+      lt: prefix + '\xff',
+      limit: limit || 10
     })
   },
 

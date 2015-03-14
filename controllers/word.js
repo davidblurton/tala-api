@@ -14,8 +14,8 @@ export default {
   },
 
   // Generates a list of autocompletion suggestions.
-  suggestions(prefix) {
-    return concat(database.search(prefix)
+  suggestions(prefix, limit) {
+    return concat(database.search(prefix, limit)
       .pipe(mapper(wordMapper)))
   },
 
