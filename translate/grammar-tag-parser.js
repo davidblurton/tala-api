@@ -4,10 +4,6 @@ let endsWith = (str, suffix) =>
   str.indexOf(suffix, str.length - suffix.length) !== -1;
 
 export default (word, language) => {
-  if(!lookup[language]) {
-    return word.grammar_tag;
-  }
-
   var tags = word.grammar_tag.split('-');
 
   // Definite article doesn't have a separator
@@ -22,5 +18,9 @@ export default (word, language) => {
     tags = word.grammar_tag.split('_');
   }
 
-  return tags.map(tag => lookup[language].grammar_tag[tag] || tag);
+  if(language) {
+    return tags.map(tag => lookup[language].grammar_tag[tag] || tag);
+  } else {
+    return tags;
+  }
 }

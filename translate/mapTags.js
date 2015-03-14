@@ -1,25 +1,31 @@
 var matchers = require('./tags');
 
+var lookup = {
+  'kk': ['case', 'number', 'article'],
+  'kvk': ['case', 'number', 'article'],
+  'hk': ['case', 'number', 'article']
+}
+
 export default (tags, wordClass) => {
-  return {
+  var tags = {
     case: {
-      nominitive: matchers.isNominative(tags),
-      accusative: matchers.isAccusative(tags),
-      genitive: matchers.isGenitive(tags),
-      dative: matchers.isDative(tags)
+      NF: matchers.isNominative(tags),
+      ÞF: matchers.isAccusative(tags),
+      EF: matchers.isGenitive(tags),
+      ÞGF: matchers.isDative(tags)
     },
     number: {
-      singular: matchers.isSingular(tags),
-      plural: matchers.isPlural(tags)
+      ET: matchers.isSingular(tags),
+      FT: matchers.isPlural(tags)
     },
     article: {
-      definite: matchers.isDefinite(tags),
-      indefinite: matchers.isIndefinite(tags, wordClass)
+      'gr': matchers.isDefinite(tags),
+      '': matchers.isIndefinite(tags, wordClass)
     },
     gender: {
-      masculine: matchers.isMasculine(tags),
-      feminine: matchers.isFeminine(tags),
-      neuter: matchers.isNeuter(tags)
+      masculine: matchers.isMasculine(tags, wordClass),
+      feminine: matchers.isFeminine(tags, wordClass),
+      neuter: matchers.isNeuter(tags, wordClass)
     },
     person: {
       "first person": matchers.isFirstPerson(tags),
@@ -30,4 +36,12 @@ export default (tags, wordClass) => {
 
     }
   }
+
+  if(lookup[wordClass]) {
+    var results = {}
+    lookup[wordClass].forEach(prop => results[prop] = tags[prop])
+    return results
+  }
+
+  return tags;
 }
