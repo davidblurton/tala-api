@@ -12,7 +12,9 @@ var lookup = {
   // Adjective
   'lo': ['degree', 'gender', 'case', 'number'],
   // Reflexive pronoun
-  'abfn': ['case']
+  'abfn': ['case'],
+  // Other pronoun
+  'fn': ['gender', 'case', 'number']
 }
 
 export default (tags, wordClass) => {
