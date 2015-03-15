@@ -45,12 +45,13 @@ export default {
   // Find a related word with the provided filters.
   // Supports filtering on grammar_tag, word_class.
   filter(word, queries) {
-    var tags = (queries.grammar_tag || '').split(',') || []
+    //var tags = (queries.grammar_tag || '').split(',') || []
+    var tags = queries.grammar_tag || ''
     var word_class = queries.word_class || ''
 
     return this.related(word)
       .then(results => filters.exact(results, 'word_class', word_class))
-      .then(results => filters.includes(results, 'grammar_tag', tags))
+      .then(results => filters.exact(results, 'grammar_tag', tags))
   },
 
   // Get the grammar tags for all related words.
