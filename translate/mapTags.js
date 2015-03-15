@@ -14,7 +14,9 @@ var lookup = {
   // Reflexive pronoun
   'abfn': ['case'],
   // Other pronoun
-  'fn': ['gender', 'case', 'number']
+  'fn': ['gender', 'case', 'number'],
+  // Numeral
+  'to': ['gender', 'case']
 }
 
 export default (tags, wordClass) => {
