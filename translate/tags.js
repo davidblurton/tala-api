@@ -30,5 +30,13 @@ module.exports = {
 
   isSecondPerson: (tags) => tags.includes('2p') || tags.includes('2P'),
 
-  isThirdPerson: (tags) => tags.includes('3p') || tags.includes('3P')
+  isThirdPerson: (tags) => tags.includes('3p') || tags.includes('3P'),
+
+  isPositive: (tags) => tags.includes('FSB'),
+
+  isSuperlative: (tags) => tags.includes('ESB'),
+
+  isComparative: (tags) => tags.includes('MST'),
+
+  matchesTags: (tags, val) => tags.includes(val)
 }

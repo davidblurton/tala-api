@@ -6,11 +6,7 @@ block content
   .columns(data-bind="foreach: words")
     .box
       div(data-bind="foreach: results")
-        h1(data-bind="text: word_form")
+        //h1(data-bind="text: word_form")
         h3
           span(data-bind='text: head_word')
-        em(data-bind='text: type')
-        pre(data-bind='text: grammar_tag')
-        //ul(data-bind="foreach: tags")
-          //li(data-bind="text: $data")
-        pre(data-bind='text: JSON.stringify(info, null, 2)')
+        em(data-bind='text: en.word_class')

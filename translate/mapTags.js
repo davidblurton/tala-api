@@ -6,11 +6,13 @@ var lookup = {
   'kvk': ['case', 'number', 'article'],
   'hk': ['case', 'number', 'article'],
   // Verb
-  'so': ['tense', 'mood', 'person', 'number'],
+  'so': ['voice', 'mood', 'tense', 'person', 'number'],
   // Pronoun
   'pfn': ['case', 'number'],
   // Adjective
-  'lo': [ 'gender', 'case', 'number']
+  'lo': ['degree', 'gender', 'case', 'number'],
+  // Reflexive pronoun
+  'abfn': ['case']
 }
 
 export default (tags, wordClass) => {
@@ -40,10 +42,22 @@ export default (tags, wordClass) => {
       "3P": matchers.isThirdPerson(tags)
     },
     tense: {
-
+      "NT": matchers.matchesTags(tags, "NT"),
+      "ÞT": matchers.matchesTags(tags, "ÞT")
     },
     mood: {
-
+      "FH": matchers.matchesTags(tags, "FH"),
+      "VH": matchers.matchesTags(tags, "VH")
+    },
+    degree: {
+      "FSB": matchers.isPositive(tags),
+      "FVB": matchers.matchesTags(tags, "FVB"),
+      "MST": matchers.isComparative(tags),
+      "ESB": matchers.isSuperlative(tags),
+      "EVB": matchers.matchesTags(tags, "EVB")
+    },
+    voice: {
+      "GM": matchers.matchesTags(tags, "GM")
     }
   }
 
