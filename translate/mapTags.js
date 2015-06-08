@@ -5,16 +5,22 @@ let lookup = {
   'kk': ['case', 'number', 'article'],
   'kvk': ['case', 'number', 'article'],
   'hk': ['case', 'number', 'article'],
+
   // Verb
   'so': ['voice', 'mood', 'tense', 'person', 'number'],
+
   // Pronoun
   'pfn': ['case', 'number'],
+
   // Adjective
   'lo': ['degree', 'gender', 'case', 'number'],
+
   // Reflexive pronoun
   'abfn': ['case'],
+
   // Other pronoun
   'fn': ['gender', 'case', 'number'],
+
   // Numeral
   'to': ['gender', 'case']
 }
