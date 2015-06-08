@@ -4,8 +4,6 @@ import parseGrammarTags from './grammar-tag-parser'
 
 export default (word, language) => {
   let tags = parseGrammarTags(word, language)
-
   word.tags = mapTags(word.grammarTag, word.wordClass)
-
   return word
 }
