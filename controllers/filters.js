@@ -4,8 +4,6 @@ export default {
   },
 
   includes(array, property, values) {
-    return array.filter(values ? x =>
-      values.every(value => x[property].includes(value))
-    : true)
+    return array.filter(values ? x => values.every(value => x[property].includes(value)) : true)
   }
 }
