@@ -48,8 +48,17 @@ export default {
     let wordClass = queries.wordClass || ''
 
     return this.related(word)
-      .then(results => filters.exact(results, 'wordClass', wordClass))
-      .then(results => filters.exact(results, 'grammarTag', tags))
+      .then(results => {
+        if (wordClass) {
+          results = filters.any(results, 'wordClass', wordClass)
+        }
+        
+        if (tags) {
+          results = filters.includes(results, 'grammarTag', tags)  
+        }
+
+        return results
+      })
   },
 
   // Get the grammar tags for all related words.

@@ -5,5 +5,9 @@ export default {
 
   includes(array, property, values) {
     return array.filter(values ? x => values.every(value => x[property].includes(value)) : true)
+  },
+
+  any(array, property, values) {
+    return array.filter(values ? x => values.some(value => x[property].includes(value)) : true)
   }
 }
