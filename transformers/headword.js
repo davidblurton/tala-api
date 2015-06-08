@@ -1,1 +1,1 @@
-export default data => data.split('~')[0];
+export default data => data.split('~')[0]

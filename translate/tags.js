@@ -1,7 +1,7 @@
 let isNoun = wordClass =>
   wordClass === 'kk' ||
   wordClass === 'kvk' ||
-  wordClass === 'hk';
+  wordClass === 'hk'
 
 export default {
   isSingular: (tags) => tags.includes('ET'),

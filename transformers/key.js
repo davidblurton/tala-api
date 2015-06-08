@@ -12,7 +12,7 @@ let convert = (row, raw) => {
 }
 
 export default function(data) {
-  let word = data.split('~')[1];
-  let row = word.split(';');
-  return convert(row, data);
+  let word = data.split('~')[1]
+  let row = word.split('')
+  return convert(row, data)
 }
