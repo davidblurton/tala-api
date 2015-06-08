@@ -1,3 +1,25 @@
+const prepositions = {
+  'að': {
+    wordClass: ['so'],
+    //grammarTag: ['MM-SAGNB']
+  },
+
+  'um': {
+    wordClass: ['hk', 'kk', 'kvk'],
+    grammarTag: ['ÞF'] // accusative
+  },
+
+  'frá': {
+    wordClass: ['hk', 'kk', 'kvk'],
+    grammarTag: ['ÞGF'] // dative
+  },
+
+  'til': {
+    wordClass: ['hk', 'kk', 'kvk'],
+    grammarTag: ['EF'] // genitive
+  }
+}
+
 export default function getFilters(input) {
   let parsed = input.split(' ')
   let result = {}
@@ -9,18 +31,8 @@ export default function getFilters(input) {
   result.keyword = keyword
   result.filters = {}
 
-  if (keyword === 'að') {
-    result.filters = {
-      wordClass: ['so'],
-      grammarTag: ['MM-SAGNB']
-    }
-  }
-
-  if (keyword === 'frá') {
-    result.filters = {
-      wordClass: ['hk', 'kk', 'kvk'],
-      grammarTag: ['ÞGF']
-    }
+  if (Object.keys(prepositions).includes(keyword)) {
+    result.filters = prepositions[keyword];
   }
 
   return result
