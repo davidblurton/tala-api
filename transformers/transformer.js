@@ -1,7 +1,7 @@
 import stream from 'stream'
 
 export default mapper => {
-  var row = new stream.Transform({
+  let row = new stream.Transform({
     objectMode: true
   })
 

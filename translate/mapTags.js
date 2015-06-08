@@ -1,6 +1,6 @@
 import matchers from './tags'
 
-var lookup = {
+let lookup = {
   // Nouns
   'kk': ['case', 'number', 'article'],
   'kvk': ['case', 'number', 'article'],
@@ -20,7 +20,7 @@ var lookup = {
 }
 
 export default (tags, wordClass) => {
-  var tags = {
+  let tags = {
     case: {
       NF: matchers.isNominative(tags),
       ÞF: matchers.isAccusative(tags),
@@ -65,7 +65,7 @@ export default (tags, wordClass) => {
     }
   }
 
-  var results = {}
+  let results = {}
 
   if (lookup[wordClass]) {
     lookup[wordClass].forEach(prop => results[prop] = tags[prop])

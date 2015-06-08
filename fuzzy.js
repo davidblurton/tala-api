@@ -1,4 +1,4 @@
-var map = {
+let map = {
   a: 'á',
   e: 'é',
   i: 'í',
@@ -16,11 +16,11 @@ String.prototype.replaceAt = function(index, character) {
 
 function cartProd(paramArray) {
   function addTo(curr, args) {
-    var i;
-    var copy;
-    var rest = args.slice(1);
-    var last = !rest.length;
-    var result = [];
+    let i;
+    let copy;
+    let rest = args.slice(1);
+    let last = !rest.length;
+    let result = [];
 
     for (i = 0; i < args[0].length; i++) {
       copy = curr.slice();
@@ -38,8 +38,8 @@ function cartProd(paramArray) {
   return addTo([], Array.prototype.slice.call(arguments));
 }
 
-var fuzzy = function(word) {
-  var replacementIndexes = [];
+let fuzzy = function(word) {
+  let replacementIndexes = [];
 
   word.split('').map(function(letter, i) {
     if (map[letter]) {
@@ -51,19 +51,19 @@ var fuzzy = function(word) {
     return [word];
   }
 
-  var banana = replacementIndexes.map(function(i) {
+  let banana = replacementIndexes.map(function(i) {
     return [
       [i, true],
       [i, false]
     ];
   });
 
-  var replacementMap = cartProd.apply(null, banana);
+  let replacementMap = cartProd.apply(null, banana);
 
   return replacementMap.map(function(replacer) {
     return replacer.reduce(function(word, inst) {
-      var replacementIndex = inst[0];
-      var shouldReplace = inst[1];
+      let replacementIndex = inst[0];
+      let shouldReplace = inst[1];
 
       return shouldReplace ? word.replaceAt(replacementIndex, map[word[replacementIndex]]) : word;
     }, word);

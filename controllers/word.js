@@ -34,7 +34,7 @@ export default {
 
   // Find all words from the same headword.
   related(word) {
-    var lookup = this.lookup.bind(this)
+    let lookup = this.lookup.bind(this)
 
     return lookup(word)
       .then(results => _.chain(results).pluck('bilId').unique().value())
@@ -45,9 +45,9 @@ export default {
   // Find a related word with the provided filters.
   // Supports filtering on grammarTag, wordClass.
   filter(word, queries) {
-    //var tags = (queries.grammarTag || '').split(',') || []
-    var tags = queries.grammarTag || ''
-    var wordClass = queries.wordClass || ''
+    //let tags = (queries.grammarTag || '').split(',') || []
+    let tags = queries.grammarTag || ''
+    let wordClass = queries.wordClass || ''
 
     return this.related(word)
       .then(results => filters.exact(results, 'wordClass', wordClass))
@@ -87,7 +87,7 @@ export default {
 
   // Find fuzzy matches for word.
   fuzzy(word) {
-    var streams = fuzzy.getSuggestions(word)
+    let streams = fuzzy.getSuggestions(word)
       .map(suggestion => database.findOne(suggestion)
       .pipe(mapper(keyMapper)))
 

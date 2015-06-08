@@ -4,7 +4,7 @@ import index from './routes/index'
 import cors from 'cors'
 import responseTime from 'response-time'
 
-var app = express()
+let app = express()
 app.set('views', __dirname + '/app/views')
 app.set('view engine', 'jade')
 
@@ -15,9 +15,9 @@ app.use('/api', api)
 app.use('/', index)
 app.use(express.static(__dirname + '/app'))
 
-var server = app.listen(8000, () => {
-  var host = server.address().address
-  var port = server.address().port
+let server = app.listen(8000, () => {
+  let host = server.address().address
+  let port = server.address().port
 
   console.log('app running at http://%s:%s', host, port)
 })

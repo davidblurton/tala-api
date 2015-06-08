@@ -4,7 +4,7 @@ let endsWith = (str, suffix) =>
   str.indexOf(suffix, str.length - suffix.length) !== -1;
 
 export default (word, language) => {
-  var tags = word.grammarTag.split('-');
+  let tags = word.grammarTag.split('-');
 
   // Definite article doesn't have a separator
   if (endsWith(word.grammarTag, 'gr')) {
