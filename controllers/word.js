@@ -5,7 +5,6 @@ import database from '../database'
 import mapper from '../transformers/transformer'
 import keyMapper from '../transformers/key'
 import wordMapper from '../transformers/headword'
-import fuzzy from '../fuzzy'
 import filters from './filters'
 
 export default {
@@ -45,7 +44,6 @@ export default {
   // Find a related word with the provided filters.
   // Supports filtering on grammarTag, wordClass.
   filter(word, queries) {
-    //let tags = (queries.grammarTag || '').split(',') || []
     let tags = queries.grammarTag || ''
     let wordClass = queries.wordClass || ''
 
@@ -83,14 +81,5 @@ export default {
   class(word, wordClass) {
     return this.lookup(word)
       .then(results => results.filter(result => result.wordClass === wordClass))
-  },
-
-  // Find fuzzy matches for word.
-  fuzzy(word) {
-    let streams = fuzzy.getSuggestions(word)
-      .map(suggestion => database.findOne(suggestion)
-      .pipe(mapper(keyMapper)))
-
-    return concat(es.merge.apply(null, streams))
   }
 }

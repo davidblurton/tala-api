@@ -40,10 +40,4 @@ router.get('/:prefix/suggestions', (req, res, next) => {
     .catch(next)
 });
 
-router.get('/:prefix/fuzzy', (req, res, next) => {
-  word.fuzzy(req.params.prefix)
-    .then(results => res.send(format(results, req.query.lang)))
-    .catch(next)
-});
-
 export default router
