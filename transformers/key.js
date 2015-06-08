@@ -11,7 +11,7 @@ let convert = (row, raw) => {
   }
 }
 
-module.exports = function(data) {
+export default function(data) {
   var word = data.split('~')[1];
   var row = word.split(';');
   return convert(row, data);

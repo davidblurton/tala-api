@@ -1,4 +1,4 @@
-var lookup = require('./translate.json');
+import lookup from './translate.json'
 
 let endsWith = (str, suffix) =>
   str.indexOf(suffix, str.length - suffix.length) !== -1;

@@ -1,14 +1,14 @@
-var stream = require('stream')
+import stream from 'stream'
 
-module.exports = function(mapper) {
+export default mapper => {
   var row = new stream.Transform({
     objectMode: true
   })
 
   row._transform = function(chunk, encoding, done) {
-    this.push(mapper(chunk));
+    this.push(mapper(chunk))
     done()
   }
 
-  return row;
+  return row
 }

@@ -1,4 +1,4 @@
-var matchers = require('./tags');
+import matchers from './tags'
 
 var lookup = {
   // Nouns

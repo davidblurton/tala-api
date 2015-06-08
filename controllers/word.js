@@ -1,12 +1,12 @@
-var es = require('event-stream')
-var _ = require('lodash')
-var concat = require('./concat-stream-promise')
-var database = require('../database')
-var mapper = require('../transformers/transformer')
-var keyMapper = require('../transformers/key')
-var wordMapper = require('../transformers/headword')
-var fuzzy = require('../fuzzy')
-var filters = require('./filters')
+import es from 'event-stream'
+import _ from 'lodash'
+import concat from './concat-stream-promise'
+import database from '../database'
+import mapper from '../transformers/transformer'
+import keyMapper from '../transformers/key'
+import wordMapper from '../transformers/headword'
+import fuzzy from '../fuzzy'
+import filters from './filters'
 
 export default {
   // Finds words that start with prefix.

@@ -1,8 +1,8 @@
-var express = require('express')
-var api = require('./routes/api')
-var index = require('./routes/index')
-var cors = require('cors')
-var responseTime = require('response-time')
+import express from 'express'
+import api from './routes/api'
+import index from './routes/index'
+import cors from 'cors'
+import responseTime from 'response-time'
 
 var app = express()
 app.set('views', __dirname + '/app/views')

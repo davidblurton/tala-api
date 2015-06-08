@@ -1,5 +1,5 @@
-var level = require('level')
-var db = level(process.cwd() + '/db')
+import level from 'level'
+let db = level(process.cwd() + '/db')
 
 export default {
   search(prefix, limit) {

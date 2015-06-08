@@ -1,6 +1,8 @@
-var router = require('express').Router();
-var word = require('../controllers/word');
-var format = require('./result-formatter');
+import { Router } from 'express'
+import word from '../controllers/word'
+import format from './result-formatter'
+
+let router = new Router()
 
 router.get('/:word', (req, res, next) => {
   word.lookup(req.params.word)
@@ -44,4 +46,4 @@ router.get('/:prefix/fuzzy', (req, res, next) => {
     .catch(next)
 });
 
-module.exports = router;
+export default router
