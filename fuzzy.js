@@ -16,10 +16,11 @@ String.prototype.replaceAt = function(index, character) {
 
 function cartProd(paramArray) {
   function addTo(curr, args) {
-    var i, copy,
-      rest = args.slice(1),
-      last = !rest.length,
-      result = [];
+    var i;
+    var copy;
+    var rest = args.slice(1);
+    var last = !rest.length;
+    var result = [];
 
     for (i = 0; i < args[0].length; i++) {
       copy = curr.slice();
@@ -46,7 +47,7 @@ var fuzzy = function(word) {
     }
   });
 
-  if(!replacementIndexes.length) {
+  if (!replacementIndexes.length) {
     return [word];
   }
 
@@ -55,7 +56,7 @@ var fuzzy = function(word) {
       [i, true],
       [i, false]
     ];
- });
+  });
 
   var replacementMap = cartProd.apply(null, banana);
 

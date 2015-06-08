@@ -37,27 +37,27 @@ export default {
     var lookup = this.lookup.bind(this)
 
     return lookup(word)
-      .then(results => _.chain(results).pluck('bil_id').unique().value())
+      .then(results => _.chain(results).pluck('bilId').unique().value())
       .then(ids => Promise.all(ids.map(id => lookup(id))))
       .then(results => _.flatten(results))
   },
 
   // Find a related word with the provided filters.
-  // Supports filtering on grammar_tag, word_class.
+  // Supports filtering on grammarTag, wordClass.
   filter(word, queries) {
-    //var tags = (queries.grammar_tag || '').split(',') || []
-    var tags = queries.grammar_tag || ''
-    var word_class = queries.word_class || ''
+    //var tags = (queries.grammarTag || '').split(',') || []
+    var tags = queries.grammarTag || ''
+    var wordClass = queries.wordClass || ''
 
     return this.related(word)
-      .then(results => filters.exact(results, 'word_class', word_class))
-      .then(results => filters.exact(results, 'grammar_tag', tags))
+      .then(results => filters.exact(results, 'wordClass', wordClass))
+      .then(results => filters.exact(results, 'grammarTag', tags))
   },
 
   // Get the grammar tags for all related words.
   tags(word) {
     return this.related(word)
-      .then(results => results.map(result => result.grammar_tag))
+      .then(results => results.map(result => result.grammarTag))
   },
 
   // Find a related word with the specified grammar tag
@@ -65,24 +65,24 @@ export default {
     return this.related(word)
       .then(results => results.filter(
         result => tags.every(
-          tag => result.grammar_tag.includes(tag))))
+          tag => result.grammarTag.includes(tag))))
   },
 
   exactTag(word, tag) {
     return this.related(word)
-      .then(results => results.filter(result => result.grammar_tag === tag))
+      .then(results => results.filter(result => result.grammarTag === tag))
   },
 
   // Get the word class for all matching words.
   classes(word) {
     return this.lookup(word)
-      .then(results => results.map(result => result.word_class))
+      .then(results => results.map(result => result.wordClass))
   },
 
   // Find a matching word with the specified word class
-  class(word, word_class) {
+  class(word, wordClass) {
     return this.lookup(word)
-      .then(results => results.filter(result => result.word_class === word_class))
+      .then(results => results.filter(result => result.wordClass === wordClass))
   },
 
   // Find fuzzy matches for word.

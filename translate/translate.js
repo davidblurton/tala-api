@@ -5,7 +5,7 @@ var parseGrammarTags = require('./grammar-tag-parser');
 export default (word, language) => {
   var tags = parseGrammarTags(word, language)
 
-  word.tags = mapTags(word.grammar_tag, word.word_class)
+  word.tags = mapTags(word.grammarTag, word.wordClass)
 
   return word
 }

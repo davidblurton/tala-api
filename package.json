@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jscs --esnext ."
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
     "level": "^0.18.0",
     "lodash": "^3.5.0",
     "response-time": "^2.3.0"
+  },
+  "devDependencies": {
+    "jscs": "^1.13.1"
   }
 }
