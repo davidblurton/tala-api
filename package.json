@@ -1,7 +1,7 @@
 {
-  "name": "icelandic",
+  "name": "icelandic-api",
   "version": "0.0.1",
-  "description": "A site for exploring icelandic grammar",
+  "description": "An api for exploring icelandic grammar",
   "main": "index.js",
   "scripts": {
     "start": "node index",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/davidblurton/icelandic"
+    "url": "https://github.com/davidblurton/icelandic-api"
   },
   "author": "David Blurton",
   "license": "ISC",
