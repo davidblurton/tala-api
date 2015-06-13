@@ -1,9 +1,9 @@
 let isNoun = wordClass =>
   wordClass === 'kk' ||
   wordClass === 'kvk' ||
-  wordClass === 'hk';
+  wordClass === 'hk'
 
-module.exports = {
+export default {
   isSingular: (tags) => tags.includes('ET'),
 
   isPlural: (tags) => tags.includes('FT'),

@@ -1,6 +1,6 @@
 {
   "en" : {
-    "word_class": {
+    "wordClass": {
       "hk": "Noun (neuter)",
       "kk": "Noun (masculine)",
       "kvk": "Noun (feminine)",
@@ -14,7 +14,7 @@
       "gr": "Definite article"
     },
 
-    "grammar_tag": {
+    "grammarTag": {
       "1p": "1st person (in pronouns)",
       "1P": "1st person (in verbs)",
       "2p": "2nd person (in pronouns)",
@@ -69,7 +69,7 @@
   },
 
   "is" : {
-    "word_class": {
+    "wordClass": {
       "hk": "hvorugkyn",
       "kk": "karlkyn",
       "kvk": "kvenkyn",
@@ -83,7 +83,7 @@
       "gr": "greinir"
     },
 
-    "grammar_tag": {
+    "grammarTag": {
       "1p": "1. persóna (í fornöfnum)",
       "1P": "1. persóna (í sagnorðum)",
       "2p": "2. persóna (í fornöfnum)",

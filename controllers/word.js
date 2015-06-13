@@ -1,12 +1,11 @@
-var es = require('event-stream')
-var _ = require('lodash')
-var concat = require('./concat-stream-promise')
-var database = require('../database')
-var mapper = require('../transformers/transformer')
-var keyMapper = require('../transformers/key')
-var wordMapper = require('../transformers/headword')
-var fuzzy = require('../fuzzy')
-var filters = require('./filters')
+import es from 'event-stream'
+import _ from 'lodash'
+import concat from './concat-stream-promise'
+import database from '../database'
+import mapper from '../transformers/transformer'
+import keyMapper from '../transformers/key'
+import wordMapper from '../transformers/headword'
+import filters from './filters'
 
 export default {
   // Finds words that start with prefix.
@@ -44,30 +43,38 @@ export default {
 
   // Find all words from the same headword.
   related(word) {
-    var lookup = this.lookup.bind(this)
+    let lookup = this.lookup.bind(this)
 
     return lookup(word)
-      .then(results => _.chain(results).pluck('bil_id').unique().value())
+      .then(results => _.chain(results).pluck('bilId').unique().value())
       .then(ids => Promise.all(ids.map(id => lookup(id))))
       .then(results => _.flatten(results))
   },
 
   // Find a related word with the provided filters.
-  // Supports filtering on grammar_tag, word_class.
+  // Supports filtering on grammarTag, wordClass.
   filter(word, queries) {
-    //var tags = (queries.grammar_tag || '').split(',') || []
-    var tags = queries.grammar_tag || ''
-    var word_class = queries.word_class || ''
+    let tags = queries.grammarTag || ''
+    let wordClass = queries.wordClass || ''
 
     return this.related(word)
-      .then(results => filters.exact(results, 'word_class', word_class))
-      .then(results => filters.exact(results, 'grammar_tag', tags))
+      .then(results => {
+        if (wordClass) {
+          results = filters.any(results, 'wordClass', wordClass)
+        }
+
+        if (tags) {
+          results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
+        }
+
+        return results
+      })
   },
 
   // Get the grammar tags for all related words.
   tags(word) {
     return this.related(word)
-      .then(results => results.map(result => result.grammar_tag))
+      .then(results => results.map(result => result.grammarTag))
   },
 
   // Find a related word with the specified grammar tag
@@ -75,32 +82,23 @@ export default {
     return this.related(word)
       .then(results => results.filter(
         result => tags.every(
-          tag => result.grammar_tag.includes(tag))))
+          tag => result.grammarTag.includes(tag))))
   },
 
   exactTag(word, tag) {
     return this.related(word)
-      .then(results => results.filter(result => result.grammar_tag === tag))
+      .then(results => results.filter(result => result.grammarTag === tag))
   },
 
   // Get the word class for all matching words.
   classes(word) {
     return this.lookup(word)
-      .then(results => results.map(result => result.word_class))
+      .then(results => results.map(result => result.wordClass))
   },
 
   // Find a matching word with the specified word class
-  class(word, word_class) {
+  class(word, wordClass) {
     return this.lookup(word)
-      .then(results => results.filter(result => result.word_class === word_class))
-  },
-
-  // Find fuzzy matches for word.
-  fuzzy(word) {
-    var streams = fuzzy.getSuggestions(word)
-      .map(suggestion => database.findOne(suggestion)
-      .pipe(mapper(keyMapper)))
-
-    return concat(es.merge.apply(null, streams))
+      .then(results => results.filter(result => result.wordClass === wordClass))
   }
 }

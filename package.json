@@ -1,15 +1,16 @@
 {
-  "name": "icelandic",
+  "name": "icelandic-api",
   "version": "0.0.1",
-  "description": "A site for exploring icelandic grammar",
+  "description": "An api for exploring icelandic grammar",
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jscs --esnext ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/davidblurton/icelandic"
+    "url": "https://github.com/davidblurton/icelandic-api"
   },
   "author": "David Blurton",
   "license": "ISC",
@@ -19,9 +20,11 @@
     "cors": "^2.5.3",
     "event-stream": "^3.2.1",
     "express": "^4.11.0",
-    "jade": "^1.9.0",
     "level": "^0.18.0",
     "lodash": "^3.5.0",
     "response-time": "^2.3.0"
+  },
+  "devDependencies": {
+    "jscs": "^1.13.1"
   }
 }

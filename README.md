@@ -31,10 +31,10 @@ Looks up related words with provided filters.
 
 ### Parameters
 
-word_class (optional)
-grammar_tag (optional) Full tag or comma separated tags.
+wordClass (optional)
+grammarTag (optional) Full tag or comma separated tags.
 
-`/api/dagur/filter?word_class=kk&grammar_tag=ET`
+`/api/dagur/filter?wordClass=kk&grammarTag=ET`
 
 ## /:prefix/prefix
 
