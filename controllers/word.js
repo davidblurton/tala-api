@@ -32,6 +32,16 @@ export default {
       .pipe(mapper(keyMapper)))
   },
 
+  // Are there matching words from multiple headwords.
+  multiple(word) {
+    let lookup = this.lookup.bind(this)
+
+    return lookup(word).then(results => {
+      let ids = results.map(result => result.bil_id)
+      return !ids.every(id => id === ids[0])
+    })
+  },
+
   // Find all words from the same headword.
   related(word) {
     var lookup = this.lookup.bind(this)
