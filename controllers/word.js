@@ -52,9 +52,9 @@ export default {
         if (wordClass) {
           results = filters.any(results, 'wordClass', wordClass)
         }
-        
+
         if (tags) {
-          results = filters.includes(results, 'grammarTag', tags)  
+          results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
         }
 
         return results

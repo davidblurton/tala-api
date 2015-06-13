@@ -1,17 +1,17 @@
 import express from 'express'
 import api from './routes/api'
+import summary from './routes/summary'
 import index from './routes/index'
 import cors from 'cors'
 import responseTime from 'response-time'
 
 let app = express()
-app.set('views', __dirname + '/app/views')
-app.set('view engine', 'jade')
 
 app.use(cors())
 app.use(responseTime())
 
 app.use('/api', api)
+app.use('/api', summary)
 app.use('/', index)
 app.use(express.static(__dirname + '/app'))
 

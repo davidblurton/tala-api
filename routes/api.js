@@ -1,15 +1,11 @@
 import { Router } from 'express'
 import word from '../controllers/word'
-import getFilters from '../controllers/inputFilter'
 import format from './result-formatter'
 
 let router = new Router()
 
 router.get('/:word', (req, res, next) => {
-  let input = req.params.word
-  let filter = getFilters(input)
-
-  word.filter(filter.word, filter.filters)
+  word.lookup(req.params.word)
     .then(results => res.send(format(results, req.query.lang)))
     .catch(next)
 })
