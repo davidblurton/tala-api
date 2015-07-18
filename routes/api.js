@@ -28,6 +28,12 @@ router.get('/:word/filter', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:word/multiple', (req, res, next) => {
+  word.multiple(req.params.word)
+    .then(multiple => res.send(multiple))
+    .catch(next)
+});
+
 router.get('/:prefix/prefix', (req, res, next) => {
   word.prefix(req.params.prefix)
     .then(results => res.send(format(results, req.query.lang)))
