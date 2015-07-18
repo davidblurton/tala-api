@@ -50,11 +50,12 @@ export default {
     return this.related(word)
       .then(results => {
         if (wordClass) {
-          results = filters.any(results, 'wordClass', wordClass)
+          results = filters.any(results, 'wordClass', [wordClass])
         }
 
         if (tags) {
-          results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
+          results = filters.includes(results, 'grammarTag', [tags])
+          //results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
         }
 
         return results

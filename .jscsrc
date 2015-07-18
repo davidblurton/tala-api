@@ -1,5 +1,6 @@
 {
 	"preset": "google",
+  "esnext": true,
 	"excludeFiles": ["node_modules/**"],
 	"maximumLineLength": 120
 }
