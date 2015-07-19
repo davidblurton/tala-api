@@ -1,10 +1,11 @@
-# api.tala.is
+# Icelandic declanation API
+### [api.tala.is](api.tala.is)
 
 An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
 
-`api/tala.is/find/dagur`
+`api.tala.is/find/dagur`
 
-```
+```json
 {
    "count":1,
    "results":[
@@ -22,50 +23,46 @@ An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks n�
 }
 ```
 
-## Parameters
+## Declanations api
 
-wordClass (optional)
-
-grammarTag (optional) Full tag.
-
-grammarTags (optional) Comma separated parts.
-
-limit (optional, default unlimited) How many results to return.
-
-## /id/:id
+### `/id/:id`
 
 Finds a word by id
 
-## /find/:word
+### `/find/:word`
 
 Finds all words that match exactly
 
-## /related/:word
+### `/related/:word`
 
-Finds all words with the same head word.
+Finds all words from the same head word.
 
-# Summary api
+### Filters
 
-## /suggestions/:prefix
+You can filter results using query parameters. All parameters are optional.
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| wordClass | Grammatical class (noun, verb, etc) | hk |
+| grammarTag| Grammar tag | NF |
+| limit     | Maximum number of results to return | 2 |
+
+Example: `api.tala.is/related/tala?wordClass=hk&grammarTag=NF&limit=2`
+
+## Summary api
+
+### `/suggestions/:prefix`
 
 Find words that start with provided prefix. Returns just the suggested word - good for autocomplete.
 
-### Parameters
-
-limit (optional, default unlimited) How many results to return.
-
-## /verb/:verb
+### `/verb/:verb`
 
 Gives a summary of conjugations for the provided verb.
 
-## /preposition/:preposition/:word
+### `/preposition/:preposition/:word`
 
 Finds declanations of the provided word that match the lexical case of the preposition.
 
-## /multiple/:word
+### `/multiple/:word`
 
 Returns true if word matches more than one headword.
-
-
-
-
