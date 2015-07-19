@@ -8,11 +8,6 @@ import prepositionFormatter from '../formatters/preposition'
 
 let router = new Router()
 
-let log = res => {
-  console.log(res)
-  return res;
-}
-
 router.get('/preposition/:preposition/:word', (req, res, next) => {
   let filter = getFilters(prepositionFilters, req.params.preposition, req.params.word)
 
@@ -23,8 +18,6 @@ router.get('/preposition/:preposition/:word', (req, res, next) => {
 
 router.get('/verb/:person/:verb', (req, res, next) => {
   let filter = getFilters(verbFilters, req.params.person, req.params.verb)
-
-  console.log(filter.filters)
 
   summary.filter(req.params.verb, filter.filters)
     .then(results => res.send(verbFormatter(results)))
