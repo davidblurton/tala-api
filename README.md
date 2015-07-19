@@ -1,5 +1,5 @@
 # Icelandic declanation API
-### [api.tala.is](api.tala.is)
+### [http://api.tala.is](api.tala.is)
 
 An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
 
