@@ -1,4 +1,3 @@
-import es from 'event-stream'
 import _ from 'lodash'
 import concat from './concat-stream-promise'
 import database from '../database/database'
