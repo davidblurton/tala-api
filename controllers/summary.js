@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import words from '../models/database'
-import filters from './oldFilters'
+import filters from '../filters/oldFilters'
 
 export default {
   // Generates a list of autocompletion suggestions.

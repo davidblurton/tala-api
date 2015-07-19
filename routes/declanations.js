@@ -1,19 +1,19 @@
 import { Router } from 'express'
-import word from '../controllers/word'
+import declanations from '../controllers/declanations'
 import format from '../formatters/result'
-import filter from '../controllers/filters'
+import filter from '../filters/filters'
 
 let router = new Router()
 
 router.get('/id/:word', (req, res, next) => {
-  word.findById(req.params.word)
+  declanations.findById(req.params.word)
     .then(results => format(results, req.query.lang))
     .then(results => res.send(results))
     .catch(next)
 })
 
 router.get('/find/:word', (req, res, next) => {
-  word.lookup(req.params.word)
+  declanations.lookup(req.params.word)
     .then(results => filter(results, req.query))
     .then(results => format(results, req.query.lang))
     .then(results => res.send(results))
@@ -21,7 +21,7 @@ router.get('/find/:word', (req, res, next) => {
 })
 
 router.get('/related/:word', (req, res, next) => {
-  word.related(req.params.word)
+  declanations.related(req.params.word)
     .then(results => filter(results, req.query))
     .then(results => format(results, req.query.lang))
     .then(results => res.send(results))
