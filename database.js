@@ -6,7 +6,7 @@ export default {
     return db.createKeyStream({
       gte: prefix,
       lt: prefix + '\xff',
-      limit: limit || 10
+      limit: limit || -1
     })
   },
 

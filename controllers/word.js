@@ -16,8 +16,12 @@ export default {
 
   // Generates a list of autocompletion suggestions.
   suggestions(prefix, limit) {
-    return concat(database.search(prefix, limit)
-      .pipe(mapper(wordMapper)))
+    return concat(database.search(prefix)
+      .pipe(mapper(keyMapper)))
+      .then(results => results.filter(x => x.headWord === x.wordForm))
+      .then(results => results.map(x => x.wordForm))
+      .then(_.unique)
+      .then(results => results.slice(0, limit))
   },
 
   findById(id) {
