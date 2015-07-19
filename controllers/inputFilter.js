@@ -25,6 +25,8 @@ const prepositions = {
 }
 
 export function getFilters(preposition, word) {
+  let result = {};
+
   result.word = word
   result.preposition = preposition
   result.filters = {}
