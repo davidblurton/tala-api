@@ -1,25 +1,14 @@
-# Icelandic
+# api.tala.is
 
-## Schema
-
-Example record:
-
-```
-abbadís;117998;kvk;alm;abbadísunum;ÞGFFTgr
-```
-
-Data is stored in the key, nothing is stored in the value. Key is prefixed by fields we want to index on and a ~. The example record would be stored in the following 2 entries.
-
-```
-abbadísunum~abbadís;117998;kvk;alm;abbadísunum;ÞGFFTgr
-117998~abbadís;117998;kvk;alm;abbadísunum;ÞGFFTgr
-```
-
-Supported values: `en` `is`
+An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
 
 ## /:word
 
-Looks up an exact match
+Finds all words that match exactly
+
+## /:word/id
+
+Finds a word by id
 
 ## /:word/related
 
@@ -29,16 +18,19 @@ Finds all words with the same head word.
 
 Looks up related words with provided filters.
 
+`/api/dagur/filter?wordClass=kk&grammarTag=ET`
+
 ### Parameters
 
 wordClass (optional)
-grammarTag (optional) Full tag or comma separated tags.
 
-`/api/dagur/filter?wordClass=kk&grammarTag=ET`
+grammarTag (optional) Full tag or comma separated parts.
 
-## /:prefix/prefix
+### Parameters
 
-Find words that start with provided prefix. Returns full entries.
+limit (optional, default unlimited) How many results to return.
+
+# Summary api
 
 ## /:prefix/suggestions
 
@@ -46,7 +38,20 @@ Find words that start with provided prefix. Returns just the suggested word - go
 
 ### Parameters
 
-limit (optional, default 10) How many results to return.
+limit (optional, default unlimited) How many results to return.
+
+## /verb/:verb
+
+Gives a summary of conjugations for the provided verb.
+
+## /preposition/:preposition/:word
+
+Finds declanations of the provided word that match the lexical case of the preposition.
+
+## /:word/multiple
+
+Returns true if word matches more than one headword.
+
 
 
 

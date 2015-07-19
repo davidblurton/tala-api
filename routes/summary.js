@@ -21,4 +21,16 @@ router.get('/verb/:verb', (req, res, next) => {
     .catch(next)
 })
 
+router.get('/:word/multiple', (req, res, next) => {
+  word.multiple(req.params.word)
+    .then(multiple => res.send(multiple))
+    .catch(next)
+})
+
+router.get('/:prefix/suggestions', (req, res, next) => {
+  word.suggestions(req.params.prefix, req.query.limit)
+    .then(results => res.send(results))
+    .catch(next)
+})
+
 export default router
