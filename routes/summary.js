@@ -6,12 +6,11 @@ import prepositionFormatter from '../formatters/preposition'
 
 let router = new Router()
 
-router.get('/preposition/:word', (req, res, next) => {
-  let input = req.params.word
-  let filter = getFilters(input)
+router.get('/preposition/:preposition/:word', (req, res, next) => {
+  let filter = getFilters(req.params.preposition, req.params.word)
 
   word.filter(filter.word, filter.filters)
-    .then(results => res.send(prepositionFormatter(results, filter.keyword)))
+    .then(results => res.send(prepositionFormatter(results, filter.preposition)))
     .catch(next)
 })
 

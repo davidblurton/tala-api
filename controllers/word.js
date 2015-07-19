@@ -5,7 +5,7 @@ import database from '../database'
 import mapper from '../transformers/transformer'
 import keyMapper from '../transformers/key'
 import wordMapper from '../transformers/headword'
-import filters from './filters'
+import filters from './oldFilters'
 
 export default {
   // Finds words that start with prefix.
@@ -68,36 +68,5 @@ export default {
     return this.related(word)
       .then(results => filters.any(results, 'wordClass', wordClass))
       .then(results => filters.includes(results, 'grammarTag', tags))
-  },
-
-  // Get the grammar tags for all related words.
-  tags(word) {
-    return this.related(word)
-      .then(results => results.map(result => result.grammarTag))
-  },
-
-  // Find a related word with the specified grammar tag
-  includesTag(word, tags) {
-    return this.related(word)
-      .then(results => results.filter(
-        result => tags.every(
-          tag => result.grammarTag.includes(tag))))
-  },
-
-  exactTag(word, tag) {
-    return this.related(word)
-      .then(results => results.filter(result => result.grammarTag === tag))
-  },
-
-  // Get the word class for all matching words.
-  classes(word) {
-    return this.lookup(word)
-      .then(results => results.map(result => result.wordClass))
-  },
-
-  // Find a matching word with the specified word class
-  class(word, wordClass) {
-    return this.lookup(word)
-      .then(results => results.filter(result => result.wordClass === wordClass))
   }
 }

@@ -24,19 +24,13 @@ const prepositions = {
   },
 }
 
-export function getFilters(input) {
-  let parsed = input.split(' ')
-  let result = {}
-
-  let keyword = parsed[0]
-  let word = parsed[1] || parsed[0]
-
+export function getFilters(preposition, word) {
   result.word = word
-  result.keyword = keyword
+  result.preposition = preposition
   result.filters = {}
 
-  if (prepositions[keyword]) {
-    result.filters = prepositions[keyword];
+  if (prepositions[preposition]) {
+    result.filters = prepositions[preposition];
   }
 
   return result
