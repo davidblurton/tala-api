@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import summary from '../controllers/summary'
-import {verbFilter, getFilters} from '../filters/summaryFilters'
+import {verbFilter, getFilters} from '../filters/summary'
 import verbFormatter from '../formatters/verb'
 import prepositionFormatter from '../formatters/preposition'
 

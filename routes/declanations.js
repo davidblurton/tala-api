@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import declanations from '../controllers/declanations'
 import format from '../formatters/result'
-import filter from '../filters/filters'
+import filter from '../filters/global'
 
 let router = new Router()
 
