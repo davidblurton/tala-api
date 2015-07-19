@@ -1,7 +1,7 @@
-# Icelandic declanation API
+# Icelandic declension API
 ### [api.tala.is](http://api.tala.is)
 
-An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
+An API for icelandic declensions. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
 
 `api.tala.is/find/dagur`
 
@@ -23,7 +23,7 @@ An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks n�
 }
 ```
 
-## Declanations api
+## Declensions api
 
 ### `/id/:id`
 
@@ -61,7 +61,7 @@ Gives a summary of conjugations for the provided verb.
 
 ### `/preposition/:preposition/:word`
 
-Finds declanations of the provided word that match the lexical case of the preposition.
+Finds declensions of the provided word that match the lexical case of the preposition.
 
 ### `/multiple/:word`
 

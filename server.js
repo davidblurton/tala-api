@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import responseTime from 'response-time'
 
-import declanations from './routes/declanations'
+import declensions from './routes/declensions'
 import summary from './routes/summary'
 import index from './routes/index'
 
@@ -11,7 +11,7 @@ let app = express()
 app.use(cors())
 app.use(responseTime())
 
-app.use('/', declanations)
+app.use('/', declensions)
 app.use('/', summary)
 app.use('/', index)
 
