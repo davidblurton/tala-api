@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 let firstOrDefault = array => array ? array[0] : '';
 
 export default {
@@ -6,7 +8,11 @@ export default {
   },
 
   includes(array, property, values) {
-    return array.filter(values ? x => values.every(value => x[property].includes(value)) : true)
+    if (_.isPlainObject(values)) {
+      return _.mapValues(values, prop => this.each(array, 'grammarTag', prop))
+    } else {
+      return array.filter(values ? x => values.every(value => x[property].includes(value)) : true)
+    }
   },
 
   any(array, property, values) {
@@ -14,6 +20,6 @@ export default {
   },
 
   each(array, property, values) {
-    values.map(tag => firstOrDefault(array.filter(x => x && x[property] === tag)))
+    return values.map(tag => firstOrDefault(array.filter(x => x && x[property] === tag)))
   }
 }

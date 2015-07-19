@@ -18,7 +18,7 @@ export default {
   suggestions(prefix, limit) {
     return concat(database.search(prefix)
       .pipe(mapper(keyMapper)))
-      .then(results => results.filter(x => x.headWord === x.wordForm))
+      .then(results => results.filter(x => x.headWord === x.wordForm)) // this should be a filter
       .then(results => results.map(x => x.wordForm))
       .then(_.unique)
       .then(results => results.slice(0, limit))
@@ -58,25 +58,16 @@ export default {
   // Find a related word with the provided filters.
   // Supports filtering on grammarTag, wordClass.
   filter(word, queries) {
-    let tags = queries.grammarTag || ''
     let wordClass = queries.wordClass || ''
+    let tags = queries.grammarTag || ''
+
+    if (!_.isArray(wordClass)) {
+      wordClass = [wordClass]
+    }
 
     return this.related(word)
-      .then(results => {
-        if (wordClass) {
-          if (!_.isArray(wordClass)) {
-            wordClass = [wordClass]
-          }
-
-          results = filters.any(results, 'wordClass', wordClass)
-        }
-
-        if (tags) {
-          results = filters.includes(results, 'grammarTag', tags)
-        }
-
-        return results
-      })
+      .then(results => filters.any(results, 'wordClass', wordClass))
+      .then(results => filters.includes(results, 'grammarTag', tags))
   },
 
   // Get the grammar tags for all related words.
