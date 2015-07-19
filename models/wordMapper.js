@@ -4,7 +4,7 @@ export default function(data) {
 
   return {
     _id: word,
-    _url: `/id/${word}`,
+    _url: `/id/${data}`,
     headWord: row[0],
     binId: row[1],
     wordClass: row[2],
