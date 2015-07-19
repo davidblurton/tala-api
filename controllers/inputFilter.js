@@ -35,7 +35,7 @@ export function getFilters(input) {
   result.keyword = keyword
   result.filters = {}
 
-  if (Object.keys(prepositions).includes(keyword)) {
+  if (prepositions[keyword]) {
     result.filters = prepositions[keyword];
   }
 

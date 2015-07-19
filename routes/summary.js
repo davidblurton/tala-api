@@ -11,7 +11,12 @@ router.get('/preposition/:word', (req, res, next) => {
   let filter = getFilters(input)
 
   word.filter(filter.word, filter.filters)
-    .then(results => res.send(format(results, req.query.lang)))
+    .then(results => {
+      let res = {};
+      res[filter.keyword] = results.map(x => x.wordForm)
+      return res;
+    })
+    .then(results => res.send(results))
     .catch(next)
 })
 

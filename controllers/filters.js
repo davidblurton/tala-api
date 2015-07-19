@@ -14,6 +14,6 @@ export default {
   },
 
   each(array, property, values) {
-    return values.map(tag => firstOrDefault(array.filter(x => x && x[property] === tag)))
+    values.map(tag => firstOrDefault(array.filter(x => x && x[property] === tag)))
   }
 }

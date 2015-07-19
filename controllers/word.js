@@ -72,13 +72,7 @@ export default {
         }
 
         if (tags) {
-          if (_.isString(tags)) {
-            results = filters.includes(results, 'grammarTag', tags)
-          }
-
-          else if (_.isObject(tags)) {
-            results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
-          }
+          results = filters.includes(results, 'grammarTag', tags)
         }
 
         return results
