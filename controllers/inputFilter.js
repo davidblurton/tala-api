@@ -1,8 +1,22 @@
 export const verbFilter = {
   wordClass: ['so'],
   grammarTag: {
-    'present': ['GM-FH-NT-1P-ET', 'GM-FH-NT-2P-ET', 'GM-FH-NT-3P-ET', 'GM-FH-NT-1P-FT', 'GM-FH-NT-2P-FT', 'GM-FH-NT-3P-FT'],
-    'past': ['GM-FH-ÞT-1P-ET', 'GM-FH-ÞT-2P-ET', 'GM-FH-ÞT-3P-ET', 'GM-FH-ÞT-1P-FT', 'GM-FH-ÞT-2P-FT', 'GM-FH-ÞT-3P-FT'],
+    'present': [
+      'GM-FH-NT-1P-ET',
+      'GM-FH-NT-2P-ET',
+      'GM-FH-NT-3P-ET',
+      'GM-FH-NT-1P-FT',
+      'GM-FH-NT-2P-FT',
+      'GM-FH-NT-3P-FT'
+    ],
+    'past': [
+      'GM-FH-ÞT-1P-ET',
+      'GM-FH-ÞT-2P-ET',
+      'GM-FH-ÞT-3P-ET',
+      'GM-FH-ÞT-1P-FT',
+      'GM-FH-ÞT-2P-FT',
+      'GM-FH-ÞT-3P-FT'
+    ],
     'supine': ['MM-SAGNB']
   }
 }

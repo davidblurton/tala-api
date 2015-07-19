@@ -40,7 +40,7 @@ export default {
     let lookup = this.lookup.bind(this)
 
     return lookup(word).then(results => {
-      let ids = results.map(result => result.bil_id)
+      let ids = results.map(result => result.binId)
       return !ids.every(id => id === ids[0])
     })
   },
@@ -50,7 +50,7 @@ export default {
     let lookup = this.lookup.bind(this)
 
     return lookup(word)
-      .then(results => _.chain(results).pluck('bilId').unique().value())
+      .then(results => _.chain(results).pluck('binId').unique().value())
       .then(ids => Promise.all(ids.map(id => lookup(id))))
       .then(results => _.flatten(results))
   },

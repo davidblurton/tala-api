@@ -12,7 +12,7 @@ An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks n�
          "_id":"dagur~dagur;5752;kk;alm;dagur;NFET",
          "_url":"/id/dagur~dagur;5752;kk;alm;dagur;NFET",
          "headWord":"dagur",
-         "bilId":"5752",
+         "binId":"5752",
          "wordClass":"kk",
          "section":"alm",
          "wordForm":"dagur",
