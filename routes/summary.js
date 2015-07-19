@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import word from '../controllers/word'
 import {verbFilter, getFilters} from '../controllers/inputFilter'
-import verbFormatter from './verb-formatter'
-import prepositionFormatter from './preposition-formatter'
+import verbFormatter from '../formatters/verb'
+import prepositionFormatter from '../formatters/preposition'
 
 let router = new Router()
 
@@ -21,13 +21,13 @@ router.get('/verb/:verb', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/:word/multiple', (req, res, next) => {
+router.get('/multiple/:word', (req, res, next) => {
   word.multiple(req.params.word)
     .then(multiple => res.send(multiple))
     .catch(next)
 })
 
-router.get('/:prefix/suggestions', (req, res, next) => {
+router.get('/suggestions/:prefix', (req, res, next) => {
   word.suggestions(req.params.prefix, req.query.limit)
     .then(results => res.send(results))
     .catch(next)

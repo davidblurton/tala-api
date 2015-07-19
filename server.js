@@ -10,8 +10,8 @@ let app = express()
 app.use(cors())
 app.use(responseTime())
 
-app.use('/api', api)
-app.use('/api', summary)
+app.use('/', api)
+app.use('/', summary)
 app.use('/', index)
 app.use(express.static(__dirname + '/app'))
 

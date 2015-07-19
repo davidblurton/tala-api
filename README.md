@@ -2,37 +2,51 @@
 
 An API for icelandic declanations. Uses data from [Beygingarlýsing íslensks nútímamáls](http://bin.arnastofnun.is/DMII/)
 
-## /:word
+`api/tala.is/find/dagur`
 
-Finds all words that match exactly
+```
+{
+   "count":1,
+   "results":[
+      {
+         "_id":"dagur~dagur;5752;kk;alm;dagur;NFET",
+         "_url":"/id/dagur~dagur;5752;kk;alm;dagur;NFET",
+         "headWord":"dagur",
+         "bilId":"5752",
+         "wordClass":"kk",
+         "section":"alm",
+         "wordForm":"dagur",
+         "grammarTag":"NFET"
+      }
+   ]
+}
+```
 
-## /:word/id
-
-Finds a word by id
-
-## /:word/related
-
-Finds all words with the same head word.
-
-## /:word/filter
-
-Looks up related words with provided filters.
-
-`/api/dagur/filter?wordClass=kk&grammarTag=ET`
-
-### Parameters
+## Parameters
 
 wordClass (optional)
 
-grammarTag (optional) Full tag or comma separated parts.
+grammarTag (optional) Full tag.
 
-### Parameters
+grammarTags (optional) Comma separated parts.
 
 limit (optional, default unlimited) How many results to return.
 
+## /id/:id
+
+Finds a word by id
+
+## /find/:word
+
+Finds all words that match exactly
+
+## /related/:word
+
+Finds all words with the same head word.
+
 # Summary api
 
-## /:prefix/suggestions
+## /suggestions/:prefix
 
 Find words that start with provided prefix. Returns just the suggested word - good for autocomplete.
 
@@ -48,7 +62,7 @@ Gives a summary of conjugations for the provided verb.
 
 Finds declanations of the provided word that match the lexical case of the preposition.
 
-## /:word/multiple
+## /multiple/:word
 
 Returns true if word matches more than one headword.
 

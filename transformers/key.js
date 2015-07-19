@@ -1,7 +1,7 @@
 let convert = (row, raw) => {
   return {
     _id: raw,
-    _url: `/api/${raw}/id`,
+    _url: `/id/${raw}`,
     headWord: row[0],
     bilId: row[1],
     wordClass: row[2],
