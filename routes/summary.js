@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import word from '../controllers/word'
 import {verbFilter, getFilters} from '../controllers/inputFilter'
-import format from './result-formatter'
 import verbFormatter from './verb-formatter'
+import prepositionFormatter from './preposition-formatter'
 
 let router = new Router()
 
@@ -11,12 +11,7 @@ router.get('/preposition/:word', (req, res, next) => {
   let filter = getFilters(input)
 
   word.filter(filter.word, filter.filters)
-    .then(results => {
-      let res = {};
-      res[filter.keyword] = results.map(x => x.wordForm)
-      return res;
-    })
-    .then(results => res.send(results))
+    .then(results => res.send(prepositionFormatter(results, filter.keyword)))
     .catch(next)
 })
 

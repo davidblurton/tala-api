@@ -28,8 +28,8 @@ export function getFilters(input) {
   let parsed = input.split(' ')
   let result = {}
 
-  const keyword = parsed[0]
-  const word = parsed[1] || parsed[0]
+  let keyword = parsed[0]
+  let word = parsed[1] || parsed[0]
 
   result.word = word
   result.keyword = keyword
