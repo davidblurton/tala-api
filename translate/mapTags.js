@@ -25,49 +25,49 @@ let lookup = {
   'to': ['gender', 'case']
 }
 
-export default (tags, wordClass) => {
+export default (grammarTag, wordClass) => {
   let tags = {
     case: {
-      NF: matchers.isNominative(tags),
-      ÞF: matchers.isAccusative(tags),
-      ÞGF: matchers.isDative(tags),
-      EF: matchers.isGenitive(tags)
+      NF: matchers.isNominative(grammarTag),
+      ÞF: matchers.isAccusative(grammarTag),
+      ÞGF: matchers.isDative(grammarTag),
+      EF: matchers.isGenitive(grammarTag)
     },
     number: {
-      ET: matchers.isSingular(tags),
-      FT: matchers.isPlural(tags)
+      ET: matchers.isSingular(grammarTag),
+      FT: matchers.isPlural(grammarTag)
     },
     article: {
-      '': matchers.isIndefinite(tags, wordClass),
-      'gr': matchers.isDefinite(tags)
+      '': matchers.isIndefinite(grammarTag, wordClass),
+      'gr': matchers.isDefinite(grammarTag)
     },
     gender: {
-      KK: matchers.isMasculine(tags, wordClass),
-      KVK: matchers.isFeminine(tags, wordClass),
-      HK: matchers.isNeuter(tags, wordClass)
+      KK: matchers.isMasculine(grammarTag, wordClass),
+      KVK: matchers.isFeminine(grammarTag, wordClass),
+      HK: matchers.isNeuter(grammarTag, wordClass)
     },
     person: {
-      '1P': matchers.isFirstPerson(tags),
-      '2P': matchers.isSecondPerson(tags),
-      '3P': matchers.isThirdPerson(tags)
+      '1P': matchers.isFirstPerson(grammarTag),
+      '2P': matchers.isSecondPerson(grammarTag),
+      '3P': matchers.isThirdPerson(grammarTag)
     },
     tense: {
-      'NT': matchers.matchesTags(tags, 'NT'),
-      'ÞT': matchers.matchesTags(tags, 'ÞT')
+      'NT': matchers.matchesTags(grammarTag, 'NT'),
+      'ÞT': matchers.matchesTags(grammarTag, 'ÞT')
     },
     mood: {
-      'FH': matchers.matchesTags(tags, 'FH'),
-      'VH': matchers.matchesTags(tags, 'VH')
+      'FH': matchers.matchesTags(grammarTag, 'FH'),
+      'VH': matchers.matchesTags(grammarTag, 'VH')
     },
     degree: {
-      'FSB': matchers.isPositive(tags),
-      'FVB': matchers.matchesTags(tags, 'FVB'),
-      'MST': matchers.isComparative(tags),
-      'ESB': matchers.isSuperlative(tags),
-      'EVB': matchers.matchesTags(tags, 'EVB')
+      'FSB': matchers.isPositive(grammarTag),
+      'FVB': matchers.matchesTags(grammarTag, 'FVB'),
+      'MST': matchers.isComparative(grammarTag),
+      'ESB': matchers.isSuperlative(grammarTag),
+      'EVB': matchers.matchesTags(grammarTag, 'EVB')
     },
     voice: {
-      'GM': matchers.matchesTags(tags, 'GM')
+      'GM': matchers.matchesTags(grammarTag, 'GM')
     }
   }
 
