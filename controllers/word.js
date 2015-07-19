@@ -64,12 +64,21 @@ export default {
     return this.related(word)
       .then(results => {
         if (wordClass) {
-          results = filters.any(results, 'wordClass', [wordClass])
+          if (!_.isArray(wordClass)) {
+            wordClass = [wordClass]
+          }
+
+          results = filters.any(results, 'wordClass', wordClass)
         }
 
         if (tags) {
-          results = filters.includes(results, 'grammarTag', [tags])
-          //results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
+          if (_.isString(tags)) {
+            results = filters.includes(results, 'grammarTag', tags)
+          }
+
+          else if (_.isObject(tags)) {
+            results = _.mapValues(tags, prop => filters.each(results, 'grammarTag', prop))
+          }
         }
 
         return results

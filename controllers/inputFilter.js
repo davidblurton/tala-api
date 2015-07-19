@@ -24,7 +24,7 @@ const prepositions = {
   },
 }
 
-export default function getFilters(input) {
+export function getFilters(input) {
   let parsed = input.split(' ')
   let result = {}
 

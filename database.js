@@ -1,11 +1,13 @@
 import level from 'level'
+
+const END = '\xff'
 let db = level(process.cwd() + '/db')
 
 export default {
   search(prefix, limit) {
     return db.createKeyStream({
       gte: prefix,
-      lt: prefix + '\xff',
+      lt: prefix + END,
       limit: limit || -1
     })
   },
@@ -13,14 +15,14 @@ export default {
   find(word) {
     return db.createKeyStream({
       gte: word + '~',
-      lt: word + '~' + '\xff'
+      lt: word + '~' + END
     })
   },
 
   findOne(word) {
     return db.createKeyStream({
       gte: word + '~',
-      lt: word + '~' + '\xff',
+      lt: word + '~' + END,
       limit: 1
     })
   },
