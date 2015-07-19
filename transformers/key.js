@@ -1,7 +1,10 @@
-let convert = (row, raw) => {
+export default function(data) {
+  let word = data.split('~')[1]
+  let row = word.split(';')
+
   return {
-    _id: raw,
-    _url: `/id/${raw}`,
+    _id: word,
+    _url: `/id/${word}`,
     headWord: row[0],
     binId: row[1],
     wordClass: row[2],
@@ -9,10 +12,4 @@ let convert = (row, raw) => {
     wordForm: row[4],
     grammarTag: row[5]
   }
-}
-
-export default function(data) {
-  let word = data.split('~')[1]
-  let row = word.split(';')
-  return convert(row, data)
 }
