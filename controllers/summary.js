@@ -14,10 +14,11 @@ export default {
 
   // Are there matching words from multiple headwords.
   multiple(word) {
-    return words.lookup(word).then(results => {
-      let ids = results.map(result => result.binId)
-      return !ids.every(id => id === ids[0])
-    })
+    return words.lookup(word)
+      .then(results => {
+        let ids = results.map(result => result.binId)
+        return !ids.every(id => id === ids[0])
+      })
   },
 
   // Find all words from the same headword.
