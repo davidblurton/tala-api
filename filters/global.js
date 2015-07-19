@@ -5,6 +5,6 @@ export default (results, queries) => {
 
   return results
     .filter(x => wordClass ? x.wordClass === wordClass : true)
-    .filter(x => tag ? x.grammarTag.includes(tag) : true)
+    .filter(x => tag ? x.grammarTag === tag : true)
     .slice(0, limit)
 }

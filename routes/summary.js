@@ -1,21 +1,32 @@
 import { Router } from 'express'
 import summary from '../controllers/summary'
-import {verbFilter, getFilters} from '../filters/summary'
+import getFilters from '../filters/summary'
+import verbFilters from '../filters/verbs'
+import prepositionFilters from '../filters/prepositions'
 import verbFormatter from '../formatters/verb'
 import prepositionFormatter from '../formatters/preposition'
 
 let router = new Router()
 
+let log = res => {
+  console.log(res)
+  return res;
+}
+
 router.get('/preposition/:preposition/:word', (req, res, next) => {
-  let filter = getFilters(req.params.preposition, req.params.word)
+  let filter = getFilters(prepositionFilters, req.params.preposition, req.params.word)
 
   summary.filter(filter.word, filter.filters)
     .then(results => res.send(prepositionFormatter(results, filter.preposition)))
     .catch(next)
 })
 
-router.get('/verb/:verb', (req, res, next) => {
-  summary.filter(req.params.verb, verbFilter)
+router.get('/verb/:person/:verb', (req, res, next) => {
+  let filter = getFilters(verbFilters, req.params.person, req.params.verb)
+
+  console.log(filter.filters)
+
+  summary.filter(req.params.verb, filter.filters)
     .then(results => res.send(verbFormatter(results)))
     .catch(next)
 })
