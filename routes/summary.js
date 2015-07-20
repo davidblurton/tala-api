@@ -12,7 +12,7 @@ router.get('/preposition/:preposition/:word', (req, res, next) => {
   let filter = getFilters(prepositionFilters, req.params.preposition, req.params.word)
 
   summary.filter(filter.word, filter.filters)
-    .then(results => res.send(prepositionFormatter(results, filter.preposition)))
+    .then(results => res.send(prepositionFormatter(results, filter.query)))
     .catch(next)
 })
 
@@ -20,7 +20,7 @@ router.get('/verb/:person/:verb', (req, res, next) => {
   let filter = getFilters(verbFilters, req.params.person, req.params.verb)
 
   summary.filter(req.params.verb, filter.filters)
-    .then(results => res.send(verbFormatter(results)))
+    .then(results => res.send(verbFormatter(results, filter.query)))
     .catch(next)
 })
 
