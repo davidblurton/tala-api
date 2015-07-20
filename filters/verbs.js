@@ -54,4 +54,59 @@ export default {
       ]
     }
   },
+  'við': {
+    wordClass: ['so'],
+    grammarTag: {
+      'present': [
+        'GM-FH-NT-1P-FT'
+      ],
+      'past': [
+        'GM-FH-ÞT-1P-FT'
+      ]
+    }
+  },
+  'þið': {
+    wordClass: ['so'],
+    grammarTag: {
+      'present': [
+        'GM-FH-NT-2P-FT'
+      ],
+      'past': [
+        'GM-FH-ÞT-2P-FT'
+      ]
+    }
+  },
+  'þeir': {
+    wordClass: ['so'],
+    grammarTag: {
+      'present': [
+        'GM-FH-NT-3P-FT'
+      ],
+      'past': [
+        'GM-FH-ÞT-3P-FT'
+      ]
+    }
+  },
+  'þær': {
+    wordClass: ['so'],
+    grammarTag: {
+      'present': [
+        'GM-FH-NT-3P-FT'
+      ],
+      'past': [
+        'GM-FH-ÞT-3P-FT'
+      ]
+    }
+  },
+  'þau': {
+    wordClass: ['so'],
+    grammarTag: {
+      'present': [
+        'GM-FH-NT-3P-FT'
+      ],
+      'past': [
+        'GM-FH-ÞT-3P-FT'
+      ]
+    }
+  },
 }
