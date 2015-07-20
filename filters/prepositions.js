@@ -73,22 +73,26 @@ const prepositions = {
   'vestan': 'EF',
 
   // Accusative or dative
-  // 'á'
-  // 'eftir'
-  // 'fyrir'
-  // 'í'
-  // 'með'
-  // 'undir'
-  // 'við'
-  // 'yfir'
+  'á': ['ÞF', 'ÞGF'],
+  'eftir': ['ÞF', 'ÞGF'],
+  'fyrir': ['ÞF', 'ÞGF'],
+  'í': ['ÞF', 'ÞGF'],
+  'með': ['ÞF', 'ÞGF'],
+  'undir': ['ÞF', 'ÞGF'],
+  'við': ['ÞF', 'ÞGF'],
+  'yfir': ['ÞF', 'ÞGF'],
 }
 
 let getFilters = query => {
   let grammarCase = prepositions[query]
 
   if (grammarCase) {
-    return filters[grammarCase]
+    if (!Array.isArray(grammarCase)) {
+      grammarCase = [grammarCase]
+    }
+
+    return grammarCase.map(gc => filters[gc])
   }
 }
 
-export default getFilters;
+export default getFilters

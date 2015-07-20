@@ -1,4 +1,4 @@
-export default {
+const filters = {
   'ég': {
     wordClass: ['so'],
     grammarTag: {
@@ -110,3 +110,9 @@ export default {
     }
   },
 }
+
+let getFilters = query => {
+  return filters[query]
+}
+
+export default getFilters;

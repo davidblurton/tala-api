@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import words from '../models/database'
-import filters from '../filters/old'
 
 export default {
   // Generates a list of autocompletion suggestions.
@@ -27,20 +26,5 @@ export default {
       .then(results => _.chain(results).pluck('binId').unique().value())
       .then(ids => Promise.all(ids.map(id => words.lookup(id))))
       .then(results => _.flatten(results))
-  },
-
-  // Find a related word with the provided filters.
-  // Supports filtering on grammarTag, wordClass.
-  filter(word, queries) {
-    let wordClass = queries.wordClass
-    let tags = queries.grammarTag
-
-    if (!_.isArray(wordClass)) {
-      wordClass = [wordClass]
-    }
-
-    return this.related(word)
-      .then(results => filters.any(results, 'wordClass', wordClass))
-      .then(results => filters.includes(results, 'grammarTag', tags))
   }
 }
