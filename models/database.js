@@ -1,6 +1,5 @@
 import level from 'level'
 import concat from './concat-stream-promise'
-import streamTransformer from './streamTransformer'
 import wordMapper from './wordMapper'
 
 const END = '\xff'
@@ -24,6 +23,12 @@ let database = {
 }
 
 export default {
-  search: prefix => concat(database.search(prefix).pipe(streamTransformer(wordMapper))),
-  lookup: word => concat(database.lookup(word).pipe(streamTransformer(wordMapper)))
+  search(prefix) {
+    return concat(database.search(prefix))
+      .then(results => results.map(wordMapper))
+  },
+  lookup(word) {
+    return concat(database.lookup(word))
+      .then(results => results.map(wordMapper))
+  }
 }
