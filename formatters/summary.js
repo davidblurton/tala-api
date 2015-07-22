@@ -6,6 +6,8 @@ export default (results, query) => {
   }
 
   return results.map(result =>
-    _.mapValues(result, values => values.map(x => x && `${query} ${x.wordForm}`))
+    _.mapValues(result, values =>
+      values.map(x => x && `${query} ${x.wordForm}`)
+    )
   )
 }
