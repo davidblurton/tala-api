@@ -35,8 +35,8 @@ router.get('/summary/:phrase', (req, res, next) => {
       .then(results => res.send(results))
       .catch(next)
   } else {
-    let modifier = parsed[0];
-    let word = parsed[1];
+    let modifier = parsed[0].toLowerCase();
+    let word = parsed[1].toLowerCase();
 
     let prepositionFilter = getPrepositionFilters(modifier)
 
