@@ -2,7 +2,9 @@ import level from 'level'
 import concat from './concat-stream-promise'
 import wordMapper from './wordMapper'
 
+const SEPARATOR = '~'
 const END = '\xff'
+
 let db = level(process.cwd() + '/db')
 
 let database = {
@@ -16,8 +18,8 @@ let database = {
 
   lookup(word) {
     return db.createKeyStream({
-      gte: word + '~',
-      lt: word + '~' + END
+      gte: word + SEPARATOR,
+      lt: word + SEPARATOR + END
     })
   }
 }

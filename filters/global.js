@@ -1,10 +1,8 @@
-export default (results, queries) => {
-  let wordClass = queries.wordClass
-  let tag = queries.grammarTag
-  let limit = queries.limit
+export default (results, params) => {
+  let {wordClass, tag, limit} = params
 
   return results
-    .filter(x => wordClass ? x.wordClass === wordClass : true)
-    .filter(x => tag ? x.grammarTag === tag : true)
+    .filter(word => wordClass ? word.wordClass === wordClass : true)
+    .filter(word => tag ? word.grammarTag === tag : true)
     .slice(0, limit)
 }

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import declensions from '../controllers/declensions'
-import format from '../formatters/result'
+import format from '../formatters/word'
 import filter from '../filters/global'
 
 let router = new Router()
