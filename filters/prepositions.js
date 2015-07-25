@@ -22,6 +22,16 @@ const filters = {
       'plural': ['EFFT', 'EFFTgr'],
     }
   },
+
+  'ÞFÞGF': {
+    wordClass: ['hk', 'kk', 'kvk', 'pfn'],
+    grammarTag: {
+      'singular - accusative': ['ÞFET', 'ÞFETgr'],
+      'plural - accusative': ['ÞFFT', 'ÞFFTgr'],
+      'singular - dative': ['ÞGFET', 'ÞGFETgr'],
+      'plural - dative': ['ÞGFFT', 'ÞGFFTgr']
+    }
+  },
 }
 
 const prepositions = {
@@ -73,25 +83,21 @@ const prepositions = {
   'vestan': 'EF',
 
   // Accusative or dative
-  'á': ['ÞF', 'ÞGF'],
-  'eftir': ['ÞF', 'ÞGF'],
-  'fyrir': ['ÞF', 'ÞGF'],
-  'í': ['ÞF', 'ÞGF'],
-  'með': ['ÞF', 'ÞGF'],
-  'undir': ['ÞF', 'ÞGF'],
+  'á': 'ÞFÞGF',
+  'eftir': 'ÞFÞGF',
+  'fyrir': 'ÞFÞGF',
+  'í': 'ÞFÞGF',
+  'með': 'ÞFÞGF',
+  'undir': 'ÞFÞGF',
   // 'við': ['ÞF', 'ÞGF'],
-  'yfir': ['ÞF', 'ÞGF'],
+  'yfir': 'ÞFÞGF',
 }
 
 let getFilters = query => {
   let grammarCase = prepositions[query]
 
   if (grammarCase) {
-    if (!Array.isArray(grammarCase)) {
-      grammarCase = [grammarCase]
-    }
-
-    return grammarCase.map(gc => filters[gc])
+    return filters[grammarCase]
   }
 }
 

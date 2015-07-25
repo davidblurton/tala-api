@@ -42,13 +42,11 @@ router.get('/summary/:phrase', (req, res, next) => {
 
     if (prepositionFilter) {
       // Do preposition + noun
-      Promise.all(prepositionFilter.map(filter => {
-        let {wordClass, grammarTag} = filter;
+      let {wordClass, grammarTag} = prepositionFilter;
 
-        return summary.related(word)
-          .then(results => oldFilters.any(results, 'wordClass', wordClass))
-          .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
-      }))
+      summary.related(word)
+        .then(results => oldFilters.any(results, 'wordClass', wordClass))
+        .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
         .then(results => res.send(summaryFormatter(results, modifier)))
         .catch(next)
     } else {

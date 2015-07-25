@@ -8,6 +8,10 @@ export default {
   },
 
   includes(array, property, values) {
+    if (array.length === 0) {
+      return []
+    }
+
     if (_.isPlainObject(values)) {
       return _.mapValues(values, prop => this.each(array, 'grammarTag', prop))
     } else {

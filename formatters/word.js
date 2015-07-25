@@ -5,6 +5,6 @@ export default (results, lang) => {
   return {
     count: results.length,
     wordClasses: _.unique(results.map(x => x.wordClass)),
-    results: results.map(result => translate(result))
+    results: results.map(result => translate(result, lang))
   }
 }
