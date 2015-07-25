@@ -7,7 +7,7 @@ export default (results, query) => {
 
   return results.map(result =>
     _.mapValues(result, values =>
-      values.map(x => x && `${query} ${x.wordForm}`)
+      values.filter(x => x).map(x => x && `${query} ${x.wordForm}`)
     )
   )
 }
