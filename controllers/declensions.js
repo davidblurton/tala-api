@@ -28,7 +28,7 @@ export default {
   related(word) {
     return database.lookup(word)
       .then(results => _.chain(results).pluck('binId').unique().value())
-      .then(ids => Promise.all(ids.map(id => words.lookup(id))))
+      .then(ids => Promise.all(ids.map(id => database.lookup(id))))
       .then(results => _.flatten(results))
   },
 }
