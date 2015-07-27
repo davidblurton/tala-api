@@ -4,10 +4,7 @@ import declensions from '../controllers/declensions'
 import getVerbFilters from '../filters/verbs'
 import getPrepositionFilters from '../filters/prepositions'
 import summaryFormatter from '../formatters/summary'
-import prepositionFormatter from '../formatters/preposition'
 import oldFilters from '../filters/old'
-
-import _ from 'lodash'
 
 let router = new Router()
 
@@ -23,43 +20,43 @@ router.get('/suggestions/:prefix', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/summary/:phrase', (req, res, next) => {
+router.get('/verb/:phrase', (req, res, next) => {
   let parsed = req.params.phrase.split(' ')
+  let modifier = (parsed[0] || '').toLowerCase();
+  let word = (parsed[1] || '').toLowerCase();
 
-  if (parsed.length === 1) {
-    // If it's a verb, show verb summary
-    // If it's a noun, show noun summary
-    // If it's a preposition, show meaning and what case it directs
+  let filters = getVerbFilters(modifier)
 
-    declensions.find(parsed[0])
-      .then(results => res.send(results))
+  if (filters) {
+    let {wordClass, grammarTag} = filters;
+
+    summary.related(word)
+      .then(results => oldFilters.any(results, 'wordClass', wordClass))
+      .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
+      .then(results => res.send(summaryFormatter(results, modifier)))
       .catch(next)
   } else {
-    let modifier = parsed[0].toLowerCase();
-    let word = parsed[1].toLowerCase();
+    res.send([])
+  }
+})
 
-    let prepositionFilter = getPrepositionFilters(modifier)
+router.get('/preposition/:phrase', (req, res, next) => {
+  let parsed = req.params.phrase.split(' ')
+  let modifier = (parsed[0] || '').toLowerCase();
+  let word = (parsed[1] || '').toLowerCase();
 
-    if (prepositionFilter) {
-      // Do preposition + noun
-      let {wordClass, grammarTag} = prepositionFilter;
+  let filters = getPrepositionFilters(modifier)
 
-      summary.related(word)
-        .then(results => oldFilters.any(results, 'wordClass', wordClass))
-        .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
-        .then(results => res.send(summaryFormatter(results, modifier)))
-        .catch(next)
-    } else {
-      // Do pronoun + verb match
-      let verbFilter = getVerbFilters(modifier)
-      let {wordClass, grammarTag} = verbFilter;
+  if (filters) {
+    let {wordClass, grammarTag} = filters;
 
-      summary.related(word)
-        .then(results => oldFilters.any(results, 'wordClass', wordClass))
-        .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
-        .then(results => res.send(summaryFormatter(results, modifier)))
-        .catch(next)
-    }
+    summary.related(word)
+      .then(results => oldFilters.any(results, 'wordClass', wordClass))
+      .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
+      .then(results => res.send(summaryFormatter(results, modifier)))
+      .catch(next)
+  } else {
+    res.send([])
   }
 })
 

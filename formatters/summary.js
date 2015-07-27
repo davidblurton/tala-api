@@ -5,9 +5,14 @@ export default (results, query) => {
     results = [results]
   }
 
-  return results.map(result =>
+  let formattedResults = results.map(result =>
     _.mapValues(result, values =>
       values.filter(x => x).map(x => x && `${query} ${x.wordForm}`)
     )
   )
+
+  return {
+    query: query,
+    results: formattedResults
+  }
 }
