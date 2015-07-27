@@ -89,7 +89,7 @@ const prepositions = {
   'í': 'ÞFÞGF',
   'með': 'ÞFÞGF',
   'undir': 'ÞFÞGF',
-  // 'við': ['ÞF', 'ÞGF'],
+  'við': 'ÞFÞGF',
   'yfir': 'ÞFÞGF',
 }
 
