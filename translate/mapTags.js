@@ -22,7 +22,7 @@ let lookup = {
   'fn': ['gender', 'case', 'number'],
 
   // Numeral
-  'to': ['gender', 'case']
+  'to': ['gender', 'case', 'number']
 }
 
 export default (grammarTag, wordClass) => {
