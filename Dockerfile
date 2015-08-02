@@ -4,7 +4,7 @@ WORKDIR /code
 
 ADD . /code
 
-RUN npm install
+RUN npm config set production && npm install
 
 EXPOSE 8000
 
