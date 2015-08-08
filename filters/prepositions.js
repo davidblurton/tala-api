@@ -1,3 +1,5 @@
+import {parse, toString} from '../translate/parser'
+
 const filters = {
   'ÞF': {
     wordClass: ['hk', 'kk', 'kvk', 'pfn'],
@@ -93,11 +95,24 @@ const prepositions = {
   'yfir': 'ÞFÞGF',
 }
 
-let getFilters = query => {
+let getFilters = (query, nouns) => {
   let grammarCase = prepositions[query]
 
   if (grammarCase) {
-    return filters[grammarCase]
+    return nouns.map(noun => noun.grammarTag).map(grammarTag => {
+      let parsed = parse(grammarTag)
+      parsed.grammarCase = grammarCase
+      let newGrammarTag = toString(parsed)
+
+      return {
+        wordClass: ['hk', 'kk', 'kvk'],
+        grammarTag: {
+          'accusative': [newGrammarTag],
+        }
+      }
+    })[0]
+  } else {
+    throw new Error('preposition not found')
   }
 }
 

@@ -2,9 +2,7 @@ import { Router } from 'express'
 import summary from '../controllers/summary'
 import declensions from '../controllers/declensions'
 import getVerbFilters from '../filters/verbs'
-import getPrepositionFilters from '../filters/prepositions'
 import summaryFormatter from '../formatters/summary'
-import oldFilters from '../filters/old'
 
 let router = new Router()
 
@@ -41,23 +39,9 @@ router.get('/verb/:phrase', (req, res, next) => {
 })
 
 router.get('/preposition/:phrase', (req, res, next) => {
-  let parsed = req.params.phrase.split(' ')
-  let modifier = (parsed[0] || '').toLowerCase();
-  let word = (parsed[1] || '').toLowerCase();
-
-  let filters = getPrepositionFilters(modifier)
-
-  if (filters) {
-    let {wordClass, grammarTag} = filters;
-
-    summary.related(word)
-      .then(results => oldFilters.any(results, 'wordClass', wordClass))
-      .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
-      .then(results => res.send(summaryFormatter(results, modifier)))
-      .catch(next)
-  } else {
-    res.send([])
-  }
+  summary.preposition(req.params.phrase)
+    .then(results => res.send(summaryFormatter(results, modifier)))
+    .catch(next)
 })
 
 export default router

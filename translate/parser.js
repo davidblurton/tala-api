@@ -1,15 +1,17 @@
+const features = ['grammarCase', 'number', 'article']
+
 const parser = {
-  case(tag) {
-    return ['NF', 'ÞF', 'EF', 'ÞG'].filter(case => tag.includes(case))[0]
-  }
+  grammarCase(tag) {
+    return ['NF', 'ÞF', 'ÞGF', 'EF'].filter(x => tag.includes(x))[0]
+  },
 
   gender(tag) {
-    return ['KK', 'KVK', 'HK'].filter(gender => tag.includes(gender))[0]
-  }
+    return ['KK', 'KVK', 'HK'].filter(x => tag.includes(x))[0]
+  },
 
   number(tag) {
-    return ['ET', 'FT'].filter(number => tag.includes(number))[0]
-  }
+    return ['ET', 'FT'].filter(x => tag.includes(x))[0]
+  },
 
   article(tag) {
     if (tag.endsWith('gr')) {
@@ -20,15 +22,15 @@ const parser = {
   }
 }
 
-export function toString(tagMap) {
-  return tagMap.entries().join('')
+export function toString(tags) {
+  return features.map(feature => tags[feature]).join('')
 }
 
 export function parse(grammarTag) {
-  var result = new Map()
+  var result = {}
 
-  ['case', 'number', 'article'].forEach(x => {
-    result.set(x, parser[x].call(grammarTag))
+  features.forEach(x => {
+    result[x] = parser[x].call(null, grammarTag)
   })
 
   return result
