@@ -1,6 +1,4 @@
-import {parse, toString} from '../grammar/parser'
-
-const supportClasses = ['hk', 'kk', 'kvk']
+import {parse, toString, supportClasses} from '../grammar/parser'
 
 const filters = {
   'ÞF': {
@@ -88,32 +86,43 @@ const prepositions = {
 
   // Accusative or dative
   'á': ['ÞF', 'ÞGF'],
-  'eftir': 'ÞFÞGF',
-  'fyrir': 'ÞFÞGF',
-  'í': 'ÞFÞGF',
-  'með': 'ÞFÞGF',
-  'undir': 'ÞFÞGF',
-  'við': 'ÞFÞGF',
-  'yfir': 'ÞFÞGF',
+  'eftir': ['ÞF', 'ÞGF'],
+  'fyrir': ['ÞF', 'ÞGF'],
+  'í': ['ÞF', 'ÞGF'],
+  'með': ['ÞF', 'ÞGF'],
+  'undir': ['ÞF', 'ÞGF'],
+  'við': ['ÞF', 'ÞGF'],
+  'yfir': ['ÞF', 'ÞGF'],
 }
 
 export default (query, words) => {
-  let grammarCase = prepositions[query]
+  let grammarCases = prepositions[query]
 
-  if(!grammarCase) {
+  if (!grammarCases) {
     throw new Error('preposition not found')
   }
 
-  return words.map(noun => {
+  if (!Array.isArray(grammarCases)) {
+    grammarCases = [grammarCases]
+  }
+
+  return grammarCases.map(grammarCase => {
+    let noun = words.filter(x => supportClasses.includes(x.wordClass))[0]
+
+    if(!noun) {
+      throw new Error('No supported words found')
+    }
+
     let parsed = parse(noun.wordClass, noun.grammarTag)
     parsed.grammarCase = grammarCase
     let newGrammarTag = toString(noun.wordClass, parsed)
 
-    return {
-      wordClass: noun.wordClass,
-      grammarTag: {
-        'ÞF': newGrammarTag,
-      }
-    }
-  })[0]
+    let res = {}
+
+    res.wordClass = noun.wordClass
+    res.grammarTag = {}
+    res.grammarTag[grammarCase] = newGrammarTag
+
+    return res
+  })
 }

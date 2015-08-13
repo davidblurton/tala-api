@@ -1,10 +1,11 @@
 import _ from 'lodash';
+import translate from '../translate/translate'
 
-export default (results, query) => {
+export default (results, query, lang) => {
   let formattedResults = _.mapValues(results, x => `${query} ${x.wordForm}`)
 
   return {
     query: query,
-    results: [formattedResults]
+    results: [translate(formattedResults, lang)],
   }
 }

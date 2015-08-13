@@ -39,7 +39,7 @@ router.get('/verb/:phrase', (req, res, next) => {
 })
 
 router.get('/preposition/:phrase', (req, res, next) => {
-  summary.preposition(req.params.phrase)
+  summary.preposition(req.params.phrase, req.query.lang)
     .then(results => res.send(results))
     .catch(next)
 })

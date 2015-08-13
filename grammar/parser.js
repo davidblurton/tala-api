@@ -1,3 +1,5 @@
+export const supportClasses = ['hk', 'kk', 'kvk', 'to']
+
 const featuresMap = {
   'hk': ['grammarCase', 'number', 'article'],
   'kk': ['grammarCase', 'number', 'article'],
