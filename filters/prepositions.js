@@ -1,5 +1,7 @@
 import {parse, toString} from '../translate/parser'
 
+const supportClasses = ['hk', 'kk', 'kvk']
+
 const filters = {
   'ÞF': {
     wordClass: ['hk', 'kk', 'kvk', 'pfn'],
@@ -85,7 +87,7 @@ const prepositions = {
   'vestan': 'EF',
 
   // Accusative or dative
-  'á': 'ÞFÞGF',
+  'á': ['ÞF', 'ÞGF'],
   'eftir': 'ÞFÞGF',
   'fyrir': 'ÞFÞGF',
   'í': 'ÞFÞGF',
@@ -95,25 +97,29 @@ const prepositions = {
   'yfir': 'ÞFÞGF',
 }
 
-let getFilters = (query, nouns) => {
+export default (query, words) => {
   let grammarCase = prepositions[query]
 
-  if (grammarCase) {
-    return nouns.map(noun => noun.grammarTag).map(grammarTag => {
-      let parsed = parse(grammarTag)
-      parsed.grammarCase = grammarCase
-      let newGrammarTag = toString(parsed)
-
-      return {
-        wordClass: ['hk', 'kk', 'kvk'],
-        grammarTag: {
-          'accusative': [newGrammarTag],
-        }
-      }
-    })[0]
-  } else {
+  if(!grammarCase) {
     throw new Error('preposition not found')
   }
-}
 
-export default getFilters
+  let nouns = words.filter(x => supportClasses.includes(x.wordClass))
+
+  if (nouns.length === 0) {
+    throw new Error('No matching word classes could be declined. Must have a case.')
+  }
+
+  return nouns.map(noun => {
+    let parsed = parse(noun.grammarTag)
+    parsed.grammarCase = grammarCase
+    let newGrammarTag = toString(parsed)
+
+    return {
+      wordClass: noun.wordClass,
+      grammarTag: {
+        'ÞF': newGrammarTag,
+      }
+    }
+  })[0]
+}

@@ -29,5 +29,8 @@
     "jscs": "^1.13.1",
     "mocha": "^2.2.5",
     "mocha-babel": "^3.0.0"
+  },
+  "babel": {
+    "stage": 0
   }
 }

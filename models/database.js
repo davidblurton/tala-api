@@ -24,13 +24,14 @@ let database = {
   }
 }
 
-export default {
-  search(prefix) {
-    return concat(database.search(prefix))
-      .then(results => results.map(wordMapper))
-  },
-  lookup(word) {
-    return concat(database.lookup(word))
-      .then(results => results.map(wordMapper))
-  }
+async function search(prefix) {
+  let results = await concat(database.search(prefix))
+  return results.map(wordMapper)
 }
+
+async function lookup(word) {
+  let results = await concat(database.lookup(word))
+  return results.map(wordMapper)
+}
+
+export default {search, lookup}

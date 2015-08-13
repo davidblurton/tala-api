@@ -40,7 +40,7 @@ router.get('/verb/:phrase', (req, res, next) => {
 
 router.get('/preposition/:phrase', (req, res, next) => {
   summary.preposition(req.params.phrase)
-    .then(results => res.send(summaryFormatter(results, modifier)))
+    .then(results => res.send(results))
     .catch(next)
 })
 

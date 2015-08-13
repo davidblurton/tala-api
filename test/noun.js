@@ -21,12 +21,12 @@ var testCases = [
 ]
 
 describe('Parser', () => {
-  describe('Nouns', () => {
-    it('should parse and toString nouns', () => {
-      testCases.forEach(grammarTag => {
-        var parsed = parse(grammarTag)
-        assert.equal(toString(parsed), grammarTag)
-      })
+
+  it('should parse nouns', () => {
+    testCases.forEach(grammarTag => {
+      var parsed = parse(grammarTag)
+      assert.equal(toString(parsed), grammarTag)
     })
   })
+
 })
