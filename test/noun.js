@@ -1,5 +1,5 @@
 import assert from 'assert'
-import {parse, toString} from '../translate/parser';
+import {parse, toString} from '../grammar/parser';
 
 var testCases = [
   'ÞFET',

@@ -1,4 +1,4 @@
-import {parse, toString} from '../translate/parser'
+import {parse, toString} from '../grammar/parser'
 
 const supportClasses = ['hk', 'kk', 'kvk']
 
@@ -104,16 +104,10 @@ export default (query, words) => {
     throw new Error('preposition not found')
   }
 
-  let nouns = words.filter(x => supportClasses.includes(x.wordClass))
-
-  if (nouns.length === 0) {
-    throw new Error('No matching word classes could be declined. Must have a case.')
-  }
-
-  return nouns.map(noun => {
-    let parsed = parse(noun.grammarTag)
+  return words.map(noun => {
+    let parsed = parse(noun.wordClass, noun.grammarTag)
     parsed.grammarCase = grammarCase
-    let newGrammarTag = toString(parsed)
+    let newGrammarTag = toString(noun.wordClass, parsed)
 
     return {
       wordClass: noun.wordClass,
