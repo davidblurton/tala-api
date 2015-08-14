@@ -50,17 +50,12 @@ async function preposition(words, lang) {
 
   let filters = getPrepositionFilters(modifier, nouns)
 
-  return filters.map(filter =>  {
+  let matching = filters.map(filter =>  {
     let {wordClass, grammarTag} = filter
-
-    let matching = includes(results, 'grammarTag', grammarTag)
-
-    return summaryFormatter(matching, modifier, lang)
+    return includes(results, 'grammarTag', grammarTag)
   })
 
-
-
-
+  return summaryFormatter(matching, modifier, lang)
 }
 
 export default {suggestions, multiple, related, preposition}
