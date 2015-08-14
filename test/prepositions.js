@@ -15,4 +15,14 @@ describe('Prepositions', () => {
         { "ÞGF": "í búðinni" }
       ]))
   })
+
+  it('should return matching proper nouns', () => {
+    return summary.preposition('til Ægir')
+      .then(results => assert.deepEqual(results.results, [{ "EF": "til Ægis" }]))
+  })
+
+  it('should return matching pronouns', () => {
+    return summary.preposition('frá hann')
+      .then(results => assert.deepEqual(results.results, [{ "ÞGF": "frá honum" }]))
+  })
 })

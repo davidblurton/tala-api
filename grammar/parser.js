@@ -1,10 +1,11 @@
-export const supportedClasses = ['hk', 'kk', 'kvk', 'to']
+export const supportedClasses = ['hk', 'kk', 'kvk', 'to', 'pfn']
 
 const featuresMap = {
   'hk': ['grammarCase', 'number', 'article'],
   'kk': ['grammarCase', 'number', 'article'],
   'kvk': ['grammarCase', 'number', 'article'],
   'to': ['gender', 'grammarCase', 'number'],
+  'pfn': ['grammarCase', 'number']
 }
 
 const parser = {
@@ -36,12 +37,17 @@ function isNoun(wordClass) {
 export function toString(wordClass, tags) {
   if (isNoun(wordClass)) {
     let {grammarCase, number, article} = tags
-    return `${grammarCase}${number}${article}`
+    return grammarCase + number + article
   }
 
   if (wordClass === 'to') {
     let {gender, grammarCase, number} = tags
     return `${gender}_${grammarCase}${number}`
+  }
+
+  if (wordClass === 'pfn') {
+    let {grammarCase, number} = tags
+    return grammarCase + number
   }
 }
 
@@ -49,7 +55,7 @@ export function parse(wordClass, grammarTag) {
   let features = featuresMap[wordClass]
 
   if (!features) {
-    throw new Error(`Unsupported word class. Supported word classes: ${Object.keys(featuresMap).join()}`)
+    throw new Error('Unsupported word class.')
   }
 
   var result = {}
