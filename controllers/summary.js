@@ -51,7 +51,26 @@ async function preposition(words, lang) {
   let filters = getPrepositionFilters(modifier, nouns)
 
   let matching = filters.map(filter =>  {
-    let {wordClass, grammarTag} = filter
+    let {grammarTag} = filter
+    return includes(results, 'grammarTag', grammarTag)
+  })
+
+  return summaryFormatter(matching, modifier, lang)
+}
+
+async function verb(words, lang) {
+  let parsed = req.params.phrase.split(' ')
+  let modifier = (parsed[0] || '').toLowerCase();
+  let word = (parsed[1] || '').toLowerCase();
+
+  let filters = getVerbFilters(modifier)
+
+  let {wordClass, grammarTag} = filters;
+
+  let results = await summary.related(word)
+
+  let matching = filters.map(filter =>  {
+    let {grammarTag} = filter
     return includes(results, 'grammarTag', grammarTag)
   })
 
