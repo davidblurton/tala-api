@@ -1,4 +1,4 @@
-export const supportClasses = ['hk', 'kk', 'kvk', 'to']
+export const supportedClasses = ['hk', 'kk', 'kvk', 'to']
 
 const featuresMap = {
   'hk': ['grammarCase', 'number', 'article'],
@@ -49,7 +49,7 @@ export function parse(wordClass, grammarTag) {
   let features = featuresMap[wordClass]
 
   if (!features) {
-    throw new Error(`Unsupported word class. Supported word classes: ${Object.keys(featureMap).join()}`)
+    throw new Error(`Unsupported word class. Supported word classes: ${Object.keys(featuresMap).join()}`)
   }
 
   var result = {}

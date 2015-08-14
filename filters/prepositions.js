@@ -1,40 +1,4 @@
-import {parse, toString, supportClasses} from '../grammar/parser'
-
-const filters = {
-  'ÞF': {
-    wordClass: ['hk', 'kk', 'kvk', 'pfn'],
-    grammarTag: {
-      'singular': ['ÞFET', 'ÞFETgr'],
-      'plural': ['ÞFFT', 'ÞFFTgr'],
-    }
-  },
-
-  'ÞGF': {
-    wordClass: ['hk', 'kk', 'kvk', 'pfn'],
-    grammarTag: {
-      'singular': ['ÞGFET', 'ÞGFETgr'],
-      'plural': ['ÞGFFT', 'ÞGFFTgr'],
-    }
-  },
-
-  'EF': {
-    wordClass: ['hk', 'kk', 'kvk', 'pfn'],
-    grammarTag: {
-      'singular': ['EFET', 'EFETgr'],
-      'plural': ['EFFT', 'EFFTgr'],
-    }
-  },
-
-  'ÞFÞGF': {
-    wordClass: ['hk', 'kk', 'kvk', 'pfn'],
-    grammarTag: {
-      'singular - accusative': ['ÞFET', 'ÞFETgr'],
-      'plural - accusative': ['ÞFFT', 'ÞFFTgr'],
-      'singular - dative': ['ÞGFET', 'ÞGFETgr'],
-      'plural - dative': ['ÞGFFT', 'ÞGFFTgr']
-    }
-  },
-}
+import {parse, toString, supportedClasses} from '../grammar/parser'
 
 const prepositions = {
   // Accusative
@@ -107,19 +71,19 @@ export default (query, words) => {
   }
 
   return grammarCases.map(grammarCase => {
-    let noun = words.filter(x => supportClasses.includes(x.wordClass))[0]
+    let word = words.filter(x => supportedClasses.includes(x.wordClass))[0]
 
-    if(!noun) {
+    if(!word) {
       throw new Error('No supported words found')
     }
 
-    let parsed = parse(noun.wordClass, noun.grammarTag)
+    let parsed = parse(word.wordClass, word.grammarTag)
     parsed.grammarCase = grammarCase
-    let newGrammarTag = toString(noun.wordClass, parsed)
+    let newGrammarTag = toString(word.wordClass, parsed)
 
     let res = {}
 
-    res.wordClass = noun.wordClass
+    res.wordClass = word.wordClass
     res.grammarTag = {}
     res.grammarTag[grammarCase] = newGrammarTag
 

@@ -1,112 +1,92 @@
 const filters = {
   'ég': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-1P-ET'
-      ],
-      'past': [
-        'GM-FH-ÞT-1P-ET'
-      ]
+      'present': 'GM-FH-NT-1P-ET',
+      'past': 'GM-FH-ÞT-1P-ET',
     }
   },
   'þú': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-2P-ET'
-      ],
-      'past': [
-        'GM-FH-ÞT-2P-ET'
-      ]
+      'present': 'GM-FH-NT-2P-ET',
+      'past': 'GM-FH-ÞT-2P-ET',
     }
   },
   'hann': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-ET'
-      ],
-      'past': [
-        'GM-FH-ÞT-3P-ET'
-      ]
+      'present': 'GM-FH-NT-3P-ET',
+      'past': 'GM-FH-ÞT-3P-ET',
     }
   },
   'hún': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-ET'
-      ],
-      'past': [
+      'present': 'GM-FH-NT-3P-ET',
+      'past':
         'GM-FH-ÞT-3P-ET'
-      ]
+
     }
   },
   'það': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-ET'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-3P-ET' ,
+      'past':
         'GM-FH-ÞT-3P-ET'
-      ]
+
     }
   },
   'við': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-1P-FT'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-1P-FT' ,
+      'past':
         'GM-FH-ÞT-1P-FT'
-      ]
+
     }
   },
   'þið': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-2P-FT'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-2P-FT' ,
+      'past':
         'GM-FH-ÞT-2P-FT'
-      ]
+
     }
   },
   'þeir': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-FT'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-3P-FT' ,
+      'past':
         'GM-FH-ÞT-3P-FT'
-      ]
+
     }
   },
   'þær': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-FT'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-3P-FT' ,
+      'past':
         'GM-FH-ÞT-3P-FT'
-      ]
+
     }
   },
   'þau': {
-    wordClass: ['so'],
+    wordClass: 'so',
     grammarTag: {
-      'present': [
-        'GM-FH-NT-3P-FT'
-      ],
-      'past': [
+      'present':
+        'GM-FH-NT-3P-FT' ,
+      'past':
         'GM-FH-ÞT-3P-FT'
-      ]
+
     }
   },
 }

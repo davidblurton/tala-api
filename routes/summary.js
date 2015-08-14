@@ -4,6 +4,17 @@ import declensions from '../controllers/declensions'
 import getVerbFilters from '../filters/verbs'
 import summaryFormatter from '../formatters/summary'
 
+function includes(array, property, values) {
+  return Object.keys(values).map(key => {
+    let result = {}
+    let value = values[key]
+
+    result[key] = array.filter(x => x[property] === value)[0]
+
+    return result
+  })[0]
+}
+
 let router = new Router()
 
 router.get('/multiple/:word', (req, res, next) => {
@@ -29,9 +40,9 @@ router.get('/verb/:phrase', (req, res, next) => {
     let {wordClass, grammarTag} = filters;
 
     summary.related(word)
-      .then(results => oldFilters.any(results, 'wordClass', wordClass))
-      .then(results => oldFilters.includes(results, 'grammarTag', grammarTag))
-      .then(results => res.send(summaryFormatter(results, modifier)))
+      .then(results => results.filter(x => x.wordClass === wordClass))
+      .then(results => includes(results, 'grammarTag', grammarTag))
+      .then(results => res.send(summaryFormatter([results], modifier)))
       .catch(next)
   } else {
     res.send([])
