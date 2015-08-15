@@ -14,20 +14,21 @@ function suggestions(prefix, limit) {
 }
 
 // Are there matching words from multiple headwords.
-function multiple(word) {
-  return database.lookup(word)
-    .then(results => {
-      let ids = results.map(result => result.binId)
-      return !ids.every(id => id === ids[0])
-    })
+async function multiple(word) {
+  let results = await database.lookup(word)
+
+  let ids = results.map(result => result.binId)
+  return !ids.every(id => id === ids[0])
 }
 
 // Find all words from the same headword.
-function related(word) {
-  return database.lookup(word)
-    .then(results => _.chain(results).pluck('binId').unique().value())
-    .then(ids => Promise.all(ids.map(id => database.lookup(id))))
-    .then(results => _.flatten(results))
+async function related(word) {
+  let words = await database.lookup(word)
+
+  let ids = _.chain(words).pluck('binId').unique().value()
+  let related = await* ids.map(database.lookup)
+
+  return _.flatten(related)
 }
 
 async function preposition(modifier, word) {
