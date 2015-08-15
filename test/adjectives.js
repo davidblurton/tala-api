@@ -24,4 +24,13 @@ describe('Adjectives', () => {
       "E": "stærsti hesturinn",
     })
   })
+
+  it('should work for determiners', async function() {
+    let results = await summary.adjective('annar', 'gaffal')
+    let formatted = adjectiveFormatter(results, 'gaffal')
+
+    assert.deepEqual(formatted.results, {
+      "determiner": "annan gaffal",
+    })
+  })
 })
