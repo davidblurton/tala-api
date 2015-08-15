@@ -1,14 +1,15 @@
 import _ from 'lodash'
 import database from '../models/database'
 import getPrepositionFilters from '../filters/prepositions'
+import getVerbFilters from '../filters/verbs'
 import summaryFormatter from '../formatters/summary'
 
-function includes(array, property, values) {
+function includes(array, values) {
   return Object.keys(values).map(key => {
     let result = {}
     let value = values[key]
 
-    result[key] = array.filter(x => x[property] === value)[0]
+    result[key] = array.filter(x => x.grammarTag === value)[0]
 
     return result
   })[0]
@@ -44,29 +45,17 @@ async function preposition(modifier, word) {
   let nouns = await database.lookup(word)
   let results = await this.related(word)
 
-  let filters = getPrepositionFilters(modifier, nouns)
+  let {wordClass, grammarTag} = getPrepositionFilters(modifier, nouns)
 
-  return filters.map(filter =>  {
-    let {grammarTag} = filter
-    return includes(results, 'grammarTag', grammarTag)
-  })
+  return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 }
 
-async function verb(words, lang) {
-  let parsed = req.params.phrase.split(' ')
-  let modifier = (parsed[0] || '').toLowerCase();
-  let word = (parsed[1] || '').toLowerCase();
+async function verb(modifier, word) {
+  let results = await this.related(word)
 
-  let filters = getVerbFilters(modifier)
+  let {wordClass, grammarTag} = getVerbFilters(modifier)
 
-  let {wordClass, grammarTag} = filters;
-
-  let results = await summary.related(word)
-
-  return filters.map(filter =>  {
-    let {grammarTag} = filter
-    return includes(results, 'grammarTag', grammarTag)
-  })
+  return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 }
 
-export default {suggestions, multiple, related, preposition}
+export default {suggestions, multiple, related, preposition, verb}

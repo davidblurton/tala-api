@@ -40,15 +40,9 @@ router.get('/suggestions/:prefix', (req, res, next) => {
 router.get('/verb/:phrase', (req, res, next) => {
   let {modifier, word} = split(req.params.phrase)
 
-  let filters = getVerbFilters(modifier)
-
-  let {wordClass, grammarTag} = filters;
-
-  summary.related(word)
-    .then(results => results.filter(x => x.wordClass === wordClass))
-    .then(results => includes(results, 'grammarTag', grammarTag))
-    .then(results => res.json(summaryFormatter([results], modifier)))
-    .catch(next)
+  let results = await summary.verb(modifier, word)
+  let formattedResults = summaryFormatter(results, req.query.lang)
+  res.json(formattedResults)
 })
 
 router.get('/preposition/:phrase', async function(req, res, next) {
