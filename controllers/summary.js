@@ -4,17 +4,6 @@ import getPrepositionFilters from '../filters/prepositions'
 import getVerbFilters from '../filters/verbs'
 import summaryFormatter from '../formatters/summary'
 
-function includes(array, values) {
-  return Object.keys(values).map(key => {
-    let result = {}
-    let value = values[key]
-
-    result[key] = array.filter(x => x.grammarTag === value)[0]
-
-    return result
-  })[0]
-}
-
 // Generates a list of autocompletion suggestions.
 function suggestions(prefix, limit) {
   return database.search(prefix)
