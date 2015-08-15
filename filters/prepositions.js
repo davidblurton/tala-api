@@ -73,7 +73,7 @@ export default (query, words) => {
   let word = words.filter(x => supportedClasses.includes(x.wordClass))[0]
 
   if (!word) {
-    throw new Error('No supported words found')
+    throw new Error('No matching words found')
   }
 
   let parsed = parse(word.wordClass, word.grammarTag)
