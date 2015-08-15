@@ -14,7 +14,7 @@ function getTags(nouns, degree) {
     let definite;
 
     if (degree.length === 1) {
-      definite = degree + (parsed.article ? 'SB' : 'VB')
+      definite = degree + (parsed.article ? 'VB': 'SB')
     } else {
       definite = degree
     }

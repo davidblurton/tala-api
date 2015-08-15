@@ -15,13 +15,13 @@ describe('Adjectives', () => {
   })
 
   it('should return adjectives that match noun', async function() {
-    let results = await summary.adjective('stór', 'hestur')
-    let formatted = adjectiveFormatter(results, 'hestur')
+    let results = await summary.adjective('stór', 'hesturinn')
+    let formatted = adjectiveFormatter(results, 'hesturinn')
 
     assert.deepEqual(formatted.results, {
-      "E": "stærsti hestur",
-      "F": "stóri hestur",
-      "MST": "stærri hestur",
+      "E": "stærsti hesturinn",
+      "F": "stóri hesturinn",
+      "MST": "stærri hesturinn",
     })
   })
 })
