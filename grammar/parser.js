@@ -5,7 +5,8 @@ const featuresMap = {
   'kk': ['grammarCase', 'number', 'article'],
   'kvk': ['grammarCase', 'number', 'article'],
   'to': ['gender', 'grammarCase', 'number'],
-  'pfn': ['grammarCase', 'number']
+  'pfn': ['grammarCase', 'number'],
+  'lo': ['definite', 'gender', 'grammarCase', 'number']
 }
 
 const parser = {
@@ -19,6 +20,10 @@ const parser = {
 
   number(tag) {
     return ['ET', 'FT'].filter(x => tag.includes(x))[0]
+  },
+
+  definite(tag) {
+    return ['ESB', 'EVB', 'FSB', 'FVB'].filter(x => tag.includes(x))[0]
   },
 
   article(tag) {
@@ -48,6 +53,11 @@ export function toString(wordClass, tags) {
   if (wordClass === 'pfn') {
     let {grammarCase, number} = tags
     return grammarCase + number
+  }
+
+  if (wordClass === 'lo') {
+    let {definite, gender, grammarCase, number} = tags
+    return `${definite}-${gender}-${grammarCase}${number}`
   }
 }
 

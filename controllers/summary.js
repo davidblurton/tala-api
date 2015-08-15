@@ -2,7 +2,7 @@ import _ from 'lodash'
 import database from '../models/database'
 import getPrepositionFilters from '../filters/prepositions'
 import getVerbFilters from '../filters/verbs'
-import summaryFormatter from '../formatters/summary'
+import getAdjectiveFilters from '../filters/adjectives'
 
 function includes(array, values) {
   return Object.keys(values).map(key => {
@@ -58,4 +58,15 @@ async function verb(modifier, word) {
   return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 }
 
-export default {suggestions, multiple, related, preposition, verb}
+async function adjective(adjective, noun) {
+  let nouns = await database.lookup(noun)
+  let adjectives = (await this.related(adjective)).filter(x => x.wordClass === 'lo')
+
+  let {wordClass, grammarTag} = getAdjectiveFilters(nouns)
+
+  return _.mapValues(grammarTag, tag => adjectives.filter(x => x.grammarTag === tag[0])[0])
+}
+
+
+
+export default {suggestions, multiple, related, preposition, verb, adjective}
