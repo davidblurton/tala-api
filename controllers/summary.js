@@ -62,7 +62,9 @@ async function adjective(adjective, noun) {
   let nouns = await database.lookup(noun)
   let adjectives = (await this.related(adjective)).filter(x => x.wordClass === 'lo')
 
-  let {wordClass, grammarTag} = getAdjectiveFilters(nouns)
+  let hasDegree = adjectives.every(x => x.grammarTag.split('-').length > 2)
+
+  let {wordClass, grammarTag} = getAdjectiveFilters(nouns, hasDegree)
 
   return _.mapValues(grammarTag, tag => adjectives.filter(x => x.grammarTag === tag[0])[0])
 }

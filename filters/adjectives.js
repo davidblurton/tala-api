@@ -13,6 +13,10 @@ function getTags(nouns, degree) {
     let parsed = parse(noun.wordClass, noun.grammarTag)
     let definite;
 
+    if (!degree) {
+      return `${noun.wordClass.toUpperCase()}-${parsed.grammarCase}${parsed.number}`
+    }
+
     if (degree.length === 1) {
       definite = degree + (parsed.article ? 'VB': 'SB')
     } else {
@@ -23,15 +27,24 @@ function getTags(nouns, degree) {
   })
 }
 
-export default words => {
+export default (words, hasDegree) => {
   let nouns = words.filter(isNoun)
 
-  return {
-    wordClass: 'lo',
-    grammarTag: {
-      'F': getTags(nouns, 'F'),
-      'E': getTags(nouns, 'E'),
-      'MST': getTags(nouns, 'MST'),
+  if (hasDegree) {
+    return {
+      wordClass: 'lo',
+      grammarTag: {
+        'F': getTags(nouns, 'F'),
+        'MST': getTags(nouns, 'MST'),
+        'E': getTags(nouns, 'E'),
+      }
+    }
+  } else {
+    return {
+      wordClass: 'lo',
+      grammarTag: {
+        'determiner': getTags(nouns)
+      }
     }
   }
 }

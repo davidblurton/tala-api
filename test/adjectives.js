@@ -19,9 +19,9 @@ describe('Adjectives', () => {
     let formatted = adjectiveFormatter(results, 'hesturinn')
 
     assert.deepEqual(formatted.results, {
-      "E": "stærsti hesturinn",
       "F": "stóri hesturinn",
       "MST": "stærri hesturinn",
+      "E": "stærsti hesturinn",
     })
   })
 })
