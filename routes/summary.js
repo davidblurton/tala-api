@@ -15,6 +15,14 @@ function includes(array, property, values) {
   })[0]
 }
 
+function split(word) {
+  let parsed = words.split(' ')
+  let modifier = (parsed[0] || '').toLowerCase()
+  let word = (parsed[1] || '')
+
+  return {modifier, word}
+}
+
 let router = new Router()
 
 router.get('/multiple/:word', (req, res, next) => {
@@ -30,9 +38,7 @@ router.get('/suggestions/:prefix', (req, res, next) => {
 })
 
 router.get('/verb/:phrase', (req, res, next) => {
-  let parsed = req.params.phrase.split(' ')
-  let modifier = (parsed[0] || '').toLowerCase();
-  let word = (parsed[1] || '').toLowerCase();
+  let {modifier, word} = split(req.params.phrase)
 
   let filters = getVerbFilters(modifier)
 
@@ -45,10 +51,12 @@ router.get('/verb/:phrase', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/preposition/:phrase', (req, res, next) => {
-  summary.preposition(req.params.phrase, req.query.lang)
-    .then(results => res.json(results))
-    .catch(next)
+router.get('/preposition/:phrase', async function(req, res, next) {
+  let {modifier, word} = split(req.params.phrase)
+
+  let results = await summary.preposition(modifier, word)
+  let formattedResults = summaryFormatter(results, req.query.lang)
+  res.json(formattedResults)
 })
 
 export default router

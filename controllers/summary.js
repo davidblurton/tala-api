@@ -40,22 +40,16 @@ function related(word) {
     .then(results => _.flatten(results))
 }
 
-async function preposition(words, lang) {
-  let parsed = words.split(' ')
-  let modifier = (parsed[0] || '').toLowerCase()
-  let word = (parsed[1] || '')
-
+async function preposition(modifier, word) {
   let nouns = await database.lookup(word)
   let results = await this.related(word)
 
   let filters = getPrepositionFilters(modifier, nouns)
 
-  let matching = filters.map(filter =>  {
+  return filters.map(filter =>  {
     let {grammarTag} = filter
     return includes(results, 'grammarTag', grammarTag)
   })
-
-  return summaryFormatter(matching, modifier, lang)
 }
 
 async function verb(words, lang) {
@@ -69,12 +63,10 @@ async function verb(words, lang) {
 
   let results = await summary.related(word)
 
-  let matching = filters.map(filter =>  {
+  return filters.map(filter =>  {
     let {grammarTag} = filter
     return includes(results, 'grammarTag', grammarTag)
   })
-
-  return summaryFormatter(matching, modifier, lang)
 }
 
 export default {suggestions, multiple, related, preposition}

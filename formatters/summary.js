@@ -6,6 +6,6 @@ export default (results, query, lang) => {
 
   return {
     query: query,
-    results: translate(formattedResults, lang),
+    results: lang ? translate(formattedResults, lang) : formattedResults,
   }
 }

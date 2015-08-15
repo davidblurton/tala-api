@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "mocha --compilers js:mocha-babel test/**/*.js",
+    "test": "mocha --compilers js:mocha-babel --recursive ./test/",
     "lint": "jshint --exclude ./node_modules . || true && jscs .",
     "deploy": "./deploy.sh"
   },
