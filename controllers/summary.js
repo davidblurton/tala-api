@@ -13,14 +13,6 @@ function suggestions(prefix, limit) {
     .then(results => results.slice(0, limit))
 }
 
-// Are there matching words from multiple headwords.
-async function multiple(word) {
-  let results = await database.lookup(word)
-
-  let ids = results.map(result => result.binId)
-  return !ids.every(id => id === ids[0])
-}
-
 // Find all words from the same headword.
 async function related(word) {
   let words = await database.lookup(word)
@@ -59,6 +51,4 @@ async function adjective(adjective, noun) {
   return _.mapValues(grammarTag, tag => adjectives.filter(x => x.grammarTag === tag[0])[0])
 }
 
-
-
-export default {suggestions, multiple, related, preposition, verb, adjective}
+export default {suggestions, related, preposition, verb, adjective}
