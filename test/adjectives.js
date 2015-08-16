@@ -1,0 +1,37 @@
+import assert from 'assert'
+import summary from '../controllers/summary';
+import adjectiveFormatter from '../formatters/adjective'
+
+describe('Adjectives', () => {
+
+  it('should return adjectives that match the noun', async function() {
+    let results = await summary.adjective('góða', 'veður')
+    let formatted = adjectiveFormatter(results, 'veður')
+
+    assert.deepEqual(formatted.results, {
+      "F": "góður veður",
+      "MST": "betri veður",
+      "E": "bestur veður",
+    })
+  })
+
+  it('should return adjectives that match noun', async function() {
+    let results = await summary.adjective('stór', 'hesturinn')
+    let formatted = adjectiveFormatter(results, 'hesturinn')
+
+    assert.deepEqual(formatted.results, {
+      "F": "stóri hesturinn",
+      "MST": "stærri hesturinn",
+      "E": "stærsti hesturinn",
+    })
+  })
+
+  it('should work for determiners', async function() {
+    let results = await summary.adjective('annar', 'gaffal')
+    let formatted = adjectiveFormatter(results, 'gaffal')
+
+    assert.deepEqual(formatted.results, {
+      "determiner": "annan gaffal",
+    })
+  })
+})

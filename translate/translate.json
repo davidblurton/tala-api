@@ -64,7 +64,9 @@
       "ÞGF": "dative",
       "ÞGFET": "dative singular",
       "ÞGFFT": "dative plural",
-      "ÞT": "past tense"
+      "ÞT": "past tense",
+      "F": "positive degree",
+      "E": "superlative"
     }
   },
 
@@ -133,7 +135,9 @@
       "ÞGF": "þágufall",
       "ÞGFET": "þágufall eintölu",
       "ÞGFFT": "þágufall fleirtölu",
-      "ÞT": "þátíð"
+      "ÞT": "þátíð",
+      "F": "frumstig",
+      "E": "efsta stig"
     }
   }
 }
