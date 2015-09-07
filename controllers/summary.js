@@ -27,9 +27,12 @@ async function preposition(modifier, word) {
   let nouns = await database.lookup(word)
   let results = await this.related(word)
 
-  let {wordClass, grammarTag} = getPrepositionFilters(modifier, nouns)
+  let filters = getPrepositionFilters(modifier, nouns)
 
-  return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
+  return filters.map(filter => {
+    let {wordClass, grammarTag} = filter
+    return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
+  })
 }
 
 async function verb(modifier, word) {

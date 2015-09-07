@@ -70,23 +70,25 @@ export default (query, words) => {
     grammarCases = [grammarCases]
   }
 
-  let word = words.filter(x => supportedClasses.includes(x.wordClass))[0]
+  let supportedWords = words.filter(x => supportedClasses.includes(x.wordClass))
 
-  if (!word) {
+  if (supportedWords.length === 0) {
     throw new Error('No matching words found')
   }
 
-  let parsed = parse(word.wordClass, word.grammarTag)
+  return supportedWords.map(word => {
+    let parsed = parse(word.wordClass, word.grammarTag)
 
-  let res = {}
+    let res = {}
 
-  res.wordClass = word.wordClass
-  res.grammarTag = {}
+    res.wordClass = word.wordClass
+    res.grammarTag = {}
 
-  grammarCases.forEach(grammarCase => {
-    parsed.grammarCase = grammarCase
-    res.grammarTag[grammarCase] = toString(word.wordClass, parsed)
+    grammarCases.forEach(grammarCase => {
+      parsed.grammarCase = grammarCase
+      res.grammarTag[grammarCase] = toString(word.wordClass, parsed)
+    })
+
+    return res
   })
-
-  return res
 }
