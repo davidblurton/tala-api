@@ -3,6 +3,7 @@ import {parse, toString} from '../../grammar/parser';
 
 const testCases = {
   'FVB-KK-NFET': {definite: 'FVB', gender: 'KK', grammarCase: 'NF', number: 'ET'},
+  'FVB-KVK-NFET': {definite: 'FVB', gender: 'KVK', grammarCase: 'NF', number: 'ET'},
 }
 
 describe('Parse adjectives', () => {
