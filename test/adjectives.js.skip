@@ -4,14 +4,13 @@ import adjectiveFormatter from '../formatters/adjective'
 
 describe('Adjectives', () => {
 
-  it('should return adjectives that match the noun', async function() {
+  it('should not return superlative for indefinite nouns', async function() {
     let results = await summary.adjective('góða', 'veður')
     let formatted = adjectiveFormatter(results, 'veður')
 
     assert.deepEqual(formatted.results, {
       "F": "góður veður",
-      "MST": "betri veður",
-      "E": "bestur veður",
+      "MST": "betri veður"
     })
   })
 

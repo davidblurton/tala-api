@@ -1,4 +1,6 @@
-import {parse, toString, supportedClasses} from '../grammar/parser'
+import {parse, toString} from '../grammar/parser'
+
+const supportedClasses = ['hk', 'kk', 'kvk', 'to', 'pfn']
 
 const prepositions = {
   // Accusative

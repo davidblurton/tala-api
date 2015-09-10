@@ -8,9 +8,9 @@ describe('Verbs', () => {
     let results = await summary.verb('ég', 'fara')
     let formatted = summaryFormatter(results, 'ég')
 
-    assert.deepEqual(formatted.results, {
+    assert.deepEqual(formatted.results, [{
       "NT": "ég fer",
       "ÞT": "ég fór",
-    })
+    }])
   })
 })

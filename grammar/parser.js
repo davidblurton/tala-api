@@ -1,11 +1,17 @@
-export const supportedClasses = ['hk', 'kk', 'kvk', 'to', 'pfn']
+function isNoun(wordClass) {
+  return ['hk', 'kk', 'kvk'].includes(wordClass)
+}
 
 const featuresMap = {
+  // Nouns
   'hk': ['grammarCase', 'number', 'article'],
   'kk': ['grammarCase', 'number', 'article'],
   'kvk': ['grammarCase', 'number', 'article'],
+   // Numeral
   'to': ['gender', 'grammarCase', 'number'],
+  // Pronoun
   'pfn': ['grammarCase', 'number'],
+  // Adjective
   'lo': ['definite', 'gender', 'grammarCase', 'number']
 }
 
@@ -33,10 +39,6 @@ const parser = {
       return ''
     }
   }
-}
-
-function isNoun(wordClass) {
-  return ['hk', 'kk', 'kvk'].includes(wordClass)
 }
 
 export function toString(wordClass, tags) {
