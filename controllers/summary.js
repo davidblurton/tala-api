@@ -47,15 +47,4 @@ async function verb(modifier, word) {
   return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 }
 
-async function adjective(adjective, noun) {
-  let nouns = await database.lookup(noun)
-  let adjectives = (await this.related(adjective)).filter(x => x.wordClass === 'lo')
-
-  let hasDegree = adjectives.every(x => x.grammarTag.split('-').length > 2)
-
-  let {wordClass, grammarTag} = getAdjectiveFilters(nouns, hasDegree)
-
-  return _.mapValues(grammarTag, tag => adjectives.filter(x => x.grammarTag === tag[0])[0])
-}
-
-export default {suggestions, related, preposition, verb, adjective}
+export default {suggestions, related, preposition, verb}

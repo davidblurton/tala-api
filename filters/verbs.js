@@ -73,7 +73,7 @@ const filters = {
 }
 
 let getFilters = query => {
-  return filters[query]
+  return filters[query.toLowerCase()]
 }
 
 export default getFilters;

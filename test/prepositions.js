@@ -2,7 +2,7 @@ import assert from 'assert'
 import summary from '../controllers/summary';
 import summaryFormatter from '../formatters/summary'
 
-describe('Prepositions', () => {
+describe.skip('Prepositions', () => {
 
   it('should return definite noun for definite noun input', async function() {
     let results = await summary.preposition('um', 'dagurinn')

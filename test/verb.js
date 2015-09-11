@@ -2,7 +2,7 @@ import assert from 'assert'
 import summary from '../controllers/summary';
 import summaryFormatter from '../formatters/summary'
 
-describe('Verbs', () => {
+describe.skip('Verbs', () => {
 
   it('should return past and present verbs with correct person', async function() {
     let results = await summary.verb('ég', 'fara')
