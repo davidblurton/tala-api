@@ -11,14 +11,16 @@ async function parseStatic() {
     line = line.replace(/\s*(#.*)?$/, '')
     const [verb, ...cases] = line.split(/\s+/)
 
+    // Only support simple verb>noun sentances for now.
+    if (cases.length !== 1) {
+      continue;
+    }
+
     if (!results[verb]) {
       results[verb] = []
     }
-
-    if (cases.length) {
-      // Verb controls cases
-      results[verb].push(... cases.map(c => c.toUpperCase()))
-    }
+    // Verb controls cases
+    results[verb].push(cases[0].toUpperCase())
   }
 
   return results

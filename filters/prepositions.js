@@ -75,17 +75,17 @@ function fixGrammar({modifier, cases}, word) {
 
   let parsed = parse(word.wordClass, word.grammarTag)
 
-  let res = {}
+  return cases.map(grammarCase => {
+    let res = {}
 
-  res.wordClass = word.wordClass
-  res.grammarTag = {}
+    res.wordClass = word.wordClass
+    res.binId = word.binId
+    res.grammarTag = {}
 
-  cases.forEach(grammarCase => {
     parsed.grammarCase = grammarCase
     res.grammarTag[grammarCase] = toString(word.wordClass, parsed)
+    return res
   })
-
-  return res
 }
 
 export default async function(query, words) {
@@ -105,5 +105,5 @@ export default async function(query, words) {
 
   const combinations = getCombinations(queries, words)
 
-  return combinations.map(combination => fixGrammar(...combination))
+  return _.flatten(combinations.map(combination => fixGrammar(...combination)))
 }

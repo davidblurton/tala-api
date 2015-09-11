@@ -35,7 +35,7 @@ async function preposition(modifier, word) {
 
   return filters.map(filter => {
     let {grammarTag} = filter
-    return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
+    return _.mapValues(grammarTag, tag => results.filter(x => x.binId === filter.binId && x.grammarTag === tag)[0])
   })
 }
 
