@@ -1,4 +1,7 @@
+import _ from 'lodash'
 import {parse, toString} from '../grammar/parser'
+import {findVerbs} from '../controllers/declensions'
+import lookupVerb from '../models/static'
 
 const supportedClasses = ['hk', 'kk', 'kvk', 'to', 'pfn']
 
@@ -61,36 +64,46 @@ const prepositions = {
   'yfir': ['ÞF', 'ÞGF'],
 }
 
-export default (query, words) => {
-  let grammarCases = prepositions[query]
+function getCombinations(queries, words) {
+  return _(queries).map(query => words.map(word => [query, word])).flatten().value()
+}
 
-  if (!grammarCases) {
-    throw new Error('preposition not found')
+function fixGrammar({modifier, cases}, word) {
+  if (!Array.isArray(cases)) {
+    cases = [cases]
   }
 
-  if (!Array.isArray(grammarCases)) {
-    grammarCases = [grammarCases]
-  }
+  let parsed = parse(word.wordClass, word.grammarTag)
 
-  let supportedWords = words.filter(x => supportedClasses.includes(x.wordClass))
+  let res = {}
 
-  if (supportedWords.length === 0) {
-    throw new Error('No matching words found')
-  }
+  res.wordClass = word.wordClass
+  res.grammarTag = {}
 
-  return supportedWords.map(word => {
-    let parsed = parse(word.wordClass, word.grammarTag)
-
-    let res = {}
-
-    res.wordClass = word.wordClass
-    res.grammarTag = {}
-
-    grammarCases.forEach(grammarCase => {
-      parsed.grammarCase = grammarCase
-      res.grammarTag[grammarCase] = toString(word.wordClass, parsed)
-    })
-
-    return res
+  cases.forEach(grammarCase => {
+    parsed.grammarCase = grammarCase
+    res.grammarTag[grammarCase] = toString(word.wordClass, parsed)
   })
+
+  return res
+}
+
+export default async function(query, words) {
+  let queries = []
+
+  if (prepositions[query]) {
+    queries.push({modifier: query, cases: prepositions[query]})
+  }
+
+  let verbs = await findVerbs(query);
+  let verbCases = await* verbs.map(lookupVerb)
+  queries.push(... _.zip(verbs, verbCases).filter(([, cases]) => cases).map(([verb, cases]) => {
+    return {modifier: verb, cases: cases}
+  }))
+
+  words = words.filter(word => supportedClasses.includes(word.wordClass))
+
+  const combinations = getCombinations(queries, words)
+
+  return combinations.map(combination => fixGrammar(...combination))
 }

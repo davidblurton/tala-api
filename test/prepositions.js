@@ -28,6 +28,13 @@ describe('Prepositions', () => {
     assert.deepEqual(formatted.results, [{ "EF": "til Ægis" }])
   })
 
+  it.only('should match verbs', async function() {
+    let results = await summary.preposition('tala', 'íslenska')
+    let formatted = summaryFormatter(results, 'tala')
+
+    assert.deepEqual(formatted.results, [{ "ÞGF": "tala íslensku"}])
+  })
+
   it('should return matching pronouns', async function() {
     let results = await summary.preposition('frá', 'hann')
     let formatted = summaryFormatter(results, 'frá')

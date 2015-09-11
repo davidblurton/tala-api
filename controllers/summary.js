@@ -4,8 +4,8 @@ import getPrepositionFilters from '../filters/prepositions'
 import getVerbFilters from '../filters/verbs'
 import getAdjectiveFilters from '../filters/adjectives'
 
-function uniqueHeadWords(words) {
-  return _.uniq(words, w => w.headWord)
+function uniqueWords(words) {
+  return _.uniq(words, w => w.binId)
 }
 
 // Generates a list of autocompletion suggestions.
@@ -28,10 +28,10 @@ async function related(word) {
 }
 
 async function preposition(modifier, word) {
-  let nouns = uniqueHeadWords(await database.lookup(word))
+  let nouns = uniqueWords(await database.lookup(word))
   let results = await this.related(word)
 
-  let filters = getPrepositionFilters(modifier, nouns)
+  let filters = await getPrepositionFilters(modifier, nouns)
 
   return filters.map(filter => {
     let {grammarTag} = filter

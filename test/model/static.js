@@ -2,9 +2,8 @@ import assert from 'assert'
 import lookupVerb from '../../models/static';
 
 const testCases = {
-  'tifa': [''],
-  'tefja': ['', 'þf'],
-  'vernda': ['þf']
+  'tefja': ['ÞF'],
+  'vernda': ['ÞF']
 }
 
 describe('Lookup static verb rules', () => {

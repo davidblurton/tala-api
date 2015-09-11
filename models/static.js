@@ -17,10 +17,7 @@ async function parseStatic() {
 
     if (cases.length) {
       // Verb controls cases
-      results[verb].push(...cases)
-    } else {
-      // Verb can be stand-alone
-      results[verb].push('')
+      results[verb].push(... cases.map(c => c.toUpperCase()))
     }
   }
 
