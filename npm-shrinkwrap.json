@@ -2,6 +2,18 @@
   "name": "icelandic-api",
   "version": "0.0.1",
   "dependencies": {
+    "axios": {
+      "version": "0.5.4",
+      "from": "axios@*",
+      "resolved": "https://registry.npmjs.org/axios/-/axios-0.5.4.tgz",
+      "dependencies": {
+        "es6-promise": {
+          "version": "2.3.0",
+          "from": "es6-promise@>=2.0.1 <3.0.0",
+          "resolved": "https://registry.npmjs.org/es6-promise/-/es6-promise-2.3.0.tgz"
+        }
+      }
+    },
     "babel": {
       "version": "5.8.23",
       "from": "babel@>=5.8.21 <6.0.0",
