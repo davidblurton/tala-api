@@ -1,4 +1,4 @@
-const subjectRegex = /{\*SUBJ> \[(.*) \] }/
+const subjectRegex = /{\*SUBJ> \[(.*?) \] }/
 const firstNounMatch = /\[(NP[^\[]*) ]/
 const verbRegex = /\[(VP[^\[]*) ]/
 

@@ -12,4 +12,14 @@ describe('Corrects subject verb agreement', async function() {
 
     assert.deepEqual(result, expected)
   })
+
+  it('should find the correct verb for a pronoun subject2', async function() {
+    let query = 'við talar íslensku'
+    let parsedQuery = '{*SUBJ> [NP við fp1fn ] } [VP?VnVp? talar sfg3en ] {*OBJ< [NP íslensku nveþ ] }'
+    let expected = ['við tölum íslensku', 'við töluðum íslensku']
+
+    let result = await corrections.verb(query, parsedQuery)
+
+    assert.deepEqual(result, expected)
+  })
 })

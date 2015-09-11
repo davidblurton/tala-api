@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {structure, wordFromPart} from '../grammar/parsed'
 
-describe('Understand parsed output from icenlp', () => {
+describe('Understands parsed output from icenlp', () => {
   it(`identifies subject and verb`, () => {
     const parsed = '{*SUBJ> [NP Ég fp1en ] } [VP bý sfg1en ] [PP með aþ [NP [AP íslenskri lveþsf ] konu nveþ ] ]'
     const expected = {
@@ -24,8 +24,21 @@ describe('Understand parsed output from icenlp', () => {
     assert.deepEqual(result, expected)
   })
 
+  it(`identifies verb in a sentence where the subject and verb don't match`, () => {
+    const parsed = '{*SUBJ> [NP við fp1fn ] } [VP?VnVp? talar sfg3en ] {*OBJ< [NP íslensku nveþ ] } '
+    const expected = {
+      subject: 'NP við fp1fn',
+      verb: 'VP?VnVp? talar sfg3en'
+    }
+
+    let result = structure(parsed)
+    assert.deepEqual(result, expected)
+  })
+
   it('extracts the word from a part', () => {
-    let result = wordFromPart(expected.subject)
+    const subject = 'NP Ég fp1en'
+
+    let result = wordFromPart(subject)
     assert.equal(result, 'Ég')
   })
 })
