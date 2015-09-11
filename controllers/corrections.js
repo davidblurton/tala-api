@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import database from '../models/database'
+import icenlp from '../models/icenlp'
 import summary from './summary'
 import {structure, wordFromPart} from '../grammar/parsed'
 import getVerbFilters from '../filters/verbs'
@@ -12,6 +13,12 @@ async function related(word) {
   let related = await* ids.map(database.lookup)
 
   return _.flatten(related)
+}
+
+async function sentence(query) {
+  let parsedQuery = await icenlp(query)
+  let result = await verb(query, parsedQuery.parsed)
+  return result
 }
 
 async function verb(query, parsedQuery) {
@@ -30,4 +37,4 @@ async function verb(query, parsedQuery) {
   return replacements.map(replacement => query.replace(verb, replacement))
 }
 
-export default {verb}
+export default {verb, sentence}
