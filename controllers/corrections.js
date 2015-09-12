@@ -43,6 +43,19 @@ async function verb(tokenized, parts) {
   }
 }
 
+function getDirectedCase(results) {
+  let caseTag = results.map(r => Object.keys(r))[0]
+
+  let cases = {
+    'NF': 'nominative',
+    'ÞF': 'accusative',
+    'ÞGF': 'dative',
+    'EF': 'genitive',
+  }
+
+  return cases[caseTag]
+}
+
 async function preposition(tokenized, parts) {
   if (!parts.object) {
     return
@@ -64,6 +77,7 @@ async function preposition(tokenized, parts) {
 
   return {
     rule: 'object should match verb',
+    explanation: `${verb} directs the ${getDirectedCase(res)} case`,
     index: tokenized.indexOf(object),
     replacements
   }
@@ -80,8 +94,6 @@ async function getCorrections(query) {
     let verbReplacements = await verb(tokenized, parts)
     corrections.push(verbReplacements)
   }
-
-  console.log(parts.object)
 
   if (parts.object) {
     let prepositionReplacements = await preposition(tokenized, parts)

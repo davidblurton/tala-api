@@ -4,13 +4,15 @@ import {structure} from '../../grammar/parsed'
 
 describe('Corrects verb object agreement', async function() {
   it('it should change the case of objects to match verbs', async function() {
-    let query = 'ég tala íslenska'
+    let tokenized = ['ég', 'tala', 'íslenska']
     let parsedQuery = '{*SUBJ> [NP ég fp1en ] } [VP tala sfg1en ] {*OBJ< [AP íslenska lkfosf ] }'
-    let expected = 'ég tala íslensku'
 
-    let result = await corrections.preposition(query, parsedQuery)
+    let parts = structure(parsedQuery)
+    let result = await corrections.preposition(tokenized, parts)
 
-    assert.deepEqual(result, expected)
+    let expectedReplacements = ['íslensku']
+
+    assert.deepEqual(result.replacements, expectedReplacements)
   })
 
   it.skip('it should change the case of objects to match verbs2', async function() {

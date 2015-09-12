@@ -27,7 +27,7 @@ describe('Parses parts of a sentence', async function() {
     assert.deepEqual(result, expected)
   })
 
-  it.only('detect the second subject as the object', function() {
+  it('detect the second subject as the object', function() {
     let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi gleyma sng ] {*SUBJ [NP lykillinn nkeng ] }'
 
     let result = structure(parsedQuery)
