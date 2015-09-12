@@ -81,8 +81,14 @@ async function getCorrections(query) {
     corrections.push(verbReplacements)
   }
 
-  let prepositionReplacements = await preposition(tokenized, parts)
-  corrections.push(prepositionReplacements)
+  console.log(parts.object)
+
+  if (parts.object) {
+    let prepositionReplacements = await preposition(tokenized, parts)
+    corrections.push(prepositionReplacements)
+  }
+
+
 
   corrections = corrections.filter(x => x)
 
