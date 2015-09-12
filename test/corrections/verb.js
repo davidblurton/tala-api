@@ -22,4 +22,27 @@ describe('Corrects subject verb agreement', async function() {
 
     assert.deepEqual(result, expected)
   })
+
+  it('it should change the case of objects to match verbs', async function() {
+    let query = 'ég tala íslenska'
+    let parsedQuery = '{*SUBJ> [NP ég fp1en ] } [VP tala sfg1en ] {*OBJ< [AP íslenska lkfosf ] }'
+    let expected = 'ég tala íslensku'
+
+    let result = await corrections.preposition(query, parsedQuery)
+
+    assert.deepEqual(result, expected)
+  })
+
+  it.skip('it should change the case of objects to match verbs2', async function() {
+    // Can't correct adjectives yet.
+    let query = 'Af hverju er himinninn blá?'
+    let parsedQuery = '[PP Af aþ [NP hverju fsheþ ] ] [VPb er sfg3en ] {*SUBJ< [NP himinninn nkeng ] } {*COMP<?Cg? [AP blá lvensf ] } ? ?'
+    let expected = 'Af hverju er himinninn blár?'
+
+    let result = await corrections.preposition(query, parsedQuery)
+
+    assert.deepEqual(result, expected)
+  })
+
+
 })

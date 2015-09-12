@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {structure, wordFromPart} from '../grammar/parsed'
 
-describe.only('Understands parsed output from icenlp', () => {
+describe('Understands parsed output from icenlp', () => {
   it(`identifies subject and verb`, () => {
     const parsed = '{*SUBJ> [NP Ég fp1en ] } [VP sá sfg1eþ ] {*OBJ< [NP [AP veiku lveovf ] konuna nveog ] } '
     const expected = {
