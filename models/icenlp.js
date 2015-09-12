@@ -18,7 +18,7 @@ let lookup = async function(query) {
       markunknown: true,
       inputtokenize: 2,
       tagging: true,
-      tagger: 'icetagger'
+      tagger: 'hmmicehmm'
     }
   })
 
