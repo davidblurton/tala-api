@@ -83,10 +83,16 @@ async function preposition(tokenized, parts) {
   }
 }
 
-async function getCorrections(query) {
+async function getParse(query) {
   let parsedQuery = await icenlp(query)
   let {tokenized, parsed} = parsedQuery
   let parts = structure(parsed)
+
+  return {tokenized, parts, parsed}
+}
+
+async function getCorrections(query) {
+  let {tokenized, parts, parsed} = await getParse(query)
 
   let corrections = []
 
@@ -99,8 +105,6 @@ async function getCorrections(query) {
     let prepositionReplacements = await preposition(tokenized, parts)
     corrections.push(prepositionReplacements)
   }
-
-
 
   corrections = corrections.filter(x => x)
 
