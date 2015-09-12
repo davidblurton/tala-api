@@ -2,7 +2,7 @@ const subjectRegex = /{\*SUBJ> \[(.*?) \] }/
 const firstNounMatch = /\[(NP[^\[]*) ]/
 const verbRegex = /\[(VP[^\[]*) ]/
 const objectRegex = /{\*OBJ< \[(.*?) \] }/
-const compRegex = /{\*COMP<[\w\?].*?\[(.*?) \] }/
+const compRegex = /{\*COMP \[(.*?) \] }/
 
 const headwordRegex = /\((\w.*)\)/
 

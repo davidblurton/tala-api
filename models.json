@@ -1,0 +1,24 @@
+// result
+{
+  tokenized: []
+  parsed: []
+  tagged: []
+  corrections: []
+  suggestions: []
+}
+
+// correction
+
+{
+  rule:
+  index:
+  replacements:
+  modifier:
+  modified: []
+}
+
+// filter
+{
+  wordClass: []
+  grammarTags: []
+}

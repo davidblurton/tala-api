@@ -20,29 +20,32 @@ async function related(word) {
   return _.flatten(related)
 }
 
-async function verb(query, parsedQuery) {
-  let parts = structure(parsedQuery)
+async function verb(tokenized, parts) {
   let modifier = wordFromPart(parts.subject)
   let verb = wordFromPart(parts.verb)
 
+  if(!parts.verb) {
+    return
+  }
+
   let results = await related(verb)
 
-  let {wordClass, grammarTag} = getVerbFilters(modifier)
+  let {grammarTag} = getVerbFilters(modifier)
 
   let corrected = _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 
   let replacements = Object.values(_.mapValues(corrected, x => x.wordForm))
 
-  return replacements.map(replacement => query.replace(verb, replacement))
+  return {
+    rule: 'verb should match subject',
+    index: tokenized.indexOf(verb),
+    replacements
+  }
 }
 
-async function preposition(query, parsedQuery) {
-  let parts = structure(parsedQuery)
-
-  console.log(parts)
-
+async function preposition(tokenized, parts) {
   if (!parts.object) {
-    return query
+    return
   }
 
   let verb = wordFromPart(parts.verb)
@@ -50,7 +53,6 @@ async function preposition(query, parsedQuery) {
 
   let nouns = uniqueWords(await database.lookup(object))
   let results = await related(object)
-
   let filters = await getPrepositionFilters(verb, nouns)
 
   let res = filters.map(filter => {
@@ -58,18 +60,24 @@ async function preposition(query, parsedQuery) {
     return _.mapValues(grammarTag, tag => results.filter(x => x.binId === filter.binId && x.grammarTag === tag)[0])
   })
 
-  let correctedObject = Object.values(res[0]).map(x => x.wordForm)[0]
+  let replacements = Object.values(res[0]).map(x => x.wordForm)
 
-  return query.replace(object, correctedObject)
+  return {
+    rule: 'object should match verb',
+    index: tokenized.indexOf(object),
+    replacements
+  }
 }
 
 async function sentence(query) {
   let parsedQuery = await icenlp(query)
-  let results = await verb(query, parsedQuery.parsed)
+  let {tokenized} = parsedQuery
+  let parts = structure(parsedQuery)
 
-  let p = await preposition(results[0], parsedQuery.parsed)
+  let verbReplacements = await verb(tokenized, parts)
+  let prepositionReplacements = await preposition(tokenized, parts)
 
-  return p
+  return [verbReplacements, prepositionReplacements]
 }
 
 export default {verb, sentence, preposition}
