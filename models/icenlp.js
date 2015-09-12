@@ -24,7 +24,7 @@ let lookup = async function(query) {
 
   let lines = res.data.match(/[^\r\n]+/g)
 
-  let tokenized = lines[0].trim()
+  let tokenized = lines[0].trim().split(' ')
   let parsed = lines[lines.length - 1].trim()
   let tagged = lines.slice(1, -1).filter(x => x)
 

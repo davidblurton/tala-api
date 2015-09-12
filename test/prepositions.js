@@ -15,8 +15,11 @@ describe.skip('Prepositions', () => {
     let results = await summary.preposition('í', 'búðin')
     let formatted = summaryFormatter(results, 'í')
 
-    assert.deepEqual(formatted.results, [{
+    assert.deepEqual(formatted.results, [
+    {
       "ÞF": "í búðina",
+    },
+    {
       "ÞGF": "í búðinni"
     }])
   })

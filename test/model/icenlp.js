@@ -4,7 +4,7 @@ import lookup from '../../models/icenlp'
 const query = 'Ég bý með íslenskri konu'
 
 const expected = {
-  tokenized: 'Ég bý með íslenskri konu',
+  tokenized: ['Ég', 'bý', 'með', 'íslenskri', 'konu'],
   tagged: [
     'Ég fp1en (Ég)',
     'bý sfg1en (búa)',

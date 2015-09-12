@@ -2,9 +2,7 @@ import assert from 'assert'
 import corrections from '../../controllers/corrections';
 import {structure} from '../../grammar/parsed'
 
-describe.only('Corrects subject verb agreement', async function() {
-  this.timeout(5000)
-
+describe('Corrects subject verb agreement', async function() {
   it('should find the correct verb for a pronoun subject', async function() {
     let tokenized = ['hann', 'tala', 'íslensku']
     let parsedQuery = '[NP Hann fpkeo ] [VP tala sfg3fn ] {*COMP [AP íslensku lkfnvf ] }'

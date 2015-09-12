@@ -69,15 +69,49 @@ async function preposition(tokenized, parts) {
   }
 }
 
-async function sentence(query) {
+async function getCorrections(query) {
   let parsedQuery = await icenlp(query)
-  let {tokenized} = parsedQuery
-  let parts = structure(parsedQuery)
+  let {tokenized, parsed} = parsedQuery
+  let parts = structure(parsed)
 
-  let verbReplacements = await verb(tokenized, parts)
+  let corrections = []
+
+  if(parsed.includes('VPi')) {
+    let verbReplacements = await verb(tokenized, parts)
+    corrections.push(verbReplacements)
+  }
+
   let prepositionReplacements = await preposition(tokenized, parts)
+  corrections.push(prepositionReplacements)
 
-  return [verbReplacements, prepositionReplacements]
+  corrections = corrections.filter(x => x)
+
+  return {
+    tokenized,
+    // parsed,
+    corrections,
+  }
+}
+
+function applyCorrections({corrections, tokenized}) {
+  let suggestions = [...tokenized]
+
+  corrections.forEach(correction => {
+    let replacement = correction.replacements[0]
+    suggestions[correction.index] = replacement
+  })
+
+  return [suggestions.join(' ')]
+}
+
+async function sentence(query) {
+  let corrections = await getCorrections(query)
+  let suggestions = applyCorrections(corrections)
+
+  return {
+    ...corrections,
+    suggestions
+  }
 }
 
 export default {verb, sentence, preposition}

@@ -20,7 +20,7 @@ router.get('/suggestions/:prefix', async function(req, res, next) {
     let results = await summary.suggestions(req.params.prefix, req.query.limit)
     res.json(results)
   } catch (err) {
-    next(err)
+    res.status(400).json({error: err.message})
   }
 })
 
@@ -32,7 +32,7 @@ router.get('/verb/:phrase', async function(req, res, next) {
 
     res.json(formattedResults)
   } catch(err) {
-    next(err)
+    res.status(400).json({error: err.message})
   }
 })
 
@@ -44,7 +44,7 @@ router.get('/preposition/:phrase', async function(req, res, next) {
 
     res.json(formattedResults)
   } catch (err) {
-    next(err)
+    res.status(400).json({error: err.message})
   }
 })
 
@@ -56,7 +56,7 @@ router.get('/adjective/:phrase', async function(req, res, next) {
 
     res.json(formattedResults)
   } catch (err) {
-    next(err)
+    res.status(400).json({error: err.message})
   }
 })
 
