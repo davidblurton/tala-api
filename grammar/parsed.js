@@ -1,8 +1,10 @@
-const subjectRegex = /{\*SUBJ>? \[(.*?) \] }/g
+const subjectRegex = /{\*SUBJ[>]? \[(.*?) \] }/g
 const firstNounRegex = /\[(NP[^\[]*) ]/
 const verbRegex = /\[(VP[^\[]*) ]/
 const objectRegex = /{\*OBJ<? \[(.*?) \] }/
 const compRegex = /{\*COMP \[(.*?) \] }/
+const apRegex = /\[(AP[^\[]*) ]/
+const adverb = /\[(AdvP[^\[]*?) ]/
 
 const headwordRegex = /\((\w.*)\)/
 
@@ -36,6 +38,11 @@ let structure = function(parsed) {
   // If the parsed doesn't identify an object, but idetifies 2 subjects, the second subject is probably the object
   if (!object && subjectMatches[1]) {
     object = subjectMatches[1]
+  }
+
+  if(!object) {
+    let apMatch = apRegex.exec(parsed)
+    object = apMatch && apMatch[1]
   }
 
   return {subject, verb, object}

@@ -22,3 +22,16 @@
   wordClass: []
   grammarTags: []
 }
+
+// structure
+// Entry for each rule with modifier and targets
+{
+  subjectVerbAgreement: {
+    modifier: subject
+    targets: [verb]
+  }
+  verbObjectAgreement: {
+    modifier: verb
+    targets:
+  }
+}

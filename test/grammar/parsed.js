@@ -2,42 +2,36 @@ import assert from 'assert'
 import corrections from '../../controllers/corrections';
 import {structure} from '../../grammar/parsed'
 
-const input1 =
-`hann tala íslensku
-
-hann fpken (hann)
-tala sng (tala)
-íslensku nveo (íslenska)
-
-
-
-
-{*SUBJ [NP hann fpken ] } [VPi tala sng ] {*OBJ< [NP íslensku nveo ] } `
-
-describe('Parses parts of a sentence', async function() {
-  it('it detects SVO', async function() {
-    let result = structure(input1)
-
-    let expected = {
-      subject: 'NP hann fpken',
-      verb: 'VPi tala sng',
-      object: 'NP íslensku nveo',
-    }
-
-    assert.deepEqual(result, expected)
-  })
-
-  it('detect the second subject as the object', function() {
-    let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi gleyma sng ] {*SUBJ [NP lykillinn nkeng ] }'
-
+describe.only('Parses parts of a sentence', async function() {
+  it('it detects SVO', () => {
+    let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi tala sng ] {*OBJ< [NP íslensku nveo ] } '
     let result = structure(parsedQuery)
 
-    let expected = {
-      subject: 'NP hann fpken',
-      verb: 'VPi gleyma sng',
-      object: 'NP lykillinn nkeng'
-    }
+    assert.equal(result.subject, 'NP hann fpken')
+    assert.equal(result.verb, 'VPi tala sng')
+    assert.equal(result.object, 'NP íslensku nveo')
+  })
 
-    assert.deepEqual(result, expected)
+  it('detect the second subject as the object', () => {
+    let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi gleyma sng ] {*SUBJ [NP lykillinn nkeng ] }'
+    let result = structure(parsedQuery)
+
+    assert.equal(result.subject, 'NP hann fpken')
+    assert.equal(result.object, 'NP lykillinn nkeng')
+  })
+
+  it('detects the second noun as the object', () => {
+    let parsedQuery = '{*SUBJ> [NP hann fpken ] } [VP talar sfg3en ] [AP íslenska lvenvf ] '
+    let result = structure(parsedQuery)
+
+    assert.equal(result.subject, 'NP hann fpken')
+    assert.equal(result.object, 'AP íslenska lvenvf')
+  })
+
+  it('filters out adverbs from object', () => {
+    let parsedQuery = '{*SUBJ> [NP hann fpken ] } [VP talar sfg3en ] [AP [AdvP ekki aa ] íslenska lvenvf ] '
+    let result = structure(parsedQuery)
+
+    assert.equal(result.object, 'AP íslenska lvenvf')
   })
 })
