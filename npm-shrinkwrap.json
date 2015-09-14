@@ -2224,6 +2224,11 @@
           "resolved": "https://registry.npmjs.org/on-headers/-/on-headers-1.0.0.tgz"
         }
       }
+    },
+    "traverse": {
+      "version": "0.6.6",
+      "from": "traverse@*",
+      "resolved": "https://registry.npmjs.org/traverse/-/traverse-0.6.6.tgz"
     }
   }
 }
