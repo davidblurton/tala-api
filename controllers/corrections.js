@@ -2,7 +2,7 @@ import _ from 'lodash'
 import database from '../models/database'
 import icenlp from '../models/icenlp'
 import summary from './summary'
-import {structure, wordFromPart, headwordFromPart} from '../grammar/parsed'
+import {structure, headwordFromPart} from '../grammar/parsed'
 import getVerbFilters from '../filters/verbs'
 import getPrepositionFilters from '../filters/prepositions'
 
@@ -21,10 +21,10 @@ async function related(word) {
 }
 
 async function verb(tokenized, parts) {
-  let modifier = wordFromPart(parts.subject)
-  let verb = wordFromPart(parts.verb)
+  let modifier = parts.subject.word
+  let verb = parts.verb.word
 
-  if(!parts.verb) {
+  if(!modifier) {
     return
   }
 
@@ -57,12 +57,12 @@ function getDirectedCase(results) {
 }
 
 async function preposition(tokenized, parts) {
-  if (!parts.object) {
+  if (!parts.object.word) {
     return
   }
 
-  let verb = wordFromPart(parts.verb)
-  let object = wordFromPart(parts.object)
+  let verb = parts.verb.word
+  let object = parts.object.word
 
   let nouns = uniqueWords(await database.lookup(object))
   let results = await related(object)

@@ -10,7 +10,7 @@ let lookup = async function(query) {
       tokenize: true,
       query: query,
       lemma: true,
-      output: 'plain',
+      output: 'json',
       errors: true,
       functions: true,
       agreement: true,
@@ -22,11 +22,11 @@ let lookup = async function(query) {
     }
   })
 
-  let lines = res.data.match(/[^\r\n]+/g)
+  let lines = res.data.split(/^\s*$[\n\r]{1,}/gm)
 
   let tokenized = lines[0].trim().split(' ')
-  let parsed = lines[lines.length - 1].trim()
-  let tagged = lines.slice(1, -1).filter(x => x)
+  let tagged = lines[1].trim().split(/\n/)
+  let parsed = lines[2].trim()
 
   return {tokenized, tagged, parsed}
 }

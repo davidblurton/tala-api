@@ -12,12 +12,12 @@ const expected = {
     'íslenskri lveþsf (íslenskur)',
     'konu nveþ (kona)'
   ],
-  parsed: '{*SUBJ> [NP Ég fp1en ] } [VP bý sfg1en ] [PP með aþ [NP [AP íslenskri lveþsf ] konu nveþ ] ]'
 }
 
 describe('Lookup data from icenlp', () => {
   it(`get results`, async function() {
     let result = await lookup(query)
-    assert.deepEqual(result, expected)
+    assert.deepEqual(result.tokenized, expected.tokenized)
+    assert.deepEqual(result.tagged, expected.tagged)
   })
 })

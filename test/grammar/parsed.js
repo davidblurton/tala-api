@@ -2,36 +2,36 @@ import assert from 'assert'
 import corrections from '../../controllers/corrections';
 import {structure} from '../../grammar/parsed'
 
-describe.only('Parses parts of a sentence', async function() {
+describe('Parses parts of a sentence', async function() {
   it('it detects SVO', () => {
-    let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi tala sng ] {*OBJ< [NP íslensku nveo ] } '
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"tala":"sng"}]},"{*OBJ<":{"[NP":{"WORDS":[{"íslensku":"nveo"}]}}}}}'
     let result = structure(parsedQuery)
 
-    assert.equal(result.subject, 'NP hann fpken')
-    assert.equal(result.verb, 'VPi tala sng')
-    assert.equal(result.object, 'NP íslensku nveo')
+    assert.equal(result.subject.word, 'hann')
+    assert.equal(result.verb.word, 'tala')
+    assert.equal(result.object.word, 'íslensku')
   })
 
   it('detect the second subject as the object', () => {
-    let parsedQuery = '{*SUBJ [NP hann fpken ] } [VPi gleyma sng ] {*SUBJ [NP lykillinn nkeng ] }'
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"gleyma":"sng"}]},"{*SUBJ":{"[NP":{"WORDS":[{"lykillinn":"nkeng"}]}}}}}'
     let result = structure(parsedQuery)
 
-    assert.equal(result.subject, 'NP hann fpken')
-    assert.equal(result.object, 'NP lykillinn nkeng')
+    assert.equal(result.subject.word, 'hann')
+    assert.equal(result.object.word, 'lykillinn')
   })
 
   it('detects the second noun as the object', () => {
-    let parsedQuery = '{*SUBJ> [NP hann fpken ] } [VP talar sfg3en ] [AP íslenska lvenvf ] '
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ>":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VP":{"WORDS":[{"talar":"sfg3en"}]},"[AP":{"WORDS":[{"íslenska":"lvenvf"}]}}}}'
     let result = structure(parsedQuery)
 
-    assert.equal(result.subject, 'NP hann fpken')
-    assert.equal(result.object, 'AP íslenska lvenvf')
+    assert.equal(result.subject.word, 'hann')
+    assert.equal(result.object.word, 'íslenska')
   })
 
   it('filters out adverbs from object', () => {
-    let parsedQuery = '{*SUBJ> [NP hann fpken ] } [VP talar sfg3en ] [AP [AdvP ekki aa ] íslenska lvenvf ] '
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ>":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VP":{"WORDS":[{"talar":"sfg3en"}]},"[AP":{"[AdvP":{"WORDS":[{"ekki":"aa"}]},"WORDS":[{"íslenska":"lvenvf"}]}}}}'
     let result = structure(parsedQuery)
 
-    assert.equal(result.object, 'AP íslenska lvenvf')
+    assert.equal(result.object.word, 'íslenska')
   })
 })

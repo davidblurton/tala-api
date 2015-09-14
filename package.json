@@ -25,7 +25,8 @@
     "level": "^1.2.0",
     "lodash": "^3.10.0",
     "prfun": "^2.1.1",
-    "response-time": "^2.3.1"
+    "response-time": "^2.3.1",
+    "traverse": "^0.6.6"
   },
   "devDependencies": {
     "babel-runtime": "^5.8.19",
