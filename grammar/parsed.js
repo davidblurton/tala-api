@@ -54,7 +54,7 @@ let structure = function(jsonString) {
 
   let sentence = parsed['Parsed Text']['Sentence']
   let subject = getWord(sentence['{*SUBJ>'] || sentence['{*SUBJ'])
-  let verb = getWord(sentence['[VPi'] || sentence['[VP'] || sentence['[VP?Vn?'])
+  let verb = getWord(sentence['[VPi'] || sentence['[VP'] || sentence['[VPb'] || sentence['[VP?Vn?'])
   let object = getWord(sentence['{*OBJ<'] || sentence['{*SUBJ2'] || sentence['[AP'])
 
   let prepositionPhrase = getWords(sentence['[PP'] || sentence['[PP?Pca?'] || sentence['[AdvP'])
