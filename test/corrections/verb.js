@@ -7,16 +7,12 @@ describe('Corrects subject verb agreement', async function() {
     let tokenized = ['hann', 'tala', 'íslensku']
     let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"tala":"sng"}]},"{*OBJ<":{"[NP":{"WORDS":[{"íslensku":"nveo"}]}}}}}'
 
-    let expected = {
-      rule: 'verb should match subject',
-      index: 1,
-      replacements: ['talar', 'talaði']
-    }
-
     let parts = structure(parsedQuery)
     let result = await corrections.verb(tokenized, parts)
 
-    assert.deepEqual(result, expected)
+    assert.deepEqual(result.modifierIndex, 0)
+    assert.deepEqual(result.targetIndex, 1)
+    assert.deepEqual(result.replacements, ['talar', 'talaði'])
   })
 
   it('should find the correct verb when the verb comes first')

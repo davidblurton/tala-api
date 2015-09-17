@@ -37,9 +37,11 @@ async function verb(tokenized, parts) {
   let replacements = Object.values(_.mapValues(corrected, x => x.wordForm))
 
   return {
-    rule: 'verb should match subject',
-    index: tokenized.indexOf(verb),
-    replacements
+    rule: 'verb should agree with subject',
+    modifierIndex: tokenized.indexOf(modifier),
+    targetIndex: tokenized.indexOf(verb),
+    replacements,
+    isCorrect: replacements.includes(verb),
   }
 }
 
@@ -76,10 +78,12 @@ async function preposition(tokenized, parts) {
   let replacements = Object.values(res[0]).map(x => x.wordForm)
 
   return {
-    rule: 'object should match verb',
+    rule: 'object should agree with verb',
     explanation: `${verb} directs the ${getDirectedCase(res)} case`,
-    index: tokenized.indexOf(object),
-    replacements
+    modifierIndex: tokenized.indexOf(verb),
+    targetIndex: tokenized.indexOf(object),
+    replacements,
+    isCorrect: replacements.includes(object),
   }
 }
 
@@ -91,47 +95,47 @@ async function getParse(query) {
   return {tokenized, parts, parsed}
 }
 
-async function getCorrections(query) {
+async function getRules(query) {
   let {tokenized, parts, parsed} = await getParse(query)
 
-  let corrections = []
+  let rules = []
 
-  if(parsed.includes('VPi')) {
+  if (parts.verb) {
     let verbReplacements = await verb(tokenized, parts)
-    corrections.push(verbReplacements)
+    rules.push(verbReplacements)
   }
 
   if (parts.object) {
     let prepositionReplacements = await preposition(tokenized, parts)
-    corrections.push(prepositionReplacements)
+    rules.push(prepositionReplacements)
   }
 
-  corrections = corrections.filter(x => x)
+  rules = rules.filter(x => x)
 
   return {
     tokenized,
     // parsed,
-    corrections,
+    rules,
   }
 }
 
-function applyCorrections({corrections, tokenized}) {
+function applyRules({rules, tokenized}) {
   let suggestions = [...tokenized]
 
-  corrections.forEach(correction => {
-    let replacement = correction.replacements[0]
-    suggestions[correction.index] = replacement
+  rules.forEach(rules => {
+    let replacement = rules.replacements[0]
+    suggestions[rules.index] = replacement
   })
 
   return [suggestions.join(' ')]
 }
 
 async function sentence(query) {
-  let corrections = await getCorrections(query)
-  let suggestions = applyCorrections(corrections)
+  let rules = await getRules(query)
+  let suggestions = applyRules(rules)
 
   return {
-    ...corrections,
+    ...rules,
     suggestions
   }
 }
