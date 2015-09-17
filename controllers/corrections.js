@@ -125,24 +125,34 @@ async function getParse(query) {
   return {tokenized, parts, parsed, tagged}
 }
 
+function isRecognized(taggedWord) {
+  return !taggedWord.endsWith('*')
+}
+
 async function getRules(query) {
   let {tokenized, parts, parsed, tagged} = await getParse(query)
 
+  let recognized = tagged.map(isRecognized)
   let rules = []
 
-  if (parts.verb) {
-    let verbReplacements = await verb(tokenized, parts)
-    rules.push(verbReplacements)
-  }
+  try {
+    if (parts.verb) {
+      let verbReplacements = await verb(tokenized, parts)
+      rules.push(verbReplacements)
+    }
 
-  if (parts.object) {
-    let prepositionReplacements = await verbObject(tokenized, parts)
-    rules.push(prepositionReplacements)
-  }
+    if (parts.object) {
+      let prepositionReplacements = await verbObject(tokenized, parts)
+      rules.push(prepositionReplacements)
+    }
 
-  if (parts.preposition) {
-    let prepositionReplacements = await preposition(tokenized, parts, tagged)
-    rules.push(prepositionReplacements)
+    if (parts.preposition) {
+      let prepositionReplacements = await preposition(tokenized, parts, tagged)
+      rules.push(prepositionReplacements)
+    }
+  } catch(err) {
+    // log error
+    console.error(err)
   }
 
   rules = rules.filter(x => x)
@@ -152,6 +162,7 @@ async function getRules(query) {
     parsed,
     rules,
     tagged,
+    recognized
   }
 }
 
