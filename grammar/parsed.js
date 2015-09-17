@@ -21,7 +21,7 @@ function formatWords(words) {
   }
 }
 
-function getWords(part) {
+function getWord(part) {
   if (!part) return null
 
   let result
@@ -35,20 +35,40 @@ function getWords(part) {
   return formatWords(result)
 }
 
+function getWords(part) {
+  if (!part) return null
+
+  let results = []
+
+  traverse(part).forEach(function(value) {
+    if(this.key === 'WORDS') {
+      results.push(value)
+    }
+  })
+
+  return results.map(word => formatWords(word[0]))
+}
+
 let structure = function(jsonString) {
   let parsed = parseJson(jsonString)
 
   let sentence = parsed['Parsed Text']['Sentence']
-  let subject = getWords(sentence['{*SUBJ'] || sentence['{*SUBJ>'])
-  let verb = getWords(sentence['[VPi'] || sentence['[VP'])
-  let object = getWords(sentence['{*OBJ<'] || sentence['{*SUBJ2'] || sentence['[AP'])
+  let subject = getWord(sentence['{*SUBJ>'] || sentence['{*SUBJ'])
+  let verb = getWord(sentence['[VPi'] || sentence['[VP'] || sentence['[VP?Vn?'])
+  let object = getWord(sentence['{*OBJ<'] || sentence['{*SUBJ2'] || sentence['[AP'])
 
-  return {subject, verb, object}
+  let prepositionPhrase = getWords(sentence['[PP'] || sentence['[PP?Pca?'] || sentence['[AdvP'])
+
+  let preposition = prepositionPhrase && prepositionPhrase[0]
+  let prepositionObject = prepositionPhrase && prepositionPhrase[1] || getWord(sentence['{*SUBJ'])
+
+  return {subject, verb, object, preposition, prepositionObject}
 }
 
-let headwordFromPart = function(part) {
-  let headwordMatch = headwordRegex.exec(part)
+let headwordFromTagged = function(tokenized, tagged, word) {
+  let index = tokenized.indexOf(word)
+  let headwordMatch = /\((.*)\)/.exec(tagged[index])
   return headwordMatch && headwordMatch[1]
 }
 
-export default {structure, headwordFromPart}
+export default {structure, headwordFromTagged}

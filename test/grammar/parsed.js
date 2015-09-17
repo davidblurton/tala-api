@@ -34,4 +34,20 @@ describe('Parses parts of a sentence', async function() {
 
     assert.equal(result.object.word, 'íslenska')
   })
+
+  it('detects a preposition and matching object', () => {
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ>":{"[NP":{"WORDS":[{"ég":"fp1en"}]}},"[VP":{"WORDS":[{"fer":"sfg1en"}]},"[PP":{"WORDS":[{"í":"ao"}],"[NP":{"WORDS":[{"búðina":"nveog"}]}}}}}'
+    let result = structure(parsedQuery)
+
+    assert.equal(result.preposition.word, 'í')
+    assert.equal(result.prepositionObject.word, 'búðina')
+  })
+
+  it('detects matches the object with the preposition and not the verb', () => {
+    let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ>":{"[NP":{"WORDS":[{"ég":"fp1en"}]}},"[VP":{"WORDS":[{"tala":"sfg1en"}]},"[AdvP":{"WORDS":[{"við":"aa"}]},"{*SUBJ":{"[NP":{"WORDS":[{"hún":"fpven"}]}}}}}'
+    let result = structure(parsedQuery)
+
+    assert.equal(result.preposition.word, 'við')
+    assert.equal(result.prepositionObject.word, 'hún')
+  })
 })

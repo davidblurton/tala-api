@@ -2,7 +2,7 @@ import _ from 'lodash'
 import database from '../models/database'
 import icenlp from '../models/icenlp'
 import summary from './summary'
-import {structure, headwordFromPart} from '../grammar/parsed'
+import {structure, headwordFromTagged} from '../grammar/parsed'
 import getVerbFilters from '../filters/verbs'
 import getPrepositionFilters from '../filters/prepositions'
 
@@ -21,12 +21,12 @@ async function related(word) {
 }
 
 async function verb(tokenized, parts) {
-  let modifier = parts.subject.word
-  let verb = parts.verb.word
-
-  if(!modifier) {
+  if (!parts.subject || !parts.verb) {
     return
   }
+
+  let modifier = parts.subject.word
+  let verb = parts.verb.word
 
   let results = await related(verb)
 
@@ -46,7 +46,7 @@ async function verb(tokenized, parts) {
 }
 
 function getDirectedCase(results) {
-  let caseTag = results.map(r => Object.keys(r))[0]
+  let caseTags = results.map(r => Object.keys(r))
 
   let cases = {
     'NF': 'nominative',
@@ -55,11 +55,11 @@ function getDirectedCase(results) {
     'EF': 'genitive',
   }
 
-  return cases[caseTag]
+  return caseTags.map(caseTag => cases[caseTag]).join(' or ')
 }
 
-async function preposition(tokenized, parts) {
-  if (!parts.object.word) {
+async function verbObject(tokenized, parts) {
+  if (!parts.object || !parts.verb) {
     return
   }
 
@@ -87,16 +87,46 @@ async function preposition(tokenized, parts) {
   }
 }
 
+async function preposition(tokenized, parts, tagged) {
+  if (!parts.preposition || !parts.prepositionObject) {
+    return
+  }
+
+  let preposition = parts.preposition.word
+  let object = parts.prepositionObject.word
+
+  let headWord = headwordFromTagged(tokenized, tagged, object)
+  let nouns = uniqueWords(await database.lookup(object)).filter(x => x.headWord === headWord)
+  let results = await related(object)
+  let filters = await getPrepositionFilters(preposition, nouns)
+
+  let res = filters.map(filter => {
+    let {grammarTag} = filter
+    return _.mapValues(grammarTag, tag => results.filter(x => x.binId === filter.binId && x.grammarTag === tag)[0])
+  })
+
+  let replacements = _(res.map(word => Object.values(word).map(x => x.wordForm))).flatten().unique().value()
+
+  return {
+    rule: 'object should agree with preposition',
+    explanation: `${preposition} directs the ${getDirectedCase(res)} case`,
+    modifierIndex: tokenized.indexOf(preposition),
+    targetIndex: tokenized.indexOf(object),
+    replacements,
+    isCorrect: replacements.includes(object),
+  }
+}
+
 async function getParse(query) {
   let parsedQuery = await icenlp(query)
-  let {tokenized, parsed} = parsedQuery
+  let {tokenized, parsed, tagged} = parsedQuery
   let parts = structure(parsed)
 
-  return {tokenized, parts, parsed}
+  return {tokenized, parts, parsed, tagged}
 }
 
 async function getRules(query) {
-  let {tokenized, parts, parsed} = await getParse(query)
+  let {tokenized, parts, parsed, tagged} = await getParse(query)
 
   let rules = []
 
@@ -106,7 +136,12 @@ async function getRules(query) {
   }
 
   if (parts.object) {
-    let prepositionReplacements = await preposition(tokenized, parts)
+    let prepositionReplacements = await verbObject(tokenized, parts)
+    rules.push(prepositionReplacements)
+  }
+
+  if (parts.preposition) {
+    let prepositionReplacements = await preposition(tokenized, parts, tagged)
     rules.push(prepositionReplacements)
   }
 
@@ -114,8 +149,9 @@ async function getRules(query) {
 
   return {
     tokenized,
-    // parsed,
+    parsed,
     rules,
+    tagged,
   }
 }
 

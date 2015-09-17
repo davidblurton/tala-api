@@ -1,14 +1,25 @@
 import express from 'express'
 import cors from 'cors'
 import responseTime from 'response-time'
+import logger from 'express-bunyan-logger'
 
 import declensions from './routes/declensions'
 import summary from './routes/summary'
 import index from './routes/index'
 import sentence from './routes/sentence'
+import error from './error'
 
 let app = express()
 
+app.use(logger({
+  name: 'request',
+  streams: [{
+      level: 'debug',
+      stream: process.stdout
+      }],
+  format: ':remote-address :incoming :method :url :status-code - :user-agent[family] :user-agent[major].:user-agent[minor] :user-agent[os] - :response-time ms',
+  excludes: ['*']
+  }))
 app.use(cors())
 app.use(responseTime())
 
@@ -16,6 +27,9 @@ app.use('/', declensions)
 app.use('/', summary)
 app.use('/', index)
 app.use('/', sentence)
+
+//app.use(logger.errorLogger())
+app.use(error)
 
 let server = app.listen(8000, () => {
   let host = server.address().address
