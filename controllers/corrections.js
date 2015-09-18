@@ -134,6 +134,7 @@ async function getRules(query) {
 
   let recognized = tagged.map(isRecognized)
   let rules = []
+  let error
 
   try {
     if (parts.verb) {
@@ -152,7 +153,7 @@ async function getRules(query) {
     }
   } catch(err) {
     // log error
-    console.error(err)
+    error = err
   }
 
   rules = rules.filter(x => x)
@@ -162,7 +163,9 @@ async function getRules(query) {
     parsed,
     rules,
     tagged,
-    recognized
+    recognized,
+    error,
+    parts
   }
 }
 
