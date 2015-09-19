@@ -15,5 +15,5 @@ rules:
   semi:
     - 2
     - "never"
-  prefer-const:
-    - 0
+  prefer-const: 0
+  no-undef: 2
