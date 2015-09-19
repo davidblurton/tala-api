@@ -4,7 +4,6 @@ import responseTime from 'response-time'
 import logger from 'express-bunyan-logger'
 
 import declensions from './routes/declensions'
-import summary from './routes/summary'
 import index from './routes/index'
 import sentence from './routes/sentence'
 import error from './error'
@@ -23,9 +22,8 @@ app.use(logger({
 app.use(cors())
 app.use(responseTime())
 
-app.use('/', declensions)
-app.use('/', summary)
 app.use('/', index)
+app.use('/', declensions)
 app.use('/', sentence)
 
 //app.use(logger.errorLogger())

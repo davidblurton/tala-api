@@ -3,7 +3,7 @@ import corrections from '../../controllers/corrections';
 import {structure} from '../../grammar/parsed'
 
 describe('Corrects verb object agreement', async function() {
-  it('it should change the case of objects to match verbs', async function() {
+  it.skip('it should change the case of objects to match verbs', async function() {
     let tokenized = ['ég', 'tala', 'íslenska']
     let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ>":{"[NP":{"WORDS":[{"ég":"fp1en"}]}},"[VP":{"WORDS":[{"tala":"sfg1en"}]},"{*OBJ<":{"[AP":{"WORDS":[{"íslenska":"lkfosf"}]}}}}}'
 

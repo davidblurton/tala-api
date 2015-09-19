@@ -190,4 +190,4 @@ async function sentence(query) {
   }
 }
 
-export default {verb, sentence, preposition}
+export default {sentence}
