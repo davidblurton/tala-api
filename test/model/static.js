@@ -1,5 +1,5 @@
 import assert from 'assert'
-import lookupVerb from '../../models/static';
+import lookupVerb from '../../models/static'
 
 const testCases = {
   'tefja': ['ÞF'],

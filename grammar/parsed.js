@@ -8,7 +8,7 @@ function parseJson(s) {
 
   try {
     return JSON.parse(s)
-  } catch(e) {
+  } catch (e) {
     console.log('Failed to parse', s)
     return JSON.parse(s)
   }
@@ -27,7 +27,7 @@ function getWord(part) {
   let result
 
   traverse(part).forEach(function(value) {
-    if(this.key === 'WORDS') {
+    if (this.key === 'WORDS') {
       result = value[0]
     }
   })
@@ -41,7 +41,7 @@ function getWords(part) {
   let results = []
 
   traverse(part).forEach(function(value) {
-    if(this.key === 'WORDS') {
+    if (this.key === 'WORDS') {
       results.push(value)
     }
   })

@@ -1,5 +1,5 @@
 import assert from 'assert'
-import declensions from '../controllers/declensions';
+import declensions from '../controllers/declensions'
 import _ from 'lodash'
 import lookup from '../translate/translate.json'
 
@@ -10,7 +10,7 @@ describe('Sentences', () => {
 
   it.skip('should parse a sentence', async function() {
 
-    let split = sentence.replace(/[.,-\/#!$%\^&\*;:{}=\-_~()­]/g,"").split(' ')
+    let split = sentence.replace(/[.,-\/#!$%\^&\*;:{}=\-_~()­]/g,'').split(' ')
 
     let results = await* split.map(declensions.find)
 

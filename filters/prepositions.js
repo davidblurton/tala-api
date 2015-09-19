@@ -95,7 +95,7 @@ export default async function(query, words) {
     queries.push({modifier: query, cases: prepositions[query]})
   }
 
-  let verbs = await findVerbs(query);
+  let verbs = await findVerbs(query)
   let verbCases = await* verbs.map(lookupVerb)
   queries.push(... _.zip(verbs, verbCases).filter(([, cases]) => cases).map(([verb, cases]) => {
     return {modifier: verb, cases: cases}

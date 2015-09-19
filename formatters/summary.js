@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash'
 import translate from '../translate/translate'
 
 export default (results, query, lang) => {

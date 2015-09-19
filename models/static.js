@@ -13,7 +13,7 @@ async function parseStatic() {
 
     // Only support simple verb>noun sentances for now.
     if (cases.length !== 1) {
-      continue;
+      continue
     }
 
     if (!results[verb]) {

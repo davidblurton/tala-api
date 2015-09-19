@@ -21,7 +21,7 @@ function getTags(nouns, degree) {
 
   return nouns.map(noun => {
     let parsed = parse(noun.wordClass, noun.grammarTag)
-    let definite;
+    let definite
 
     if (degree.length === 1) {
       definite = degree + (parsed.article ? 'VB' : 'SB')

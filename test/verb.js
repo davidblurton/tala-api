@@ -1,5 +1,5 @@
 import assert from 'assert'
-import summary from '../controllers/summary';
+import summary from '../controllers/summary'
 import summaryFormatter from '../formatters/summary'
 
 describe.skip('Verbs', () => {
@@ -9,8 +9,8 @@ describe.skip('Verbs', () => {
     let formatted = summaryFormatter(results, 'ég')
 
     assert.deepEqual(formatted.results, [{
-      "NT": "ég fer",
-      "ÞT": "ég fór",
+      'NT': 'ég fer',
+      'ÞT': 'ég fór',
     }])
   })
 })

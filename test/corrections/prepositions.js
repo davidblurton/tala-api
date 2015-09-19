@@ -1,5 +1,5 @@
 import assert from 'assert'
-import corrections from '../../controllers/corrections';
+import corrections from '../../controllers/sentence'
 import {structure} from '../../grammar/parsed'
 
 describe('Corrects verb object agreement', async function() {

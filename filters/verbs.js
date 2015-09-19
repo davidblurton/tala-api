@@ -76,4 +76,4 @@ let getFilters = query => {
   return filters[query.toLowerCase()]
 }
 
-export default getFilters;
+export default getFilters

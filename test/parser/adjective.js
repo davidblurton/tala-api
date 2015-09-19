@@ -1,5 +1,5 @@
 import assert from 'assert'
-import {parse, toString} from '../../grammar/parser';
+import {parse, toString} from '../../grammar/parser'
 
 const testCases = {
   'FVB-KK-NFET': {definite: 'FVB', gender: 'KK', grammarCase: 'NF', number: 'ET'},
