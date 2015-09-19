@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import database from '../models/database'
+import declensions from './declensions'
 import icenlp from '../models/icenlp'
 import summary from './summary'
 import {structure, headwordFromTagged} from '../grammar/parsed'
@@ -10,16 +10,6 @@ function uniqueWords(words) {
   return _.uniq(words, w => w.binId)
 }
 
-// Find all words from the same headword.
-async function related(word) {
-  let words = await database.lookup(word)
-
-  let ids = _.chain(words).pluck('binId').unique().value()
-  let related = await* ids.map(database.lookup)
-
-  return _.flatten(related)
-}
-
 async function verb(tokenized, parts) {
   if (!parts.subject || !parts.verb) {
     return
@@ -28,20 +18,21 @@ async function verb(tokenized, parts) {
   let modifier = parts.subject.word
   let verb = parts.verb.word
 
-  let results = await related(verb)
+  let results = await declensions.related(verb)
 
   let {grammarTag} = getVerbFilters(modifier)
 
   let corrected = _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 
   let replacements = Object.values(_.mapValues(corrected, x => x.wordForm))
+  let isCorrect = replacements.includes(verb)
 
   return {
-    rule: 'verb should agree with subject',
+    rule: `verb ${isCorrect ? 'agrees' : 'should agree'} with subject`,
     modifierIndex: tokenized.indexOf(modifier),
     targetIndex: tokenized.indexOf(verb),
     replacements,
-    isCorrect: replacements.includes(verb),
+    isCorrect,
   }
 }
 
@@ -66,8 +57,8 @@ async function verbObject(tokenized, parts) {
   let verb = parts.verb.word
   let object = parts.object.word
 
-  let nouns = uniqueWords(await database.lookup(object))
-  let results = await related(object)
+  let nouns = uniqueWords(await declensions.find(object))
+  let results = await declensions.related(object)
   let filters = await getPrepositionFilters(verb, nouns)
 
   let res = filters.map(filter => {
@@ -76,14 +67,15 @@ async function verbObject(tokenized, parts) {
   })
 
   let replacements = Object.values(res[0]).map(x => x.wordForm)
+  let isCorrect = replacements.includes(object)
 
   return {
-    rule: 'object should agree with verb',
+    rule: `object ${isCorrect ? 'agrees' : 'should agree'} with verb`,
     explanation: `${verb} directs the ${getDirectedCase(res)} case`,
     modifierIndex: tokenized.indexOf(verb),
     targetIndex: tokenized.indexOf(object),
     replacements,
-    isCorrect: replacements.includes(object),
+    isCorrect,
   }
 }
 
@@ -96,8 +88,8 @@ async function preposition(tokenized, parts, tagged) {
   let object = parts.prepositionObject.word
 
   let headWord = headwordFromTagged(tokenized, tagged, object)
-  let nouns = uniqueWords(await database.lookup(object)).filter(x => x.headWord === headWord)
-  let results = await related(object)
+  let nouns = uniqueWords(await declensions.find(object)).filter(x => x.headWord === headWord)
+  let results = await declensions.related(object)
   let filters = await getPrepositionFilters(preposition, nouns)
 
   let res = filters.map(filter => {
