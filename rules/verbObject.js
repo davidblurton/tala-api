@@ -20,7 +20,12 @@ export default async function (tokenized, parts) {
     return _.mapValues(grammarTag, tag => results.filter(x => x.binId === filter.binId && x.grammarTag === tag)[0])
   })
 
-  let replacements = Object.values(res[0]).map(x => x.wordForm)
+  let replacements = []
+
+  if (res[0]) {
+    replacements = Object.values(res[0]).map(x => x.wordForm)
+  }
+
   let isCorrect = replacements.includes(object)
 
   return {
