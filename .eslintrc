@@ -1,0 +1,19 @@
+---
+parser: babel-eslint
+
+env:
+  node: true
+  es6: true
+  mocha: true
+
+plugins:
+  - babel
+
+extends: "airbnb/base"
+
+rules:
+  semi:
+    - 2
+    - "never"
+  prefer-const:
+    - 0
