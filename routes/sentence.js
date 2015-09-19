@@ -11,7 +11,10 @@ router.get('/sentence', (req, res, next) => {
   }
 
   controller.sentence(sentence).then(results => {
-    req.log.info(results)
+    if (process.env.NODE_ENV === 'production') {
+      req.log.info(results)
+    }
+
     res.json(results)
   }, next)
 })
