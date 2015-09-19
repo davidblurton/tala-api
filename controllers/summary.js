@@ -2,7 +2,6 @@ import _ from 'lodash'
 import database from '../models/database'
 import getPrepositionFilters from '../filters/prepositions'
 import getVerbFilters from '../filters/verbs'
-import getAdjectiveFilters from '../filters/adjectives'
 
 function uniqueWords(words) {
   return _.uniq(words, w => w.binId)
@@ -22,9 +21,9 @@ async function related(word) {
   let words = await database.lookup(word)
 
   let ids = _.chain(words).pluck('binId').unique().value()
-  let related = await* ids.map(database.lookup)
+  let results = await* ids.map(database.lookup)
 
-  return _.flatten(related)
+  return _.flatten(results)
 }
 
 async function preposition(modifier, word) {
@@ -42,7 +41,7 @@ async function preposition(modifier, word) {
 async function verb(modifier, word) {
   let results = await this.related(word)
 
-  let {wordClass, grammarTag} = getVerbFilters(modifier)
+  let {grammarTag} = getVerbFilters(modifier)
 
   return _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 }

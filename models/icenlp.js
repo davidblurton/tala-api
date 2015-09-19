@@ -18,8 +18,8 @@ let lookup = async function(query) {
       markunknown: true,
       inputtokenize: 2,
       tagging: true,
-      tagger: 'hmmicehmm'
-    }
+      tagger: 'hmmicehmm',
+    },
   })
 
   let lines = res.data.split(/^\s*$[\n\r]{1,}/gm)

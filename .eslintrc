@@ -17,3 +17,4 @@ rules:
     - "never"
   prefer-const: 0
   no-undef: 2
+  func-names: 0

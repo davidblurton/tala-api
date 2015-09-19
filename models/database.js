@@ -5,23 +5,30 @@ import wordMapper from './wordMapper'
 const SEPARATOR = '~'
 const END = '\xff'
 
-let db = level(process.cwd() + '/db')
+const path = process.cwd() + '/db'
+const options = {
+  createIfMissing: false,
+}
+
+let db = level(path, options)
 
 let database = {
   search(prefix, limit) {
     return db.createKeyStream({
       gte: prefix,
       lt: prefix + END,
-      limit: limit || -1
+      limit: limit || -1,
+      fillCache: true,
     })
   },
 
   lookup(word) {
     return db.createKeyStream({
       gte: word + SEPARATOR,
-      lt: word + SEPARATOR + END
+      lt: word + SEPARATOR + END,
+      fillCache: true,
     })
-  }
+  },
 }
 
 async function search(prefix) {

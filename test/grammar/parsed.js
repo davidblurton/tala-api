@@ -1,5 +1,4 @@
 import assert from 'assert'
-import corrections from '../../controllers/sentence'
 import {structure} from '../../grammar/parsed'
 
 describe('Parses parts of a sentence', async function() {

@@ -16,7 +16,7 @@ function isRecognized(taggedWord) {
 
 async function getRules({tokenized, parts, parsed, tagged}) {
   let recognized = tagged.map(isRecognized)
-  let rules
+  let rules = []
   let error
 
   try {
@@ -27,6 +27,7 @@ async function getRules({tokenized, parts, parsed, tagged}) {
     ]
   } catch (err) {
     // TODO: log error
+    console.log(err, err.stack)
     error = err
   }
 

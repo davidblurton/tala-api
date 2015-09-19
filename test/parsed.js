@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {structure, wordFromPart} from '../grammar/parsed'
 
-// Move to corrections folder
+// Convert examples to json format :(
 describe.skip('Understands parsed output from icenlp', () => {
   it(`identifies subject and verb`, () => {
     const parsed = '{*SUBJ> [NP Ég fp1en ] } [VP sá sfg1eþ ] {*OBJ< [NP [AP veiku lveovf ] konuna nveog ] } '

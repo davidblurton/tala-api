@@ -1,5 +1,5 @@
 import assert from 'assert'
-import corrections from '../../controllers/sentence'
+import {verb} from '../../rules'
 import {structure} from '../../grammar/parsed'
 
 describe('Corrects subject verb agreement', async function() {
@@ -8,7 +8,7 @@ describe('Corrects subject verb agreement', async function() {
     let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"tala":"sng"}]},"{*OBJ<":{"[NP":{"WORDS":[{"íslensku":"nveo"}]}}}}}'
 
     let parts = structure(parsedQuery)
-    let result = await corrections.verb(tokenized, parts)
+    let result = await verb(tokenized, parts)
 
     assert.deepEqual(result.modifierIndex, 0)
     assert.deepEqual(result.targetIndex, 1)
