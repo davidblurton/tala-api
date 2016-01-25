@@ -17,7 +17,7 @@ export default {
    * @return {Array}
    */
   findById(id) {
-    return database.search(id)
+    return database.lookup(id)
   },
 
   /**

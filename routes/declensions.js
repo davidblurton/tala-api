@@ -13,8 +13,8 @@ router.get('/find/:word', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/id/:word', (req, res, next) => {
-  declensions.findById(req.params.word)
+router.get('/id/:id', (req, res, next) => {
+  declensions.findById(req.params.id)
     .then(results => format(results, req.query.lang))
     .then(results => res.send(results))
     .catch(next)
