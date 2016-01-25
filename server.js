@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import responseTime from 'response-time'
 import logger from 'express-bunyan-logger'
+import compression from 'compression'
 
 import declensions from './routes/declensions'
 import index from './routes/index'
@@ -21,6 +22,7 @@ app.use(logger({
 }))
 app.use(cors())
 app.use(responseTime())
+app.use(compression())
 
 app.use('/', index)
 app.use('/', declensions)
