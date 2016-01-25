@@ -38,7 +38,7 @@
       "FVB": "positive degree, definite",
       "GM": "active voice",
       "gr": "the free definite article (word class)",
-      "gr": "definite, with suffixed article (for nouns)",
+      "gr": "definite",
       "HK": "gender: neuter",
       "KK": "gender: masculine",
       "KVK": "gender: feminine",
@@ -66,7 +66,8 @@
       "ÞGFFT": "dative plural",
       "ÞT": "past tense",
       "F": "positive degree",
-      "E": "superlative"
+      "E": "superlative",
+      "": "indefinite"
     }
   },
 
