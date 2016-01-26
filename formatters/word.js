@@ -2,8 +2,8 @@ import _ from 'lodash'
 import {parse} from '../grammar/parser'
 import lookup from '../translate/translate.json'
 
-function sort(results) {
-  return _.sortBy(results, x => {
+function sort(result) {
+  return _.sortBy(result.forms, x => {
     let rank = {
       nominative: 1,
       accusative: 2,
@@ -18,20 +18,39 @@ function translate(tags, language) {
   return _.mapValues(tags, tag => lookup[language].grammarTag[tag] || tag)
 }
 
-export default (results, lang) => {
-  results.forEach(result => {
+function translateTags(result, lang) {
+  result.forms.forEach(form => {
     try {
-      let tags = parse(result.wordClass, result.grammarTag)
-      result.tags = translate(tags, 'en')
-    } catch(e) {
-      result.tags = {}
+      let tags = parse(result.wordClass, form.grammarTag)
+      form.tags = lang ? translate(tags, lang) : tags
+    } catch (e) {
+      console.log(e)
+      form.tags = {}
     }
   })
 
+  result.forms = sort(result)
+  return result
+}
+
+function formatResult(forms) {
+  let first = forms[0]
+
+  let {headWord, binId, wordClass, section} = first
+
   return {
-    count: results.length,
-    wordClasses: _.unique(results.map(x => x.wordClass)),
-    results: sort(results),
+    headWord,
+    binId,
+    wordClass,
+    section,
+    forms: forms.map(({form, grammarTag}) => ({form, grammarTag})),
   }
+}
+
+export default function(results, lang) {
+  let resultsById = _.groupBy(results, 'binId')
+  let formattedResults = _.values(resultsById).map(formatResult)
+  let taggedResults = formattedResults.map(result => translateTags(result, lang))
+  return taggedResults
 }
 

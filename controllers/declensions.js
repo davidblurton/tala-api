@@ -31,12 +31,4 @@ export default {
       .then(ids => Promise.all(ids.map(id => database.lookup(id))))
       .then(results => _.flatten(results))
   },
-
-  /**
-   * Find unique head words for a word.
-   */
-  findVerbs(word) {
-    return database.lookup(word)
-      .then(results => _(results).filter(word => word.wordClass === 'so').pluck('headWord').unique().value())
-  }
 }

@@ -1,15 +1,13 @@
-export default function(data) {
-  let word = data.split('~')[1]
-  let row = word.split(';')
+export default function(row) {
+  let word = row.split('~')[1]
+  let [headWord, binId, wordClass, section, form, grammarTag] = word.split(';')
 
   return {
-    _id: word,
-    _url: `/id/${data}`,
-    headWord: row[0],
-    binId: row[1],
-    wordClass: row[2],
-    section: row[3],
-    wordForm: row[4],
-    grammarTag: row[5]
+    headWord,
+    binId: parseInt(binId, 10),
+    wordClass,
+    section,
+    form,
+    grammarTag,
   }
 }

@@ -12,7 +12,7 @@ const featuresMap = {
   // Pronoun
   'pfn': ['grammarCase', 'number'],
   // Adjective
-  'lo': ['definite', 'gender', 'grammarCase', 'number']
+  'lo': ['definite', 'gender', 'grammarCase', 'number'],
 }
 
 const parser = {
@@ -67,7 +67,7 @@ export function parse(wordClass, grammarTag) {
   let features = featuresMap[wordClass]
 
   if (!features) {
-    throw new Error('Unsupported word class.')
+    throw new Error(`Unsupported word class: ${wordClass}`)
   }
 
   var result = {}

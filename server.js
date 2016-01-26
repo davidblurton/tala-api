@@ -7,7 +7,7 @@ import compression from 'compression'
 import declensions from './routes/declensions'
 import index from './routes/index'
 import sentence from './routes/sentence'
-import error from './error'
+//import error from './error'
 
 let app = express()
 
@@ -28,8 +28,8 @@ app.use('/', index)
 app.use('/', declensions)
 app.use('/', sentence)
 
-//app.use(logger.errorLogger())
-app.use(error)
+app.use(logger.errorLogger())
+//app.use(error)
 
 let server = app.listen(8000, () => {
   let host = server.address().address
