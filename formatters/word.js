@@ -14,15 +14,19 @@ function sort(result) {
   })
 }
 
-function translate(tags, language) {
+function translateTags(tags, language) {
   return _.mapValues(tags, tag => lookup[language].grammarTag[tag] || tag)
 }
 
-function translateTags(result, lang) {
+function translateWordClass(wordClass, language) {
+  return lookup[language].wordClass[wordClass]
+}
+
+function translate(result, lang) {
   result.forms.forEach(form => {
     try {
       let tags = parse(result.wordClass, form.grammarTag)
-      form.tags = lang ? translate(tags, lang) : tags
+      form.tags = lang ? translateTags(tags, lang) : tags
     } catch (e) {
       console.log(e)
       form.tags = {}
@@ -30,10 +34,11 @@ function translateTags(result, lang) {
   })
 
   result.forms = sort(result)
+  result.wordClass = lang ? translateWordClass(result.wordClass, lang) : result.wordClass
   return result
 }
 
-function formatResult(forms) {
+function formatResults(forms) {
   let first = forms[0]
 
   let {headWord, binId, wordClass, section} = first
@@ -49,8 +54,9 @@ function formatResult(forms) {
 
 export default function(results, lang) {
   let resultsById = _.groupBy(results, 'binId')
-  let formattedResults = _.values(resultsById).map(formatResult)
-  let taggedResults = formattedResults.map(result => translateTags(result, lang))
+  let uniqueHeadWords = _.values(resultsById)
+  let formattedResults = uniqueHeadWords.map(formatResults)
+  let taggedResults = formattedResults.map(result => translate(result, lang))
   return taggedResults
 }
 
