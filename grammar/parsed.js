@@ -49,7 +49,7 @@ function getWords(part) {
   return results.map(word => formatWords(word[0]))
 }
 
-let structure = function(jsonString) {
+export function structure(jsonString) {
   let parsed = parseJson(jsonString)
 
   let sentence = parsed['Parsed Text']['Sentence']
@@ -65,10 +65,8 @@ let structure = function(jsonString) {
   return {subject, verb, object, preposition, prepositionObject}
 }
 
-let headwordFromTagged = function(tokenized, tagged, word) {
+export function headwordFromTagged(tokenized, tagged, word) {
   let index = tokenized.indexOf(word)
   let headwordMatch = /\((.*)\)/.exec(tagged[index])
   return headwordMatch && headwordMatch[1]
 }
-
-export default {structure, headwordFromTagged}

@@ -1,5 +1,3 @@
-import preposition from './preposition'
-import verbObject from './verbObject'
-import verb from './verb'
-
-export default {preposition, verbObject, verb}
+export {preposition} from './preposition'
+export {verbObject} from './verbObject'
+export {verb} from './verb'

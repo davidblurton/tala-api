@@ -2,7 +2,7 @@ import _ from 'lodash'
 import declensions from '../controllers/declensions'
 import getVerbFilters from '../filters/verbs'
 
-export default async function (tokenized, parts) {
+export async function verb(tokenized, parts) {
   if (!parts.subject || !parts.verb) {
     return false
   }
@@ -16,7 +16,7 @@ export default async function (tokenized, parts) {
 
   let corrected = _.mapValues(grammarTag, tag => results.filter(x => x.grammarTag === tag)[0])
 
-  let replacements = Object.values(_.mapValues(corrected, x => x.wordForm))
+  let replacements = Object.values(_.mapValues(corrected, x => x.form))
   let isCorrect = replacements.includes(verb)
 
   return {

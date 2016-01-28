@@ -2,7 +2,7 @@ import assert from 'assert'
 import {verb} from '../../rules'
 import {structure} from '../../grammar/parsed'
 
-describe('Corrects subject verb agreement', async function() {
+describe('Corrects subject verb agreement', function() {
   it('should find the correct verb for a pronoun subject', async function() {
     let tokenized = ['hann', 'tala', 'íslensku']
     let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"tala":"sng"}]},"{*OBJ<":{"[NP":{"WORDS":[{"íslensku":"nveo"}]}}}}}'

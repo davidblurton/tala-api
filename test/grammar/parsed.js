@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {structure} from '../../grammar/parsed'
 
-describe('Parses parts of a sentence', async function() {
+describe('Parses parts of a sentence', () => {
   it('it detects SVO', () => {
     let parsedQuery = '{"Parsed Text":{"Sentence":{"{*SUBJ":{"[NP":{"WORDS":[{"hann":"fpken"}]}},"[VPi":{"WORDS":[{"tala":"sng"}]},"{*OBJ<":{"[NP":{"WORDS":[{"íslensku":"nveo"}]}}}}}'
     let result = structure(parsedQuery)
