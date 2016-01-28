@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "mocha --compilers js:mocha-babel --full-trace --recursive ./test/",
+    "test": "mocha --compilers js:babel-register --full-trace --recursive ./test/",
     "lint": "jshint --exclude ./node_modules . || true && eslint .",
     "style": "eslint .",
     "predeploy": "npm run test",
@@ -19,13 +19,15 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.5.4",
-    "babel": "^5.8.21",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-stage-0": "^6.3.13",
     "compression": "^1.6.1",
     "concat-stream": "^1.5.0",
     "cors": "^2.7.1",
     "express": "^4.13.1",
     "express-bunyan-logger": "^1.1.1",
-    "level": "^1.4.0",
+    "leveldown": "^1.4.4",
+    "levelup": "^1.3.1",
     "lodash": "^3.10.0",
     "prfun": "^2.1.1",
     "response-time": "^2.3.1",
@@ -33,12 +35,12 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.1.3",
-    "babel-runtime": "^5.8.19",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.4.3",
     "eslint": "^1.5.0",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-babel": "^2.1.1",
     "jscs": "^1.13.1",
-    "mocha": "^2.2.5",
-    "mocha-babel": "^3.0.0"
+    "mocha": "^2.2.5"
   }
 }

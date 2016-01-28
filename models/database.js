@@ -1,4 +1,4 @@
-import level from 'level'
+import level from 'levelup'
 import concat from './concat-stream-promise'
 import wordMapper from './wordMapper'
 

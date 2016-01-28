@@ -20,11 +20,11 @@ async function getRules({tokenized, parts, parsed, tagged}) {
   let error
 
   try {
-    rules = await* [
+    rules = Promise.all([
       correctionRules.verb(tokenized, parts),
       correctionRules.verbObject(tokenized, parts),
       correctionRules.preposition(tokenized, parts, tagged),
-    ]
+    ])
   } catch (err) {
     // TODO: log error
     console.log(err, err.stack)

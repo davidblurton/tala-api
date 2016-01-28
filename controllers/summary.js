@@ -21,7 +21,7 @@ async function related(word) {
   let words = await database.lookup(word)
 
   let ids = _.chain(words).pluck('binId').unique().value()
-  let results = await* ids.map(database.lookup)
+  let results = Promise.all(ids.map(database.lookup))
 
   return _.flatten(results)
 }
