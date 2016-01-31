@@ -17,6 +17,8 @@ const featuresMap = {
   'so': ['person', 'number', 'tense', 'voice', 'mood', 'impersonal', 'pronoun'],
   // Other pronoun
   'fn': ['grammarCase', 'gender', 'number'],
+  // Adverb
+  'ao': ['degree'],
 }
 
 const parser = {
@@ -66,6 +68,10 @@ const parser = {
 
   pronoun(tag) {
     return ['FN'].filter(x => tag.includes(x))[0]
+  },
+
+  degree(tag) {
+    return ['FST', 'MST', 'EST'].filter(x => tag.includes(x))[0]
   },
 }
 
