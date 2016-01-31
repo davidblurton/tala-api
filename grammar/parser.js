@@ -10,11 +10,13 @@ const featuresMap = {
    // Numeral
   'to': ['grammarCase', 'gender', 'number'],
   // Pronoun
-  'pfn': ['grammarCase', 'number'],
+  'pfn': ['grammarCase', 'gender', 'number'],
   // Adjective
   'lo': ['grammarCase', 'definite', 'gender', 'number'],
   // Verb
   'so': ['person', 'number', 'tense', 'voice', 'mood', 'impersonal', 'pronoun'],
+  // Other pronoun
+  'fn': ['grammarCase', 'gender', 'number'],
 }
 
 const parser = {
