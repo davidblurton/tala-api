@@ -7,6 +7,7 @@ import compression from 'compression'
 import declensions from './routes/declensions'
 import index from './routes/index'
 import sentence from './routes/sentence'
+import suggestions from './routes/suggestions'
 //import error from './error'
 
 let app = express()
@@ -27,6 +28,7 @@ app.use(compression())
 app.use('/', index)
 app.use('/', declensions)
 app.use('/', sentence)
+app.use('/', suggestions)
 
 app.use(logger.errorLogger())
 //app.use(error)

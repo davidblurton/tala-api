@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "mocha --require babel-core/register --require babel-polyfill --recursive ./test/",
+    "test": "mocha --require babel-core/register --require babel-polyfill --recursive ./test/ -s 10",
     "lint": "jshint --exclude ./node_modules . || true && eslint .",
     "style": "eslint .",
     "predeploy": "npm run test",
