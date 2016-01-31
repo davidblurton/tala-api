@@ -4,13 +4,21 @@ import lookup from '../translate/translate.json'
 
 function sort(result) {
   return _.sortBy(result.forms, x => {
-    let rank = {
-      nominative: 1,
-      accusative: 2,
-      dative: 3,
-      genitive: 4,
+    let caseRank = {
+      NF: 1,
+      ÞF: 2,
+      ÞGF: 3,
+      EF: 4,
     }
-    return rank[x.tags && x.tags.grammarCase]
+
+    let personRank = {
+      '1P': 1,
+      '2P': 2,
+      '3P': 3,
+    }
+
+    return caseRank[x.tags && x.tags.grammarCase] ||
+        personRank[x.tags && x.tags.person]
   })
 }
 
@@ -24,9 +32,17 @@ function translateWordClass(wordClass, language) {
 
 function translate(result, lang) {
   result.forms.forEach(form => {
+    form.tags = lang ? translateTags(form.tags, lang) : form.tags
+  })
+
+  result.wordClass = lang ? translateWordClass(result.wordClass, lang) : result.wordClass
+  return result
+}
+
+function tag(result) {
+  result.forms.forEach(form => {
     try {
-      let tags = parse(result.wordClass, form.grammarTag)
-      form.tags = lang ? translateTags(tags, lang) : tags
+      form.tags = parse(result.wordClass, form.grammarTag)
     } catch (e) {
       console.log(e)
       form.tags = {}
@@ -34,7 +50,6 @@ function translate(result, lang) {
   })
 
   result.forms = sort(result)
-  result.wordClass = lang ? translateWordClass(result.wordClass, lang) : result.wordClass
   return result
 }
 
@@ -56,7 +71,8 @@ export default function(results, lang) {
   let resultsById = _.groupBy(results, 'binId')
   let uniqueHeadWords = _.values(resultsById)
   let formattedResults = uniqueHeadWords.map(formatResults)
-  let taggedResults = formattedResults.map(result => translate(result, lang))
-  return taggedResults
+  return formattedResults
+      .map(result => tag(result))
+      .map(result => translate(result, lang))
 }
 
