@@ -15,12 +15,12 @@
     },
 
     "grammarTag": {
-      "1p": "1st person (in pronouns)",
-      "1P": "1st person (in verbs)",
-      "2p": "2nd person (in pronouns)",
-      "2P": "2nd person (in verbs)",
-      "3p": "3rd person (in pronouns)",
-      "3P": "3rd person (in verbs)",
+      "1p": "1st person",
+      "1P": "1st person",
+      "2p": "2nd person",
+      "2P": "2nd person",
+      "3p": "3rd person",
+      "3P": "3rd person",
       "ao": "adverb",
       "BH": "imperative",
       "EF": "genitive",
@@ -31,13 +31,12 @@
       "ET": "singular",
       "EVB": "superlative, definite",
       "FH": "indicative",
-      "fn": "pronoun (excluding personal and possessive pronouns)",
+      "FN": "pronoun (excluding personal and possessive pronouns)",
       "FSB": "positive degree, indefinite",
       "FST": "positive degree (for adverbs)",
       "FT": "plural",
       "FVB": "positive degree, definite",
       "GM": "active voice",
-      "gr": "the free definite article (word class)",
       "gr": "definite",
       "HK": "gender: neuter",
       "KK": "gender: masculine",
@@ -87,12 +86,12 @@
     },
 
     "grammarTag": {
-      "1p": "1. persóna (í fornöfnum)",
-      "1P": "1. persóna (í sagnorðum)",
-      "2p": "2. persóna (í fornöfnum)",
-      "2P": "2. persóna (í sagnorðum)",
-      "3p": "3. persóna (í fornöfnum)",
-      "3P": "3. persóna (í sagnorðum)",
+      "1p": "1. persóna",
+      "1P": "1. persóna",
+      "2p": "2. persóna",
+      "2P": "2. persóna",
+      "3p": "3. persóna",
+      "3P": "3. persóna",
       "ao": "atviksorð",
       "BH": "boðháttur",
       "EF": "eignarfall",
@@ -103,7 +102,7 @@
       "ET": "eintala",
       "EVB": "efsta stig, veik beyging",
       "FH": "framsöguháttur",
-      "fn": "fornafn (annað en persónufornafn eða eignarfornafn)",
+      "FN": "fornafn (annað en persónufornafn eða eignarfornafn)",
       "FSB": "frumstig, sterk beyging",
       "FST": "frumstig (í atviksorðum)",
       "FT": "fleirtala",
@@ -138,7 +137,8 @@
       "ÞGFFT": "þágufall fleirtölu",
       "ÞT": "þátíð",
       "F": "frumstig",
-      "E": "efsta stig"
+      "E": "efsta stig",
+      "": "óákveðinn greinir"
     }
   }
 }
