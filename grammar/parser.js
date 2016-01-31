@@ -8,11 +8,13 @@ const featuresMap = {
   'kk': ['grammarCase', 'number', 'article'],
   'kvk': ['grammarCase', 'number', 'article'],
    // Numeral
-  'to': ['gender', 'grammarCase', 'number'],
+  'to': ['grammarCase', 'gender', 'number'],
   // Pronoun
   'pfn': ['grammarCase', 'number'],
   // Adjective
-  'lo': ['definite', 'gender', 'grammarCase', 'number'],
+  'lo': ['grammarCase', 'definite', 'gender', 'number'],
+  // Verb
+  'so': ['person', 'number', 'tense', 'voice', 'mood', 'impersonal', 'pronoun'],
 }
 
 const parser = {
@@ -38,7 +40,31 @@ const parser = {
     } else {
       return ''
     }
-  }
+  },
+
+  person(tag) {
+    return ['1P', '2P', '3P'].filter(x => tag.includes(x))[0]
+  },
+
+  tense(tag) {
+    return ['NT', 'ÞT'].filter(x => tag.includes(x))[0]
+  },
+
+  voice(tag) {
+    return ['GM', 'MM', 'OP'].filter(x => tag.includes(x))[0]
+  },
+
+  mood(tag) {
+    return ['FH', 'VH'].filter(x => tag.includes(x))[0]
+  },
+
+  impersonal(tag) {
+    return ['OP'].filter(x => tag.includes(x))[0]
+  },
+
+  pronoun(tag) {
+    return ['FN'].filter(x => tag.includes(x))[0]
+  },
 }
 
 export function toString(wordClass, tags) {
