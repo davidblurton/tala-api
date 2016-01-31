@@ -1,7 +1,7 @@
 import assert from 'assert'
 import {generateSuggestions, filterSuggestions} from '../../corrections/spelling'
 
-describe.only('Generates suggestions by replacing lettes', () => {
+describe('Generates suggestions by replacing lettes', () => {
   it('suggests a single letter replacements', () => {
     let results = generateSuggestions('eg')
     assert.deepEqual(['ég'], results)
@@ -18,7 +18,7 @@ describe.only('Generates suggestions by replacing lettes', () => {
   })
 })
 
-describe.only('Filters suggestions to words that exist in the database', () => {
+describe('Filters suggestions to words that exist in the database', () => {
   it('suggests a single replacement', () => {
     return filterSuggestions(['ég']).then(results => {
       assert.deepEqual(['ég'], results)
