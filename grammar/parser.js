@@ -37,7 +37,7 @@ const parser = {
   },
 
   article(tag) {
-    if (tag.endsWith('gr')) {
+    if (tag.includes('gr')) {
       return 'gr'
     } else {
       return ''
