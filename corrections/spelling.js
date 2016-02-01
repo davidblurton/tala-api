@@ -1,25 +1,14 @@
-import database from '../models/database'
+const Nodehun = require('nodehun')
+const fs = require('fs')
+const path = require('path')
 
-const replacementMap = {
-  'a': 'á',
-  'e': 'é',
-  'i': 'í',
-  'o': 'ó', // ö
-  'u': 'ú',
-  'ae': 'æ',
-  'th': 'þ',
-  'd': 'ð',
-}
+const affbuf = fs.readFileSync(path.join(__dirname, 'is.aff'))
+const dictbuf = fs.readFileSync(path.join(__dirname, 'is.dic'))
 
-export function generateSuggestions(word) {
-  const replacableLetters = Object.keys(replacementMap).filter(replacement => word.includes(replacement))
-  let wordWithReplacements = replacableLetters.map(r => word.replace(r, replacementMap[r]))
-  return wordWithReplacements
-}
+const dict = new Nodehun(affbuf, dictbuf)
 
-export function filterSuggestions(suggestions) {
-  return Promise.all(suggestions.map(suggestion => database.lookup(suggestion)))
-    .then(results => {
-      return results.map(x => x[0]).filter(x => x).map(x => x.form)
-    })
+export function getSuggestions(word, cb) {
+  dict.spellSuggestions(word, function(err, correct, suggestion, origWord) {
+    cb(err, suggestion)
+  })
 }

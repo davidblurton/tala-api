@@ -17,7 +17,13 @@ function sort(result) {
       '3P': 3,
     }
 
+    let numberRank = {
+      'ET': 1,
+      'FT': 2,
+    }
+
     return caseRank[x.tags && x.tags.grammarCase] ||
+        numberRank[x.tags && x.tags.number] ||
         personRank[x.tags && x.tags.person]
   })
 }
