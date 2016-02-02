@@ -12,9 +12,12 @@ function sort(result) {
     }
 
     let personRank = {
-      '1P': 1,
-      '2P': 2,
-      '3P': 3,
+      '1P-ET': 1,
+      '2P-ET': 2,
+      '3P-ET': 3,
+      '1P-FT': 4,
+      '2P-FT': 5,
+      '3P-FT': 6,
     }
 
     let numberRank = {
@@ -23,8 +26,8 @@ function sort(result) {
     }
 
     return caseRank[x.tags && x.tags.grammarCase] ||
-        numberRank[x.tags && x.tags.number] ||
-        personRank[x.tags && x.tags.person]
+        personRank[Object.keys(personRank).filter(person => x.grammarTag.includes(person))[0]] ||
+        numberRank[x.tags && x.tags.number]
   })
 }
 
