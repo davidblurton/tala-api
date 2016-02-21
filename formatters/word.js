@@ -40,7 +40,7 @@ function translateWordClass(wordClass, language) {
 }
 
 function translate(result, lang) {
-  result.forms.forEach(form => {
+  result.forms && result.forms.forEach(form => {
     form.tags = lang ? translateTags(form.tags, lang) : form.tags
   })
 
@@ -49,6 +49,10 @@ function translate(result, lang) {
 }
 
 function tag(result) {
+  if (!result.forms) {
+    return result
+  }
+
   result.forms.forEach(form => {
     try {
       form.tags = parse(result.wordClass, form.grammarTag)
@@ -62,26 +66,13 @@ function tag(result) {
   return result
 }
 
-function formatResults(forms) {
-  let first = forms[0]
-
-  let {headWord, binId, wordClass, section} = first
-
-  return {
-    headWord,
-    binId,
-    wordClass,
-    section,
-    forms: forms.map(({form, grammarTag}) => ({form, grammarTag})),
-  }
-}
-
 export default function(results, lang) {
-  let resultsById = _.groupBy(results, 'binId')
-  let uniqueHeadWords = _.values(resultsById)
-  let formattedResults = uniqueHeadWords.map(formatResults)
-  return formattedResults
-      .map(result => tag(result))
-      .map(result => translate(result, lang))
+  if (!results.length) {
+    results = [results]
+  }
+
+  return results
+    .map(result => tag(result))
+    .map(result => translate(result, lang))
 }
 

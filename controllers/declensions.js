@@ -1,34 +1,37 @@
-import _ from 'lodash'
-import database from '../models/database'
+import { words } from '../database/database'
+import getBy from '../database/get-by'
+
+/**
+ * Find a word by id.
+ * @param  {string} id
+ * @return {Array}
+ */
+function findById(id) {
+  return new Promise((resolve, reject) => {
+    words.get(id, function(err, results) {
+      if (err) return reject(err)
+      resolve(results)
+    })
+  })
+}
+
+/**
+ * Find all words from the same headword.
+ * @param  {string} word
+ * @return {Array}
+ */
+function find(word) {
+  return new Promise((resolve, reject) => {
+    getBy('form', word, function(err, results) {
+      if (err) return reject(err)
+      resolve(results)
+    })
+  }).then(ids => {
+    return Promise.all(ids.map(id => findById(id)))
+  })
+}
 
 export default {
-  /**
-   * Find an exact match for a word.
-   * @param  {string} word
-   * @return {Array}
-   */
-  find(word) {
-    return database.lookup(word)
-  },
-
-  /**
-   * Find a word by id.
-   * @param  {string} id
-   * @return {Array}
-   */
-  findById(id) {
-    return database.lookup(id)
-  },
-
-  /**
-   * Find all words from the same headword.
-   * @param  {string} word
-   * @return {Array}
-   */
-  related(word) {
-    return database.lookup(word)
-      .then(results => _.chain(results).pluck('binId').unique().value())
-      .then(ids => Promise.all(ids.map(id => database.lookup(id))))
-      .then(results => _.flatten(results))
-  },
+  findById,
+  find,
 }

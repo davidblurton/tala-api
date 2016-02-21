@@ -11,7 +11,13 @@
       "pfn": "Personal pronoun",
       "abfn": "Reflexive pronoun",
       "fn": "Other pronoun",
-      "gr": "Definite article"
+      "gr": "Definite article",
+      "ao": "Adverb",
+      "fs": "Preposition",
+      "nhm": "Infinitive particle",
+      "st": "Conjunction",
+      "töl": "Numeral",
+      "uh": "Exclamation"
     },
 
     "grammarTag": {
@@ -82,7 +88,13 @@
       "pfn": "persónufornafn",
       "abfn": "afturbeygt fornafn",
       "fn": "önnur fornöfn",
-      "gr": "greinir"
+      "gr": "greinir",
+      "ao": "atviksorð",
+      "fs": "forsetningar",
+      "nhm": "nafnháttarmerki",
+      "st": "samtengingar",
+      "töl": "töluorð",
+      "uh": "upphrópanir"
     },
 
     "grammarTag": {
