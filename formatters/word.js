@@ -67,7 +67,7 @@ function tag(result) {
 }
 
 export default function(results, lang) {
-  if (!results.length) {
+  if (!Array.isArray(results)) {
     results = [results]
   }
 
