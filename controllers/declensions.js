@@ -22,7 +22,7 @@ function findById(id) {
  */
 function find(word) {
   return new Promise((resolve, reject) => {
-    getBy('form', word, function(err, results) {
+    getBy('form', word.toLowerCase(), function(err, results) {
       if (err) return reject(err)
       resolve(results)
     })
