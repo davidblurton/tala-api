@@ -18,11 +18,4 @@ router.get('/id/:id', (req, res, next) => {
     .catch(next)
 })
 
-router.get('/related/:word', (req, res, next) => {
-  declensions.related(req.params.word)
-    .then(results => format(results, req.query.lang))
-    .then(results => res.send(results))
-    .catch(next)
-})
-
 export default router
