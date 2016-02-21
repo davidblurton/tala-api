@@ -1,8 +1,10 @@
-import {generateSuggestions, filterSuggestions} from '../corrections/spelling'
+import { getSuggestions } from '../corrections/spelling'
 
-export default {
-  suggestions(word) {
-    let suggestions = generateSuggestions(word)
-    return filterSuggestions(suggestions)
-  },
+export function suggestions(word) {
+  return new Promise((resolve, reject) => {
+    getSuggestions(word, (err, results) => {
+      if (err) reject(err)
+      resolve(results)
+    })
+  })
 }

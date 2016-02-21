@@ -1,13 +1,11 @@
 import { Router } from 'express'
-import { getSuggestions } from '../corrections/spelling'
+import { suggestions } from '../controllers/suggestions'
 
 let router = new Router()
 
 router.get('/suggestions/:word', (req, res, next) => {
-  getSuggestions(req.params.word, function(err, results) {
-    if (err) return next(err)
-    res.json(results)
-  })
+  suggestions(req.params.word)
+    .then(results => res.json(results), next)
 })
 
 export default router

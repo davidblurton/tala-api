@@ -6,7 +6,7 @@ import getBy from '../database/get-by'
  * @param  {string} id
  * @return {Array}
  */
-function findById(id) {
+export function findById(id) {
   return new Promise((resolve, reject) => {
     words.get(id, function(err, results) {
       if (err) return reject(err)
@@ -20,7 +20,7 @@ function findById(id) {
  * @param  {string} word
  * @return {Array}
  */
-function find(word) {
+export function find(word) {
   return new Promise((resolve, reject) => {
     getBy('form', word.toLowerCase(), function(err, results) {
       if (err) return reject(err)
@@ -29,9 +29,4 @@ function find(word) {
   }).then(ids => {
     return Promise.all(ids.map(id => findById(id)))
   })
-}
-
-export default {
-  findById,
-  find,
 }
