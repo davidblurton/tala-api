@@ -1,12 +1,14 @@
 function isNoun(wordClass) {
-  return ['hk', 'kk', 'kvk'].includes(wordClass)
+  return wordClass === 'hk' ||
+         wordClass === 'kk' ||
+         wordClass === 'kvk'
 }
 
 const featuresMap = {
   // Nouns
-  'hk': ['grammarCase', 'number', 'article'],
-  'kk': ['grammarCase', 'number', 'article'],
-  'kvk': ['grammarCase', 'number', 'article'],
+  'hk': ['grammarCase', 'number', 'article', 'gender'],
+  'kk': ['grammarCase', 'number', 'article', 'gender'],
+  'kvk': ['grammarCase', 'number', 'article', 'gender'],
    // Numeral
   'to': ['grammarCase', 'gender', 'number'],
   // Pronoun
@@ -26,7 +28,11 @@ const parser = {
     return ['NF', 'ÞF', 'ÞGF', 'EF'].filter(x => tag.includes(x))[0]
   },
 
-  gender(tag) {
+  gender(tag, wordClass) {
+    if (isNoun(wordClass)) {
+      return wordClass.toUpperCase()
+    }
+
     return ['KK', 'KVK', 'HK'].filter(x => tag.includes(x))[0]
   },
 
@@ -107,7 +113,7 @@ export function parse(wordClass, grammarTag) {
   var result = {}
 
   features.forEach(x => {
-    result[x] = parser[x].call(null, grammarTag)
+    result[x] = parser[x].call(null, grammarTag, wordClass)
   })
 
   return result
