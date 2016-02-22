@@ -5,7 +5,7 @@ var separator = '|';
 
 function getBy(indexName, value, cb) {
   var gt = [indexName, value, ''].join(separator)
-  var lt = [indexName, value, '~'].join(separator)
+  var lt = [indexName, value, '\xff'].join(separator)
 
   var results = [];
 
