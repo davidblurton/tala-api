@@ -2,8 +2,11 @@ import assert from 'assert'
 import {parse, toString} from '../../grammar/parser'
 
 const testCases = {
-  'FVB-KK-NFET': {definite: 'FVB', gender: 'KK', grammarCase: 'NF', number: 'ET'},
-  'FVB-KVK-NFET': {definite: 'FVB', gender: 'KVK', grammarCase: 'NF', number: 'ET'},
+  'FVB-KK-NFET': {degree: 'FVB', gender: 'KK', grammarCase: 'NF', number: 'ET'},
+  'FVB-KVK-NFET': {degree: 'FVB', gender: 'KVK', grammarCase: 'NF', number: 'ET'},
+  'FSB-KVK-NFET': {degree: 'FSB', gender: 'KVK', grammarCase: 'NF', number: 'ET'},
+  'MST-KK-NFET': {degree: 'MST', gender: 'KK', grammarCase: 'NF', number: 'ET'},
+  'EVB-KK-NFET': {degree: 'EVB', gender: 'KK', grammarCase: 'NF', number: 'ET'},
 }
 
 describe('Parse adjectives', () => {

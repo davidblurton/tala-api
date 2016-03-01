@@ -14,7 +14,7 @@ const featuresMap = {
   // Pronoun
   'pfn': ['grammarCase', 'gender', 'number'],
   // Adjective
-  'lo': ['grammarCase', 'definite', 'gender', 'number'],
+  'lo': ['grammarCase', 'gender', 'number', 'degree'],
   // Verb
   'so': ['person', 'number', 'tense', 'voice', 'mood', 'impersonal', 'pronoun'],
   // Other pronoun
@@ -41,7 +41,7 @@ const parser = {
   },
 
   definite(tag) {
-    return ['ESB', 'EVB', 'FSB', 'FVB'].filter(x => tag.includes(x))[0]
+    return ['ESB', 'EVB', 'FSB', 'FVB', 'MST'].filter(x => tag.includes(x))[0]
   },
 
   article(tag) {
@@ -77,7 +77,7 @@ const parser = {
   },
 
   degree(tag) {
-    return ['FST', 'MST', 'EST'].filter(x => tag.includes(x))[0]
+    return ['FST', 'FSB', 'FVB', 'MST', 'EST', 'ESB', 'EVB'].filter(x => tag.includes(x))[0]
   },
 }
 
@@ -98,8 +98,8 @@ export function toString(wordClass, tags) {
   }
 
   if (wordClass === 'lo') {
-    let {definite, gender, grammarCase, number} = tags
-    return `${definite}-${gender}-${grammarCase}${number}`
+    let {degree, gender, grammarCase, number} = tags
+    return `${degree}-${gender}-${grammarCase}${number}`
   }
 }
 
