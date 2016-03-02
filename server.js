@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-import responseTime from 'response-time'
 import logger from 'express-bunyan-logger'
 import compression from 'compression'
 
@@ -9,6 +8,8 @@ import index from './routes/index'
 import sentence from './routes/sentence'
 import suggestions from './routes/suggestions'
 // import error from './error'
+
+import responseTime from './middleware/response-time'
 
 let app = express()
 
@@ -22,7 +23,7 @@ let app = express()
 //   excludes: ['*'],
 // }))
 app.use(cors())
-app.use(responseTime())
+app.use(responseTime)
 app.use(compression())
 
 app.use('/', index)
