@@ -4,7 +4,7 @@
   "description": "An api for exploring icelandic grammar",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "forever --minUptime 1000 --spinSleepTime 1000 index.js",
     "test": "mocha --require babel-core/register --require babel-polyfill --recursive ./test/parser -s 10",
     "lint": "jshint --exclude ./node_modules . || true && eslint .",
     "style": "eslint .",
@@ -29,6 +29,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.1",
     "express-bunyan-logger": "^1.1.1",
+    "forever": "^0.15.1",
     "level-sublevel": "^6.5.4",
     "leveldown": "^1.4.4",
     "levelup": "^1.3.1",
