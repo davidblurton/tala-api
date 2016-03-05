@@ -1,0 +1,27 @@
+machine:
+  services:
+    - docker
+  environment:
+    TAG: davidblurton/tala-api
+
+dependencies:
+  cache_directories:
+      - "~/docker"
+
+  override:
+    - docker info
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - docker build -t $TAG .
+    - mkdir -p ~/docker; docker save $TAG > ~/docker/image.tar
+
+test:
+  override:
+    - echo "run tests"
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push $TAG
+
