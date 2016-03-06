@@ -6,8 +6,10 @@ let stats = new StatsD({
 })
 
 export default responseTime((req, res, time) => {
-  let stat = (req.method + req.route.path).toLowerCase()
-    .replace(/[:\.]/g, '')
-    .replace(/\//g, '_')
-  stats.timing(stat, time)
+  if (req.route && req.route.path) {
+    let stat = (req.method + req.route.path).toLowerCase()
+      .replace(/[:\.]/g, '')
+      .replace(/\//g, '_')
+    stats.timing(stat, time)
+  }
 })
