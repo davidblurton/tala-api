@@ -14,7 +14,7 @@ const featuresMap = {
   // Pronoun
   'pfn': ['grammarCase', 'gender', 'number'],
   // Adjective
-  'lo': ['grammarCase', 'gender', 'number', 'degree'],
+  'lo': ['grammarCase', 'gender', 'number', 'degree', 'article'],
   // Verb
   'so': ['person', 'number', 'tense', 'voice', 'mood', 'impersonal', 'pronoun'],
   // Other pronoun
@@ -44,11 +44,21 @@ const parser = {
     return ['ESB', 'EVB', 'FSB', 'FVB', 'MST'].filter(x => tag.includes(x))[0]
   },
 
-  article(tag) {
-    if (tag.includes('gr')) {
-      return 'gr'
+  article(tag, wordClass) {
+    if (isNoun(wordClass)) {
+      if (tag.includes('gr')) {
+        return 'gr'
+      } else {
+        return ''
+      }
     } else {
-      return ''
+      if (['EVB', 'FVB'].filter(x => tag.includes(x)).length) {
+        return 'gr'
+      } else if (['ESB', 'FSB'].filter(x => tag.includes(x)).length) {
+        return ''
+      } else {
+        return null
+      }
     }
   },
 
